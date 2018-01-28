@@ -4,32 +4,43 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.*;
 
 import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 
+import fr.paquet.dataBase.Connect;
 import fr.paquet.ihm.main.*;
 
 public class Main {
 
 	private static JFrame mainFrame = null;
+	private static Server server = null;
+	private static EntityManagerFactory factory;
 
 	public static void main(String[] args) {
-		Server server = null;
+
 		try {
-			// demarage de la base de donnée
+			
+			// demarage de la base de donnï¿½e
 			HsqlProperties p = new HsqlProperties();
-			p.setProperty("server.database.0", "file:c:/hsqlDB/DataR408");
-			p.setProperty("server.dbname.0", "r408");
+			p.setProperty("server.database.0", "file:c:/hsqlDB/DataR408;user=r408User;password=Login5340");
+			p.setProperty("server.dbname.0", "R408");
 			p.setProperty("server.port", "5434");
 			server = new Server();
 			server.setProperties(p);
 			server.start();
 
+			Connect.getEm();
+
 			// fermeture du logiciel
 			WindowListener l = new WindowAdapter() {
 				public void windowClosing(WindowEvent e) {
+					// arret de la base de donnï¿½e
+					server.shutdown();
 					System.exit(0);
 				}
 			};
@@ -44,14 +55,11 @@ public class Main {
 			e.printStackTrace();
 
 			// fermeture avec erreur
+			server.shutdown();
 			System.exit(1);
 
 		} finally {
 			try {
-
-				// arret de la base de donnée
-				server.shutdown();
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -60,7 +68,7 @@ public class Main {
 
 	/**
 	 * 
-	 * @return La Fenêtre principale<br/>
+	 * @return La Fenï¿½tre principale<br/>
 	 */
 	public static JFrame getMainFrame() {
 		if (mainFrame == null)

@@ -21,7 +21,7 @@ public class Connect {
 	 */
 	public static EntityManagerFactory getEmf() {
 		if (emf == null)
-			emf = Persistence.createEntityManagerFactory("r408");
+			emf = Persistence.createEntityManagerFactory("R408");
 		if (emf.isOpen())
 			return emf;
 		return emf;

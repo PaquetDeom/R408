@@ -2,10 +2,9 @@
 <persistence version="2.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="r408" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="R408" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>fr.paquet.echafaudage.Constructeur</class>
-		<class>fr.paquet.echafaudage.Echafaudage</class>
+		 <class>fr.paquet.echafaudage.Constructeur</class>
 		<class>fr.paquet.echafaudage.ElementEchaf</class>
 		<class>fr.paquet.echafaudage.Pied</class>
 		<class>fr.paquet.echafaudage.Plateforme</class>
@@ -14,14 +13,13 @@
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:hsqldb:file:c:/hsqlDB/DataR408" />
-			<property name="javax.persistence.jdbc.user" value="r408" />
+			<property name="javax.persistence.jdbc.user" value="r408User" />
 			<property name="javax.persistence.jdbc.password" value="Login5340" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
 			<property name="eclipselink.ddl-generation.output-mode"
 				value="database" />
 				
-				<!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables" 
-			/> -->
+				<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> 
 		</properties>
 	
 </persistence-unit>
