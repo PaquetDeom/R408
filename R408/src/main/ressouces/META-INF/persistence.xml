@@ -11,16 +11,12 @@
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:hsqldb:file:c:/hsqlDB/DataR408" />
-			<property name="javax.persistence.jdbc.user" value="r408User" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:c:/hsqlDB/DataR408" />
+			<property name="javax.persistence.jdbc.user" value="r408" />
 			<property name="javax.persistence.jdbc.password" value="Login5340" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
 			<property name="eclipselink.ddl-generation.output-mode"
 				value="database" />
-				
-				<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> 
 		</properties>
-	
-</persistence-unit>
+	</persistence-unit>
 </persistence>

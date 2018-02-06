@@ -25,9 +25,9 @@ public class Main {
 
 		try {
 			
-			// demarage de la base de donn�e
+			// demarage de la base de donnees
 			HsqlProperties p = new HsqlProperties();
-			p.setProperty("server.database.0", "file:c:/hsqlDB/DataR408;user=r408User;password=Login5340");
+			p.setProperty("server.database.0", "file:c:/hsqlDB/DataR408;user=r408;password=Login5340");
 			p.setProperty("server.dbname.0", "R408");
 			p.setProperty("server.port", "5434");
 			server = new Server();
