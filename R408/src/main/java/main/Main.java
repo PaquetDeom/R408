@@ -17,15 +17,14 @@ import fr.paquet.ihm.main.*;
 
 public class Main {
 
-	private static JFrame mainFrame = null;
+	private static MainFrame mainFrame = null;
 	private static Server server = null;
-	private static EntityManagerFactory factory;
 
 	public static void main(String[] args) {
 
 		try {
-			
-			// demarage de la base de donnees
+
+			// création de la base de donnees
 			HsqlProperties p = new HsqlProperties();
 			p.setProperty("server.database.0", "file:c:/hsqlDB/DataR408;user=r408;password=Login5340");
 			p.setProperty("server.dbname.0", "R408");
@@ -34,7 +33,8 @@ public class Main {
 			server.setProperties(p);
 			server.start();
 
-			Connect.getEm();
+			// creation de la mainFrame
+			setMainFrame(new MainFrame());
 
 			// fermeture du logiciel
 			WindowListener l = new WindowAdapter() {
@@ -66,13 +66,17 @@ public class Main {
 		}
 	}
 
+	private static void setMainFrame(MainFrame mainFrame) {
+
+		Main.mainFrame = mainFrame;
+	}
+
 	/**
 	 * 
-	 * @return La Fen�tre principale<br/>
+	 * @return La Fenetre principale<br/>
 	 */
-	public static JFrame getMainFrame() {
-		if (mainFrame == null)
-			mainFrame = new MainFrame();
+	public static MainFrame getMainFrame() {
+
 		return mainFrame;
 	}
 

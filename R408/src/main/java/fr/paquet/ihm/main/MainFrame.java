@@ -11,7 +11,7 @@ import main.Exit;
 public class MainFrame extends JFrame implements WindowListener {
 
 	/**
-	 * @author Nathanaël
+	 * @author Nathanael
 	 * 
 	 *         Fenetre pricipale du logiciel<br/>
 	 */
