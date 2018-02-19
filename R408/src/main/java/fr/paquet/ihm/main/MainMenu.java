@@ -7,6 +7,13 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class MainMenu extends JMenuBar {
 
+	/**
+	 * @author Nathanaël
+	 */
+	
+	/**
+	 * Constructeur de la class ajoute les Action a MainMenu<br/>
+	 */
 	public MainMenu() {
 
 		super();
@@ -17,6 +24,9 @@ public class MainMenu extends JMenuBar {
 		addMenu();
 	}
 
+	/**
+	 * Ajoute les menus dans la barre des menus<br/>
+	 */
 	private void addMenu() {
 
 		for (int i = 0; i < Action.getMenus().size(); i++) {
