@@ -1,19 +1,18 @@
 package fr.paquet.ihm.main;
 
-import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.LayoutManager;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
-import fr.paquet.ihm.echaf.LayoutEchafRevit;
+import fr.paquet.ihm.echaf.*;
 
 @SuppressWarnings("serial")
 public class MainOnglet extends JTabbedPane {
 
 	private int nbOnglet = 0;
 	private static MainOnglet onglet = null;
+	private PanelNew panelNew = null;
 
 	/**
 	 * Constructeur de la class private car ne doit etre instanciee qu une fois<br/>
@@ -43,15 +42,15 @@ public class MainOnglet extends JTabbedPane {
 		// Comptage du nb d'onglet actif
 		setNbOnglet(getNbOnglet() + 1);
 
-		// affichage des Layouts.
-		JPanel onglet = new JPanel();
-		onglet.add(new JLabel(getTitre()));
-		onglet.setPreferredSize(new Dimension(1800, 900));
-		onglet.setLayout(new LayoutEchafRevit());
-
 		// Ajout de l'onglet
-		addTab(getTitre(), onglet);
+		this.addTab(getTitre(), getPanelNew());
 		setOpaque(true);
+	}
+
+	private PanelNew getPanelNew() {
+		if (panelNew == null)
+			panelNew = new PanelNew();
+		return panelNew;
 	}
 
 	private int getNbOnglet() {
@@ -64,11 +63,15 @@ public class MainOnglet extends JTabbedPane {
 
 	/**
 	 * 
-	 * @return le titre de l'onglet<br/>
+	 * @return le titre de du document<br/>
 	 */
 	private String getTitre() {
 
-		return "sansTitre" + " " + getNbOnglet();
+		if (getPanelNew().getTitre().equals("saisir le titre"))
+
+			return "sansTitre" + " " + getNbOnglet();
+		else
+			return getPanelNew().getTitre();
 
 	}
 

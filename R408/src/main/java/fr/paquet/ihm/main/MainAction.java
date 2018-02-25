@@ -2,24 +2,25 @@ package fr.paquet.ihm.main;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 import javax.swing.*;
-
-import main.*;
 
 public class MainAction implements ActionListener {
 
 	private JMenu menu = null;
 	private JMenuItem item = null;
 	private char shortKey = 0;
+	private static ArrayList<MainAction> mActions = null;
 
 	/**
 	 * Constructeur de la class<br/>
 	 * Action sans touche de racourci<br/>
+	 * 
 	 * @param menu
 	 * @param item
 	 */
-	public MainAction(JMenu menu, JMenuItem item) {
+	private MainAction(JMenu menu, JMenuItem item) {
 		super();
 		setMenu(menu);
 		setJMenuItem(item);
@@ -30,14 +31,63 @@ public class MainAction implements ActionListener {
 	/**
 	 * Constructeur de la class<br/>
 	 * Action avec touche de racourci<br/>
+	 * 
 	 * @param menu
 	 * @param item
 	 * @param shortKey
 	 */
-	public MainAction(JMenu menu, JMenuItem item, char shortKey) {
+	private MainAction(JMenu menu, JMenuItem item, char shortKey) {
 		this(menu, item);
 		setShortKey(shortKey);
 		item.setAccelerator(getKeyStroke());
+	}
+
+	/**
+	 * 
+	 * @param menu
+	 * @param item
+	 * @param shortKey
+	 * @return L'instance unique de chaque action<br/>
+	 */
+	public static MainAction getUniqInstance(JMenu menu, JMenuItem item, char shortKey) {
+
+		MainAction mAction = null;
+
+		for (int i = 0; i < getMainActions().size(); i++) {
+			JMenu jMenu = getMainActions().get(i).getMenu();
+			JMenuItem jItem = getMainActions().get(i).getItem();
+			if (jMenu.equals(menu) && jItem.equals(item)) {
+				mAction = getMainActions().get(i);
+			}
+		}
+
+		if (mAction == null) {
+			if (shortKey == '0') {
+				shortKey = item.getText().charAt(0);
+				mAction = new MainAction(menu, item);
+				MainAction.addMainAction(mAction);
+			} else {
+				mAction = new MainAction(menu, item, shortKey);
+				MainAction.addMainAction(mAction);
+			}
+
+		}
+
+		return mAction;
+	}
+
+	/**
+	 * 
+	 * @return La liste des MainAction<br/>
+	 */
+	public static ArrayList<MainAction> getMainActions() {
+		if (mActions == null)
+			mActions = new ArrayList<MainAction>();
+		return mActions;
+	}
+
+	private static void addMainAction(MainAction mAction) {
+		getMainActions().add(mAction);
 	}
 
 	private void setShortKey(char shortKey) {
@@ -78,7 +128,7 @@ public class MainAction implements ActionListener {
 
 	/**
 	 * 
-	 * @return L'Item de l'action (Fichier, Editer...)<br/> 
+	 * @return L'Item de l'action (Nouveau, Ouvrir...)<br/>
 	 */
 	public JMenuItem getItem() {
 		return item;
@@ -87,24 +137,9 @@ public class MainAction implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 
-		if (event.getActionCommand().equals("Nouveau")) {
-			MainFrame.getMainPanel().add(MainOnglet.getUniqInstance());
-			Main.getMainFrame().setVisible(true);
-		}
-		if (event.getActionCommand().equals("Ouvrir"))
-			System.out.println("Ouvrir is click");
-		if (event.getActionCommand().equals("Sauver"))
-			System.out.println("Sauver is click");
-		if (event.getActionCommand().equals("Quitter")) {
-			System.out.println("Quitter is click");
-			new Exit();
-		}
-		if (event.getActionCommand().equals("Copier"))
-			System.out.println("Copier is click");
-		if (event.getActionCommand().equals("Couper"))
-			System.out.println("Couper is click");
-		if (event.getActionCommand().equals("Coller"))
-			System.out.println("Coller is click");
+		JMenuItem item = (JMenuItem) event.getSource();
+		Action action = Action.getAction(item.getText().toUpperCase());
+		action.actionPerf();
 
 	}
 

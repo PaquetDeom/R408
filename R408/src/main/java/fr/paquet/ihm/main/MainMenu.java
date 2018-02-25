@@ -10,7 +10,7 @@ public class MainMenu extends JMenuBar {
 	/**
 	 * @author Nathanaël
 	 */
-	
+
 	/**
 	 * Constructeur de la class ajoute les Action a MainMenu<br/>
 	 */
@@ -19,7 +19,7 @@ public class MainMenu extends JMenuBar {
 		super();
 
 		for (Action action : EnumSet.allOf(Action.class)) {
-			action.getAction();
+			action.getMainAction();
 		}
 		addMenu();
 	}
