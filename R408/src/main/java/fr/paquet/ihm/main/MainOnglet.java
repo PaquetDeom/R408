@@ -12,7 +12,6 @@ public class MainOnglet extends JTabbedPane {
 
 	private int nbOnglet = 0;
 	private static MainOnglet onglet = null;
-	private PanelNew panelNew = null;
 
 	/**
 	 * Constructeur de la class private car ne doit etre instanciee qu une fois<br/>
@@ -43,14 +42,13 @@ public class MainOnglet extends JTabbedPane {
 		setNbOnglet(getNbOnglet() + 1);
 
 		// Ajout de l'onglet
-		this.addTab(getTitre(), getPanelNew());
+		this.addTab(getTitre(), getPanelEnteteNew());
 		setOpaque(true);
 	}
 
-	private PanelNew getPanelNew() {
-		if (panelNew == null)
-			panelNew = new PanelNew();
-		return panelNew;
+	private PanelEnteteNew getPanelEnteteNew() {
+
+		return new PanelEnteteNew();
 	}
 
 	private int getNbOnglet() {
@@ -67,11 +65,11 @@ public class MainOnglet extends JTabbedPane {
 	 */
 	private String getTitre() {
 
-		if (getPanelNew().getTitre().equals("saisir le titre"))
+		if (getPanelEnteteNew().getTitre() == null)
 
 			return "sansTitre" + " " + getNbOnglet();
 		else
-			return getPanelNew().getTitre();
+			return getPanelEnteteNew().getTitre();
 
 	}
 
