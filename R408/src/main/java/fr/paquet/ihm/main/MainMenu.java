@@ -1,8 +1,12 @@
 package fr.paquet.ihm.main;
 
-import java.util.EnumSet;
+import java.util.Hashtable;
+
 
 import javax.swing.*;
+
+import fr.paquet.ihm.action.*;
+
 
 @SuppressWarnings("serial")
 public class MainMenu extends JMenuBar {
@@ -15,23 +19,27 @@ public class MainMenu extends JMenuBar {
 	 * Constructeur de la class ajoute les Action a MainMenu<br/>
 	 */
 	public MainMenu() {
-
-		super();
-
-		for (Action action : EnumSet.allOf(Action.class)) {
-			action.getMainAction();
-		}
-		addMenu();
+		addAction(new ActionNouveau());
+		addAction(new ActionGestionnaire());
+		addAction(new ActionQuitter());
 	}
 
-	/**
-	 * Ajoute les menus dans la barre des menus<br/>
-	 */
-	private void addMenu() {
-
-		for (int i = 0; i < Action.getMenus().size(); i++) {
-			add(Action.getMenus().get(i));
+	private Hashtable<String, JMenu> menus=new Hashtable<String, JMenu>();
+	private JMenu getJMenu(String menuName) {
+		JMenu menu=menus.get(menuName);
+		if(menu==null) {
+			menus.put(menuName, menu=new JMenu(menuName));
+			super.add(menu);
 		}
-
+		return menu;
+	}
+	
+	public ActionBDA addAction(ActionBDA action) {
+		
+		//créé un nouveau JMenu
+		JMenuItem jMenuAction = new JMenuItem(action);
+		
+		getJMenu(action.getParentMenuName()).add(jMenuAction);
+		return action;
 	}
 }

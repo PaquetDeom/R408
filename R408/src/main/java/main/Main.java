@@ -1,25 +1,24 @@
 package main;
 
+import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.swing.*;
+import java.io.IOException;
 
 import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
+import org.hsqldb.server.ServerAcl.AclFormatException;
 
-import fr.paquet.dataBase.Connect;
-import fr.paquet.ihm.main.*;
+import fr.paquet.ihm.main.MainFrame;
 
 public class Main {
 
-	private static MainFrame mainFrame = null;
 	private static Server server = null;
 
+	/**
+	 * Demmarrage de l application.
+	 */
 	public static void main(String[] args) {
 
 		try {
@@ -33,51 +32,56 @@ public class Main {
 			server.setProperties(p);
 			server.start();
 
-			// creation de la mainFrame
-			setMainFrame(new MainFrame());
-
-			// fermeture du logiciel
-			WindowListener l = new WindowAdapter() {
-				public void windowClosing(WindowEvent e) {
-					// arret de la base de donn�e
-					server.shutdown();
-					System.exit(0);
-				}
-			};
-
-			// add listener
-			getMainFrame().addWindowListener(l);
-
-			// rendre la fenetre visible
-			getMainFrame().setVisible(true);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException | AclFormatException e1) {
 
 			// fermeture avec erreur
-			server.shutdown();
-			System.exit(1);
+			FermetureAvecErreur();
 
 		} finally {
+
 			try {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+
+					// creation de la mainFrame
+					MainFrame mainFrame = MainFrame.getUniqInstance();
+
+					// fermeture du logiciel
+					WindowListener l = new WindowAdapter() {
+						public void windowClosing(WindowEvent e) {
+							// arret de la base de donn�e
+							FermetureSansErreur();
+						}
+					};
+
+					// add listener
+					mainFrame.addWindowListener(l);
+					mainFrame.setVisible(true);
+
+				} catch (Exception e) {
+
+					// fermeture avec erreur
+					FermetureAvecErreur();
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-
-	private static void setMainFrame(MainFrame mainFrame) {
-
-		Main.mainFrame = mainFrame;
+	
+	public static void FermetureSansErreur() {
+		server.shutdown();
+		System.exit(0);
 	}
-
-	/**
-	 * 
-	 * @return La Fenetre principale<br/>
-	 */
-	public static MainFrame getMainFrame() {
-
-		return mainFrame;
+	
+	public static void FermetureAvecErreur() {
+		server.shutdown();
+		System.exit(1);
 	}
 
 }

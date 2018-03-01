@@ -1,17 +1,22 @@
 package fr.paquet.echafaudage;
 
+import javax.persistence.*;
+
+
 public enum TypeEchaf {
-	
+
 	TYPE1, TYPE2;
 
 	/**
 	 * 
-	 * @return le type d'échafaudage<br/>
+	 * @return le type d'ï¿½chafaudage<br/>
 	 */
 	public String getType() {
 		switch (this) {
-		case TYPE1 : return ("Echafaudage à cadre");
-		case TYPE2 : return ("Echafaudage multi-directionelle");
+		case TYPE1:
+			return ("Echafaudage a cadre");
+		case TYPE2:
+			return ("Echafaudage multi-directionelle");
 		}
 		return null;
 	}

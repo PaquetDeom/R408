@@ -5,8 +5,6 @@ import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
-import main.Exit;
-
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements WindowListener {
 
@@ -16,27 +14,26 @@ public class MainFrame extends JFrame implements WindowListener {
 	 *         Fenetre pricipale du logiciel<br/>
 	 */
 
-	private static MainPanel mainPanel = null;
 	private static MainMenu mainMenu = null;
+	private static MainFrame mainFrame = null;
 
-	public MainFrame() {
+	private MainFrame() {
 		super("Logiciel de calcul R408");
 		addWindowListener(this);
 		setAlwaysOnTop(false);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setJMenuBar(getMainMenu());
-		setContentPane(getMainPanel());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	/**
 	 * 
-	 * @return le panel principal<br/>
+	 * @return l'instance unique de la class<br/>
 	 */
-	public static MainPanel getMainPanel() {
-		if (mainPanel == null)
-			mainPanel = new MainPanel();
-		return mainPanel;
+	public static MainFrame getUniqInstance() {
+		if (mainFrame == null)
+			mainFrame = new MainFrame();
+		return mainFrame;
 	}
 
 	/**
@@ -63,7 +60,7 @@ public class MainFrame extends JFrame implements WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		new Exit();
+		// TODO
 
 	}
 

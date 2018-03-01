@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import javax.swing.*;
 
 import fr.paquet.ihm.echaf.*;
+import fr.paquet.projet.Projet;
 
 @SuppressWarnings("serial")
 public class MainOnglet extends JTabbedPane {
@@ -42,13 +43,13 @@ public class MainOnglet extends JTabbedPane {
 		setNbOnglet(getNbOnglet() + 1);
 
 		// Ajout de l'onglet
-		this.addTab(getTitre(), getPanelEnteteNew());
+		this.addTab(getTitre(), getJPanelProjet());
 		setOpaque(true);
 	}
 
-	private PanelEnteteNew getPanelEnteteNew() {
+	private JPanelProjet getJPanelProjet() {
 
-		return new PanelEnteteNew();
+		return new JPanelProjet(new Projet());
 	}
 
 	private int getNbOnglet() {
@@ -65,11 +66,7 @@ public class MainOnglet extends JTabbedPane {
 	 */
 	private String getTitre() {
 
-		if (getPanelEnteteNew().getTitre() == null)
-
-			return "sansTitre" + " " + getNbOnglet();
-		else
-			return getPanelEnteteNew().getTitre();
+		return "sansTitre" + " " + getNbOnglet();
 
 	}
 

@@ -3,17 +3,33 @@ package fr.paquet.echafaudage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "ECHAFAUDAGE")
 public class Echafaudage {
 
 	/**
-	 * @author Nathanaël
+	 * @author Nathanael
 	 * 
 	 *         Class qui gere un echafaudage<br/>
 	 */
 
+	@Id
+	@Column(name = "ECECID")
+	@GeneratedValue
+	private long id = 0;
+
+	@OneToMany
 	private List<ElementEchaf> elements = null;
+
+	@ManyToOne
 	private Constructeur constructeur = null;
+
+	@Enumerated(EnumType.STRING)
 	private TypeEchaf type = null;
+
+	@Enumerated(EnumType.STRING)
 	private ClasseEchaf classe = null;
 
 	public Echafaudage() {
@@ -41,7 +57,7 @@ public class Echafaudage {
 		if (element.getConstructeur() == getConstructeur() && element.getTypeEchaf() == getTypeEchaf()) {
 			getElements().add(element);
 		} else
-			throw new Exception("L'élément n'est pas compatible avec ce type d'echaffaudage");
+			throw new Exception("L'ï¿½lï¿½ment n'est pas compatible avec ce type d'echaffaudage");
 	}
 
 	public TypeEchaf getTypeEchaf() {
@@ -76,37 +92,36 @@ public class Echafaudage {
 	private void setConstructeur(Constructeur constructeur) {
 		this.constructeur = constructeur;
 	}
-	
+
 	/**
 	 * 
 	 * @return le poids de l'echafaudage<br/>
 	 */
 	public double getPoidsPropre() {
-		
+
 		double poids = 0;
-		
-		for(ElementEchaf elEchaf : getElements()) {
+
+		for (ElementEchaf elEchaf : getElements()) {
 			poids = poids + elEchaf.getPoids();
 		}
-		
+
 		return poids;
 	}
-	
-	//TODO
+
+	// TODO
 	/**
 	 * getPlateforme
 	 */
-	
-	
+
 	public int getNbDePieds() {
-		 
+
 		int i = 0;
-		
-		for(ElementEchaf elEchaf : getElements()) {
-			if(elEchaf.getName() == "pied droit" || elEchaf.getName() == "pied inclinable")
+
+		for (ElementEchaf elEchaf : getElements()) {
+			if (elEchaf.getName() == "pied droit" || elEchaf.getName() == "pied inclinable")
 				i = i++;
 		}
-		
+
 		return i;
 	}
 
