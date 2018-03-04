@@ -16,6 +16,7 @@ public class MainFrame extends JFrame implements WindowListener {
 
 	private static MainMenu mainMenu = null;
 	private static MainFrame mainFrame = null;
+	private static MainOnglet mainOnglet = null;
 
 	private MainFrame() {
 		super("Logiciel de calcul R408");
@@ -23,6 +24,7 @@ public class MainFrame extends JFrame implements WindowListener {
 		setAlwaysOnTop(false);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setJMenuBar(getMainMenu());
+		add(getMainOnglet());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
@@ -45,6 +47,17 @@ public class MainFrame extends JFrame implements WindowListener {
 			mainMenu = new MainMenu();
 		return mainMenu;
 	}
+	
+	/**
+	 * 
+	 * @return le menu principal<br/>
+	 */
+	public static MainOnglet getMainOnglet() {
+		if (mainOnglet == null)
+			mainOnglet = MainOnglet.getUniqInstance();
+		return mainOnglet;
+	}
+	
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {

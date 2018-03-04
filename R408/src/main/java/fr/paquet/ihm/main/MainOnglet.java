@@ -19,7 +19,7 @@ public class MainOnglet extends JTabbedPane {
 	 */
 	private MainOnglet() {
 		super(SwingConstants.TOP);
-		buildOnglet();
+
 	}
 
 	/**
@@ -29,22 +29,21 @@ public class MainOnglet extends JTabbedPane {
 	public static MainOnglet getUniqInstance() {
 		if (onglet == null) {
 			onglet = new MainOnglet();
-		} else
-			onglet.buildOnglet();
+		}
 		return onglet;
 	}
 
 	/**
 	 * Cree un nouvel onglet<br/>
 	 */
-	private void buildOnglet() {
-
+	public Component buildOnglet() {
+		Component c = null;
 		// Comptage du nb d'onglet actif
 		setNbOnglet(getNbOnglet() + 1);
 
 		// Ajout de l'onglet
-		this.addTab(getTitre(), getJPanelProjet());
-		setOpaque(true);
+		this.addTab(getTitre(), c= getJPanelProjet());
+		return c;
 	}
 
 	private JPanelProjet getJPanelProjet() {

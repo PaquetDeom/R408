@@ -1,13 +1,14 @@
 package fr.paquet.ihm.action;
 
+import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
 
 import javax.swing.KeyStroke;
 
 import fr.paquet.ihm.main.MainFrame;
 import fr.paquet.ihm.main.MainOnglet;
-
 
 public class ActionNouveau extends ActionBDA {
 
@@ -26,9 +27,8 @@ public class ActionNouveau extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		MainFrame.getUniqInstance().add(MainOnglet.getUniqInstance());
-		MainFrame.getUniqInstance().setVisible(true);
-
+		Component c = MainFrame.getMainOnglet().buildOnglet();
+		c.setVisible(true);
 	}
 
 	@Override

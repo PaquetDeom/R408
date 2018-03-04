@@ -14,13 +14,13 @@ public class PanelEntete extends JPanel {
 		super();
 		setPanelProjet(panelProjet);
 
+		add(new PanelProj(this));
+		add(new PanelClient(this));
+		add(new PanelChantier(this));
+
 		GridLayout layout = new GridLayout(1, 3);
 		setLayout(layout);
-			
-		add(new PanelProj(this), layout);
-		add(new PanelClient(this), layout);
-		add(new PanelChantier(this), layout);
-		
+
 	}
 
 	public JPanelProjet getPanelProjet() {
@@ -31,5 +31,4 @@ public class PanelEntete extends JPanel {
 		this.panelProjet = panelProjet;
 	}
 
-	
 }
