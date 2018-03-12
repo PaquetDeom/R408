@@ -36,19 +36,20 @@ public class MainOnglet extends JTabbedPane {
 	/**
 	 * Cree un nouvel onglet<br/>
 	 */
-	public Component buildOnglet() {
+	public Component buildOnglet(Projet projet) {
 		Component c = null;
 		// Comptage du nb d'onglet actif
 		setNbOnglet(getNbOnglet() + 1);
 
 		// Ajout de l'onglet
-		this.addTab(getTitre(), c= getJPanelProjet());
+
+		this.addTab(getTitre(projet), c = getJPanelProjet(projet));
 		return c;
 	}
 
-	private JPanelProjet getJPanelProjet() {
+	private JPanelProjet getJPanelProjet(Projet projet) {
 
-		return new JPanelProjet(new Projet());
+		return new JPanelProjet(projet);
 	}
 
 	private int getNbOnglet() {
@@ -63,9 +64,13 @@ public class MainOnglet extends JTabbedPane {
 	 * 
 	 * @return le titre de du document<br/>
 	 */
-	private String getTitre() {
+	private String getTitre(Projet projet) {
 
-		return "sansTitre" + " " + getNbOnglet();
+		if (getJPanelProjet(projet).getProjet().getTitre() == null
+				|| getJPanelProjet(projet).getProjet().getTitre().equals(""))
+			return "sansTitre" + " " + getNbOnglet();
+		else
+			return getJPanelProjet(projet).getProjet().getTitre();
 
 	}
 

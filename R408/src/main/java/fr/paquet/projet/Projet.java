@@ -55,7 +55,7 @@ public class Projet {
 		return titre;
 	}
 
-	private void setTitre(String titre) {
+	public void setTitre(String titre) {
 		this.titre = titre;
 	}
 
