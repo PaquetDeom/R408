@@ -1,5 +1,7 @@
 package fr.paquet.projet;
 
+import java.util.Locale;
+
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -14,14 +16,13 @@ public class Personne {
 	@Column(name = "PEPEID")
 	@GeneratedValue
 	private long id = 0;
-	
+
 	@Column(name = "PEPENO", length = 20)
 	private String nom = null;
-	
+
 	@Column(name = "PEPEPR", length = 20)
 	private String prenom = null;
 
-	
 	public Personne() {
 		super();
 	}
@@ -32,13 +33,16 @@ public class Personne {
 		setPrenom(prenom);
 	}
 
+	/**
+	 * 
+	 * @return le nom sans espace à droite et à gauche et en majuscule<br/>
+	 */
 	public String getNom() {
 		return nom;
 	}
 
-	private void setNom(String nom) {
-		nom = nom.trim().toLowerCase();
-		nom = nom.replaceFirst(".", (nom.charAt(0) + "").toUpperCase());
+	public void setNom(String nom) {
+		nom = nom.trim().toUpperCase();
 		this.nom = nom;
 	}
 
@@ -50,14 +54,19 @@ public class Personne {
 		this.id = iD;
 	}
 
+	/**
+	 * 
+	 * @return le prenom sans espace à droite et à gauche avec la première
+	 *         lettre en majuscule<br/>
+	 */
 	public String getPrenom() {
-		
+
 		return prenom;
 	}
 
-	private void setPrenom(String prenom) {
+	public void setPrenom(String prenom) {
 		prenom = prenom.trim().toLowerCase();
-		prenom = prenom.replaceFirst(".", (nom.charAt(0) + "").toUpperCase());
+		prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
 		this.prenom = prenom;
 	}
 

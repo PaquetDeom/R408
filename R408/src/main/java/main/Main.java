@@ -10,6 +10,7 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
+import fr.paquet.dataBase.Connect;
 import fr.paquet.ihm.main.MainFrame;
 
 public class Main {
@@ -25,7 +26,7 @@ public class Main {
 
 			// création de la base de donnees
 			HsqlProperties p = new HsqlProperties();
-			p.setProperty("server.database.0", "file:c:/hsqlDB/DataR408;user=r408;password=Login5340");
+			p.setProperty("server.database.0", "file:/home/paquet/hsqlDB/DataR408;user=r408;password=Login5340");
 			p.setProperty("server.dbname.0", "R408");
 			p.setProperty("server.port", "5434");
 			server = new Server();
@@ -73,12 +74,12 @@ public class Main {
 			}
 		});
 	}
-	
+
 	public static void FermetureSansErreur() {
 		server.shutdown();
 		System.exit(0);
 	}
-	
+
 	public static void FermetureAvecErreur() {
 		server.shutdown();
 		System.exit(1);

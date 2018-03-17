@@ -14,11 +14,11 @@ public class JPanelProjet extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Projet projet = null;
+	private OngletProjet onglet = null;
 
-	public JPanelProjet(Projet projet) {
+	public JPanelProjet(OngletProjet onglet) {
 		super();
-		setProjet(projet);
+		setOnglet(onglet);
 		setLayout(new GridBagLayout());
 		add(new PanelEntete(this), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
@@ -28,12 +28,12 @@ public class JPanelProjet extends JPanel {
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
 	}
 
-	public Projet getProjet() {
-		return projet;
+	public OngletProjet getOnglet() {
+		return onglet;
 	}
 
-	public void setProjet(Projet projet) {
-		this.projet = projet;
+	private void setOnglet(OngletProjet onglet) {
+		this.onglet = onglet;
 	}
-
+	
 }

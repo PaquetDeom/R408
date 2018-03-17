@@ -3,8 +3,9 @@ package fr.paquet.projet;
 import java.util.regex.Pattern;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 
-import com.sun.istack.Nullable;
+//import com.sun.istack.Nullable;
 
 
 @Entity
@@ -26,15 +27,15 @@ public class Adresse {
 	private String adresse1 = null;
 
 	@Column(name = "ADADAD2", length = 100)
-	@Nullable
+	@Null
 	private String adresse2 = null;
 
 	@Column(name = "ADADAD3", length = 100)
-	@Nullable
+	@Null
 	private String adresse3 = null;
 
 	@Column(name = "ADADAD4", length = 100)
-	@Nullable
+	@Null
 	private String adresse4 = null;
 
 	@JoinColumn(name = "ADCOID")

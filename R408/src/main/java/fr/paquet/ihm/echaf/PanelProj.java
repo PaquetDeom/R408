@@ -9,31 +9,82 @@ import java.util.*;
 
 import javax.swing.*;
 
-import fr.paquet.ihm.main.MainFrame;
-import fr.paquet.ihm.main.MainOnglet;
+import fr.paquet.projet.Responsable;
 
 public class PanelProj extends JPanel {
 
 	/**
-	 * faire Hash Map
+	 * @author paquet
 	 */
+
 	private static final long serialVersionUID = 1L;
 	private PanelEntete panelEntete = null;
+	private Hashtable<String, JTextField> textFields = null;
 
-	private JTextField buildTextField(String name, int taille) {
+	/**
+	 * Constructeur de la class<br/>
+	 * 
+	 * @param panelEntete
+	 */
+	public PanelProj(PanelEntete panelEntete) {
+
+		super();
+		setPanelEntete(panelEntete);
+
+		setLayout(new GridBagLayout());
+
+		addComponent("TITRE", "Titre du projet", 20, 0);
+		addComponent("NOMRESP", "Nom du responsable", 20, 1);
+		addComponent("PRENOMRESP", "Prenom du responsable", 20, 2);
+
+	}
+
+	/**
+	 * Methode chargee d'empiler les differents components<br/>
+	 * 
+	 * @param titre
+	 * @param textLabel
+	 * @param taille
+	 * @param position
+	 */
+	private void addComponent(String titre, String textLabel, int taille, int position) {
+
 		JTextField textField = new JTextField(taille);
-		textField.setName(name);
+		putTextField(titre, textField);
+
+		add(new JLabel(textLabel), new GridBagConstraints(0, position, 1, 1, 1.0, 1.0, GridBagConstraints.LINE_END,
+				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		add(textField, new GridBagConstraints(1, position, 1, 1, 1.0, 1.0, GridBagConstraints.BASELINE,
+				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+	}
+
+	private void putTextField(String titre, JTextField textField) {
 		textField.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
 
-				JTextField TF = (JTextField) e.getSource();
-				String name = TF.getName();
+				if (titre.equals("TITRE")) {
+					getPanelEntete().getPanelProjet().getOnglet().getProjet().setTitre(textField.getText());
 
-				if (name.equals("TITRE"))
-					getPanelEntete().getPanelProjet().getProjet().setTitre(TF.getText());
-				MainFrame.getMainOnglet().setVisible(true);
+				} else {
+					if (getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp() == null)
+						getPanelEntete().getPanelProjet().getOnglet().getProjet().setResp(new Responsable());
+					if (titre.equals("NOMRESP")) {
+						getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().setNom(textField.getText());
+						textField.setText(getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().getNom());
+					}
+
+					if (titre.equals("PRENOMRESP")) {
+						getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp()
+								.setPrenom(textField.getText());
+						textField.setText(
+								getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().getPrenom());
+					}
+
+				}
+
 			}
 
 			@Override
@@ -42,48 +93,26 @@ public class PanelProj extends JPanel {
 
 			}
 		});
-		return textField;
+
+		getTextFields().put(titre, textField);
 	}
 
-	private JLabel buildLabel(String name, String text) {
-		JLabel label = new JLabel(text);
-		label.setName(name);
-		return label;
-	}
-
-	public PanelProj(PanelEntete panelEntete) {
-
-		super();
-		setPanelEntete(panelEntete);
-
-		setLayout(new GridBagLayout());
-
-		buildComponent("TITRE", "Titre du projet", 20);
-		buildComponent("NOMRESP", "Nom du responsable de l'étude", 20);
-
-		add(buildLabel("TITRE", "Titre du projet"), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BASELINE, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		add(tableTextFields.get("TITRE"), new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-	}
-
-	private Hashtable<String, JTextField> tableTextFields = new Hashtable<String, JTextField>();
-
-	private void buildComponent(String titre, String intitule, int taille) {
-
-		JTextField textField = buildTextField(titre, taille);
-
-		tableTextFields.put(titre, textField);
-
-	}
-
+	/**
+	 * 
+	 * @return le Panel de l'entête<br/>
+	 */
 	public PanelEntete getPanelEntete() {
 		return panelEntete;
 	}
 
 	private void setPanelEntete(PanelEntete panelEntete) {
 		this.panelEntete = panelEntete;
+	}
+
+	private Hashtable<String, JTextField> getTextFields() {
+		if (textFields == null)
+			textFields = new Hashtable<String, JTextField>();
+		return textFields;
 	}
 
 }

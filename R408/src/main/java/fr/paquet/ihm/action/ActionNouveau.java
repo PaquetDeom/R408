@@ -7,6 +7,7 @@ import java.awt.event.ComponentAdapter;
 
 import javax.swing.KeyStroke;
 
+import fr.paquet.ihm.echaf.OngletProjet;
 import fr.paquet.ihm.main.MainFrame;
 import fr.paquet.ihm.main.MainOnglet;
 import fr.paquet.projet.Projet;
@@ -29,7 +30,7 @@ public class ActionNouveau extends ActionBDA {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		Component c = MainFrame.getMainOnglet().buildOnglet(new Projet());
+		Component c = new OngletProjet(new Projet());
 		c.setVisible(true);
 	}
 
