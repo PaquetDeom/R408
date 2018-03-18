@@ -1,17 +1,11 @@
 package fr.paquet.ihm.main;
 
-import java.awt.Component;
-import java.awt.Dimension;
 import java.util.*;
 
 import javax.swing.*;
 
 import fr.paquet.ihm.echaf.*;
-import fr.paquet.projet.Chantier;
-import fr.paquet.projet.Client;
-import fr.paquet.projet.Projet;
-import fr.paquet.projet.ProjetListener;
-import fr.paquet.projet.Responsable;
+
 
 @SuppressWarnings("serial")
 public class MainOnglet extends JTabbedPane {

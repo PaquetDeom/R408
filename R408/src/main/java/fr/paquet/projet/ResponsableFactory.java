@@ -9,7 +9,7 @@ import fr.paquet.dataBase.R408Factory;
 public class ResponsableFactory extends R408Factory {
 
 	public ResponsableFactory() {
-
+		
 	}
 
 	/**

@@ -65,11 +65,15 @@ public class OngletProjet extends JComponent implements ProjetListener {
 		this.projet = projet;
 	}
 
+	public void show() {
+		MainOnglet.getUniqInstance().setVisible(true);
+	}
+
 	@Override
 	public void changeTitre(String nouveauTitre) {
 		getTitre(getProjet());
 		MainOnglet.getUniqInstance().setTitleAt(MainOnglet.getUniqInstance().getSelectedIndex(), nouveauTitre);
-		MainOnglet.getUniqInstance().setVisible(true);
+		show();
 	}
 
 	@Override

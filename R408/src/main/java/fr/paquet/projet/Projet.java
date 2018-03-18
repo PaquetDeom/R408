@@ -93,7 +93,7 @@ public class Projet implements ProjetListener {
 		return id;
 	}
 
-	private void setId(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -102,8 +102,10 @@ public class Projet implements ProjetListener {
 	}
 
 	public void setTitre(String titre) {
-		titre = titre.toLowerCase().trim();
-		titre = titre.substring(0, 1).toUpperCase() + titre.substring(1).toLowerCase();
+		if (!titre.equals("")) {
+			titre = titre.toLowerCase().trim();
+			titre = titre.substring(0, 1).toUpperCase() + titre.substring(1).toLowerCase();
+		}
 		this.titre = titre;
 		changeTitre(titre);
 	}

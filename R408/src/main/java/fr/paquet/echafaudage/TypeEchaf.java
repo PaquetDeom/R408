@@ -1,6 +1,6 @@
 package fr.paquet.echafaudage;
 
-import javax.persistence.*;
+
 
 
 public enum TypeEchaf {

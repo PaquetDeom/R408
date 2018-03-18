@@ -33,32 +33,32 @@ public class PanelProj extends JPanel {
 
 		setLayout(new GridBagLayout());
 
-		addComponent("TITRE", "Titre du projet", 20, 0);
-		addComponent("NOMRESP", "Nom du responsable", 20, 1);
-		addComponent("PRENOMRESP", "Prenom du responsable", 20, 2);
+		// Titre du JPanel
+		add(new JLabel("Données du projet"), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
+				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+		// Affichage des JLabel et JtextField sur le Panel en fonction du Layout
+		AddLineJLabelJTextField l1 = new AddLineJLabelJTextField(this, "TITRE", "Titre du projet", 20, 0, 1, 1, 1, 0, 0,
+				GridBagConstraints.NONE);
+		AddLineJLabelJTextField l2 = new AddLineJLabelJTextField(this, "NOMRESP", "Nom du responsable", 20, 0, 2, 1, 1,
+				0, 0, GridBagConstraints.NONE);
+		AddLineJLabelJTextField l3 = new AddLineJLabelJTextField(this, "PRENOMRESP", "Prenom du responsable", 20, 0, 3,
+				1, 1, 0, 1, GridBagConstraints.NONE);
+
+		// listener + put dans la HashTable
+		putTextField(l1.getTitre(), l1.getTextField());
+		putTextField(l2.getTitre(), l2.getTextField());
+		putTextField(l3.getTitre(), l3.getTextField());
 
 	}
 
 	/**
-	 * Methode chargee d'empiler les differents components<br/>
+	 * Methode qui met le textField dans la HashTable<br/>
+	 * Contient le Listener des TexField<br/>
 	 * 
 	 * @param titre
-	 * @param textLabel
-	 * @param taille
-	 * @param position
+	 * @param textField
 	 */
-	private void addComponent(String titre, String textLabel, int taille, int position) {
-
-		JTextField textField = new JTextField(taille);
-		putTextField(titre, textField);
-
-		add(new JLabel(textLabel), new GridBagConstraints(0, position, 1, 1, 1.0, 1.0, GridBagConstraints.LINE_END,
-				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		add(textField, new GridBagConstraints(1, position, 1, 1, 1.0, 1.0, GridBagConstraints.BASELINE,
-				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-	}
-
 	private void putTextField(String titre, JTextField textField) {
 		textField.addFocusListener(new FocusListener() {
 
@@ -66,7 +66,8 @@ public class PanelProj extends JPanel {
 			public void focusLost(FocusEvent e) {
 
 				if (titre.equals("TITRE")) {
-					getPanelEntete().getPanelProjet().getOnglet().getProjet().setTitre(textField.getText());
+					if (!textField.getText().trim().equals(""))
+						getPanelEntete().getPanelProjet().getOnglet().getProjet().setTitre(textField.getText());
 
 				} else {
 					if (getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp() == null)
@@ -109,6 +110,10 @@ public class PanelProj extends JPanel {
 		this.panelEntete = panelEntete;
 	}
 
+	/**
+	 * 
+	 * @return la Hashtabe<TITRE, JtextField><br/>
+	 */
 	private Hashtable<String, JTextField> getTextFields() {
 		if (textFields == null)
 			textFields = new Hashtable<String, JTextField>();

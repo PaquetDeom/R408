@@ -10,7 +10,6 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
-import fr.paquet.dataBase.Connect;
 import fr.paquet.ihm.main.MainFrame;
 
 public class Main {

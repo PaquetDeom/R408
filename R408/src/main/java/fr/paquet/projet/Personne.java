@@ -1,7 +1,5 @@
 package fr.paquet.projet;
 
-import java.util.Locale;
-
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -50,7 +48,7 @@ public class Personne {
 		return id;
 	}
 
-	private void setiD(long iD) {
+	public void setiD(long iD) {
 		this.id = iD;
 	}
 
@@ -65,8 +63,10 @@ public class Personne {
 	}
 
 	public void setPrenom(String prenom) {
-		prenom = prenom.trim().toLowerCase();
-		prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
+		if (!prenom.trim().equals("")) {
+			prenom = prenom.trim().toLowerCase();
+			prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
+		}
 		this.prenom = prenom;
 	}
 

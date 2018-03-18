@@ -1,7 +1,5 @@
 package fr.paquet.echafaudage;
 
-import javax.persistence.*;
-
 public enum ClasseEchaf {
 
 	CLASSE1, CLASSE2, CLASSE3, CLASSE4, CLASSE5, CLASSE6;

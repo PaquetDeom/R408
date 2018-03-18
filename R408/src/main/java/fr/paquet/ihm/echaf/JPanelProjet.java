@@ -6,7 +6,6 @@ import java.awt.Insets;
 
 import javax.swing.JPanel;
 
-import fr.paquet.projet.Projet;
 
 public class JPanelProjet extends JPanel {
 
@@ -21,11 +20,11 @@ public class JPanelProjet extends JPanel {
 		setOnglet(onglet);
 		setLayout(new GridBagLayout());
 		add(new PanelEntete(this), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+				GridBagConstraints.HORIZONTAL, new Insets(5,5,5,5), 5, 5));
 		add(new PanelEchafaudage(this), new GridBagConstraints(0, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+				GridBagConstraints.HORIZONTAL, new Insets(5,5,5,5), 0, 0));
 		add(new PanelResultats(this), new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+				GridBagConstraints.HORIZONTAL, new Insets(5,5,5,5), 0, 0));
 	}
 
 	public OngletProjet getOnglet() {
@@ -35,5 +34,5 @@ public class JPanelProjet extends JPanel {
 	private void setOnglet(OngletProjet onglet) {
 		this.onglet = onglet;
 	}
-	
+
 }

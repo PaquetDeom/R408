@@ -3,13 +3,11 @@ package fr.paquet.ihm.action;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
 
 import javax.swing.KeyStroke;
 
 import fr.paquet.ihm.echaf.OngletProjet;
-import fr.paquet.ihm.main.MainFrame;
-import fr.paquet.ihm.main.MainOnglet;
+
 import fr.paquet.projet.Projet;
 
 public class ActionNouveau extends ActionBDA {
