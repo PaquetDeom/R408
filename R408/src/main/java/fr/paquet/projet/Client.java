@@ -1,5 +1,7 @@
 package fr.paquet.projet;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 import javax.persistence.AttributeOverride;
@@ -34,6 +36,17 @@ public class Client extends Personne implements Aadresse {
 	 */
 	public Client() {
 		super();
+		setChangeSupport(new PropertyChangeSupport(this));
+	}
+	
+	/**
+	 * 
+	 * @param listener
+	 */
+	public Client(PropertyChangeListener listener){
+		this();
+		setChangeSupport(new PropertyChangeSupport(this));
+		addPropertyChangeListener(listener);
 	}
 
 	/**
@@ -43,9 +56,11 @@ public class Client extends Personne implements Aadresse {
 	 * @param prenom
 	 * @param adresse
 	 */
-	public Client(String nom, String prenom, Adresse adresse) {
+	public Client(PropertyChangeListener listener, String nom, String prenom, Adresse adresse) {
 		super(nom, prenom);
 		setAdresse(adresse);
+		setChangeSupport(new PropertyChangeSupport(this));
+		addPropertyChangeListener(listener);
 	}
 
 	private void setAdresse(Adresse adresse) {

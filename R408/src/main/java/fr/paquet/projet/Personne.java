@@ -1,5 +1,8 @@
 package fr.paquet.projet;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -21,6 +24,16 @@ public class Personne {
 	@Column(name = "PEPEPR", length = 20)
 	private String prenom = null;
 
+	private PropertyChangeSupport changeSupport = null;
+
+	protected void setChangeSupport(PropertyChangeSupport pCS) {
+		this.changeSupport = pCS;
+	}
+
+	private PropertyChangeSupport getChangeSupport() {
+		return changeSupport;
+	}
+
 	public Personne() {
 		super();
 	}
@@ -35,12 +48,19 @@ public class Personne {
 	 * 
 	 * @return le nom sans espace à droite et à gauche et en majuscule<br/>
 	 */
-	public String getNom() {
+	public synchronized String getNom() {
 		return nom;
 	}
 
-	public void setNom(String nom) {
+	public synchronized void setNom(String nom) {
 		nom = nom.trim().toUpperCase();
+
+		if (!nom.equals("") || nom != null) {
+			String oldValue = this.nom;
+			this.nom = nom;
+			getChangeSupport().firePropertyChange("nom", oldValue, nom);
+		}
+
 		this.nom = nom;
 	}
 
@@ -57,17 +77,35 @@ public class Personne {
 	 * @return le prenom sans espace à droite et à gauche avec la première
 	 *         lettre en majuscule<br/>
 	 */
-	public String getPrenom() {
+	public synchronized String getPrenom() {
 
 		return prenom;
 	}
 
-	public void setPrenom(String prenom) {
+	public synchronized void setPrenom(String prenom) {
 		if (!prenom.trim().equals("")) {
 			prenom = prenom.trim().toLowerCase();
 			prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
 		}
+
+		if (!prenom.equals("") || prenom != null) {
+			String oldValue = this.prenom;
+			this.prenom = prenom;
+			getChangeSupport().firePropertyChange("prenom", oldValue, prenom);
+		}
+
 		this.prenom = prenom;
+	}
+
+	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+
+		getChangeSupport().addPropertyChangeListener(l);
+	}
+
+	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+
+		getChangeSupport().addPropertyChangeListener(l);
+
 	}
 
 }

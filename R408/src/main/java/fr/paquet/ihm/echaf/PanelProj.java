@@ -5,13 +5,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.swing.*;
 
 import fr.paquet.projet.Responsable;
 
-public class PanelProj extends JPanel {
+public class PanelProj extends JPanel implements PropertyChangeListener {
 
 	/**
 	 * @author paquet
@@ -118,6 +120,12 @@ public class PanelProj extends JPanel {
 		if (textFields == null)
 			textFields = new Hashtable<String, JTextField>();
 		return textFields;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

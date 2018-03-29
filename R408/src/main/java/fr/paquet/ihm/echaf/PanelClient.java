@@ -5,13 +5,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class PanelClient extends JPanel {
+import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.projet.Client;
+import fr.paquet.projet.ClientFactory;
+
+public class PanelClient extends JPanel implements PropertyChangeListener {
 
 	/**
 	 * @author paquet
@@ -29,7 +35,11 @@ public class PanelClient extends JPanel {
 	public PanelClient(PanelEntete panelEntete) {
 
 		super();
+
 		setPanelEntete(panelEntete);
+
+		// listener
+		getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().addPropertyChangeListener(this);
 
 		setLayout(new GridBagLayout());
 
@@ -70,11 +80,37 @@ public class PanelClient extends JPanel {
 	}
 
 	private void putTextField(String titre, JTextField textField) {
+
 		textField.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
+				if (titre.equals("NOMCLIENT")) {
+					getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().setNom(textField.getText());
+					textField.setText(getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getNom());
+				}
+
+				if (titre.equals("PRENOMCLIENT")) {
+					getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+							.setPrenom(textField.getText());
+					textField
+							.setText(getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getPrenom());
+				}
+
+				if (titre.equals("ADRESSE1")) {
+				}
+				if (titre.equals("ADRESSE2")) {
+				}
+				if (titre.equals("ADRESSE3")) {
+				}
+				if (titre.equals("CODEPOSTAL")) {
+				}
+				if (titre.equals("COMMUNE")) {
+				}
+				if (titre.equals("MAIL")) {
+				}
+				if (titre.equals("TEL")) {
+				}
 			}
 
 			@Override
@@ -103,6 +139,45 @@ public class PanelClient extends JPanel {
 		if (textFields == null)
 			textFields = new Hashtable<String, JTextField>();
 		return textFields;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+
+		System.out.println(evt.getNewValue());
+		System.out.println(getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getNom());
+		System.out.println(getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getPrenom());
+
+		if (getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getNom() != null
+				&& getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getPrenom() != null) {
+
+			Client clt = new ClientFactory().findClientByNameAndFirstName(
+					getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getNom(),
+					getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().getPrenom());
+
+			if (clt == null) {
+				new AlertWindow("Attention", "Ce client n'est pas dans la base");
+			}
+
+			else {
+				getTextFields().get("ADRESSE1").setText(clt.getAdresse().getAdresse1());
+				getTextFields().get("ADRESSE1").setEditable(false);
+				getTextFields().get("ADRESSE2").setText(clt.getAdresse().getAdresse2());
+				getTextFields().get("ADRESSE1").setEditable(false);
+				getTextFields().get("ADRESSE3").setText(clt.getAdresse().getAdresse3());
+				getTextFields().get("ADRESSE1").setEditable(false);
+				getTextFields().get("CODEPOSTAL").setText(clt.getAdresse().getCommune().getCommune());
+				getTextFields().get("ADRESSE1").setEditable(false);
+				getTextFields().get("COMMUNE").setText(clt.getAdresse().getCommune().getCodeCommune());
+				getTextFields().get("ADRESSE1").setEditable(false);
+				getTextFields().get("MAIL").setText(clt.getAdresse().getMail());
+				getTextFields().get("ADRESSE1").setEditable(false);
+				getTextFields().get("TEL").setText(clt.getAdresse().getTel());
+				getTextFields().get("ADRESSE1").setEditable(false);
+
+			}
+		}
+
 	}
 
 }

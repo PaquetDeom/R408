@@ -1,12 +1,14 @@
 package fr.paquet.projet;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "PROJET")
-public class Projet implements ProjetListener {
+public class Projet {
 
 	/**
 	 * @author Nathanaël
@@ -31,21 +33,7 @@ public class Projet implements ProjetListener {
 	@ManyToOne
 	private Responsable resp = null;
 
-	private ArrayList<ProjetListener> listenerList = null;
-
-	public void addProjetListener(ProjetListener listener) {
-		getListener().add(listener);
-	}
-
-	/**
-	 * 
-	 * @return La liste des listener qui ecoute Projet<br/>
-	 */
-	private ArrayList<ProjetListener> getListener() {
-		if (listenerList == null)
-			listenerList = new ArrayList<ProjetListener>();
-		return listenerList;
-	}
+	PropertyChangeSupport changeSupport = null;
 
 	/**
 	 * Constructeur vide pour la gestion de la DB<br/>
@@ -60,10 +48,10 @@ public class Projet implements ProjetListener {
 	 * @param listener
 	 *            de type ProjetListener<br/>
 	 */
-	public Projet(ProjetListener listener) {
+	public Projet(PropertyChangeListener listener) {
 		this();
-		if (listener != null)
-			addProjetListener(listener);
+		setChangeSupport(new PropertyChangeSupport(this));
+		addPropertyChangeListener(listener);
 	}
 
 	/**
@@ -80,13 +68,23 @@ public class Projet implements ProjetListener {
 	 * @param resp
 	 *            de Type Reponsable<br/>
 	 */
-	public Projet(ProjetListener listener, String titre, Client client, Chantier chantier, Responsable resp) {
+	public Projet(PropertyChangeListener listener, String titre, Client client, Chantier chantier, Responsable resp) {
 		this(listener);
+		setChangeSupport(new PropertyChangeSupport(this));
+		addPropertyChangeListener(listener);
 		setTitre(titre);
 		setClient(client);
 		addChantier(chantier);
 		setResp(resp);
 
+	}
+
+	private void setChangeSupport(PropertyChangeSupport pCS) {
+		this.changeSupport = pCS;
+	}
+
+	private PropertyChangeSupport getChangeSupport() {
+		return changeSupport;
 	}
 
 	public long getId() {
@@ -97,17 +95,25 @@ public class Projet implements ProjetListener {
 		this.id = id;
 	}
 
-	public String getTitre() {
+	public synchronized String getTitre() {
 		return titre;
 	}
 
-	public void setTitre(String titre) {
-		if (!titre.equals("")) {
+	public synchronized void setTitre(String titre) {
+
+		if (!titre.equals("") && titre != null) {
 			titre = titre.toLowerCase().trim();
 			titre = titre.substring(0, 1).toUpperCase() + titre.substring(1).toLowerCase();
 		}
+
+		if (this.titre != null) {
+			String oldValeur = this.titre;
+			this.titre = titre;
+			getChangeSupport().firePropertyChange("titre", oldValeur, titre);
+		}
+
 		this.titre = titre;
-		changeTitre(titre);
+
 	}
 
 	public Client getClient() {
@@ -115,9 +121,9 @@ public class Projet implements ProjetListener {
 		return client;
 	}
 
-	private void setClient(Client client) {
+	public void setClient(Client client) {
+
 		this.client = client;
-		changeClient(client);
 	}
 
 	public List<Chantier> getChantiers() {
@@ -135,50 +141,21 @@ public class Projet implements ProjetListener {
 	}
 
 	public void setResp(Responsable resp) {
+
 		resp.addProjet(this);
 		this.resp = resp;
-		changeResponsable(resp);
-	}
-
-	@Override
-	public void changeTitre(String nouveauTitre) {
-		if (getListener() == null || getListener().isEmpty()) {
-			nouveauTitre = null;
-		} else {
-			for (ProjetListener l : getListener()) {
-				l.changeTitre(nouveauTitre);
-			}
-		}
 
 	}
 
-	@Override
-	public void changeClient(Client nouveauClient) {
-		if (getListener() == null || getListener().isEmpty()) {
-			nouveauClient = null;
-		} else {
-			for (ProjetListener l : getListener()) {
-				l.changeClient(nouveauClient);
-			}
-		}
+	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
 
+		getChangeSupport().addPropertyChangeListener(l);
 	}
 
-	@Override
-	public void changeChantiers(List<Chantier> nouveauChantier) {
-		// TODO Auto-generated method stub
+	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
 
-	}
+		getChangeSupport().addPropertyChangeListener(l);
 
-	@Override
-	public void changeResponsable(Responsable nouveauResp) {
-		if (getListener() == null || getListener().isEmpty()) {
-			nouveauResp = null;
-		} else {
-			for (ProjetListener l : getListener()) {
-				l.changeResponsable(nouveauResp);
-			}
-		}
 	}
 
 }

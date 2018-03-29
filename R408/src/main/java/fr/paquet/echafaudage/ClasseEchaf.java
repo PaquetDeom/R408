@@ -8,20 +8,20 @@ public enum ClasseEchaf {
 	 * 
 	 * @return le nom de la classe d'utilisation de l'�chafaudage<br/>
 	 */
-	public String getCLASSE() {
+	public String getClasse() {
 		switch (this) {
 		case CLASSE1:
-			return ("Classe 1");
+			return ("Classe 1 : 0.75KN/m2");
 		case CLASSE2:
-			return ("Classe 2");
+			return ("Classe 2 : 1.50KN/m2");
 		case CLASSE3:
-			return ("Classe 3");
+			return ("Classe 3 : 2.00KN/m2");
 		case CLASSE4:
-			return ("Classe 4");
+			return ("Classe 4 : 3.00KN/m2");
 		case CLASSE5:
-			return ("Classe 5");
+			return ("Classe 5 : 4.50KN/m2");
 		case CLASSE6:
-			return ("Classe 6");
+			return ("Classe 6 : 6.00KN/m2");
 		}
 		return null;
 	}

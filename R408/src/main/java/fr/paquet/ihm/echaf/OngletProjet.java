@@ -1,17 +1,14 @@
 package fr.paquet.ihm.echaf;
 
-import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JComponent;
-
 import fr.paquet.ihm.main.MainOnglet;
-import fr.paquet.projet.Chantier;
-import fr.paquet.projet.Client;
-import fr.paquet.projet.Projet;
-import fr.paquet.projet.ProjetListener;
-import fr.paquet.projet.Responsable;
 
-public class OngletProjet extends JComponent implements ProjetListener {
+import fr.paquet.projet.*;
+
+public class OngletProjet extends JComponent implements PropertyChangeListener {
 
 	/**
 	 * 
@@ -26,7 +23,10 @@ public class OngletProjet extends JComponent implements ProjetListener {
 	public OngletProjet(Projet projet) {
 
 		super();
-		setProjet(projet);
+
+		// creer le projet si la variable de methode projet est nulle
+		if (projet == null)
+			setProjet(new Projet(this, "", new Client(), new Chantier(), new Responsable()));
 
 		// Ajout de l'onglet
 		MainOnglet.getUniqInstance().addTab(getTitre(getProjet()), getJPanelProjet());
@@ -34,8 +34,6 @@ public class OngletProjet extends JComponent implements ProjetListener {
 		// Ajout à la liste des MainOnglets
 		MainOnglet.getUniqInstance().addOnglet(this);
 
-		// Ajout du listener qui écoute les changement du projet
-		getProjet().addProjetListener(this);
 	}
 
 	private JPanelProjet getJPanelProjet() {
@@ -50,7 +48,7 @@ public class OngletProjet extends JComponent implements ProjetListener {
 	 */
 	private String getTitre(Projet projet) {
 
-		if (projet.getTitre() == null || projet.getTitre().equals(""))
+		if (projet.getTitre().equals(""))
 			return "sansTitre" + " " + MainOnglet.getUniqInstance().getOnglets().size();
 		else
 			return projet.getTitre();
@@ -65,32 +63,15 @@ public class OngletProjet extends JComponent implements ProjetListener {
 		this.projet = projet;
 	}
 
-	public void show() {
-		MainOnglet.getUniqInstance().setVisible(true);
-	}
-
 	@Override
-	public void changeTitre(String nouveauTitre) {
-		getTitre(getProjet());
-		MainOnglet.getUniqInstance().setTitleAt(MainOnglet.getUniqInstance().getSelectedIndex(), nouveauTitre);
-		show();
-	}
+	public void propertyChange(PropertyChangeEvent evt) {
 
-	@Override
-	public void changeClient(Client nouveauClient) {
-		// TODO Auto-generated method stub
+		if (evt.getPropertyName().equals("titre")) {
+			String title = (String) evt.getNewValue();
+			getTitre(getProjet());
+			MainOnglet.getUniqInstance().setTitleAt(MainOnglet.getUniqInstance().getSelectedIndex(), title);
 
-	}
-
-	@Override
-	public void changeChantiers(List<Chantier> nouveauChantier) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void changeResponsable(Responsable nouveauResp) {
-		// TODO Auto-generated method stub
+		}
 
 	}
 

@@ -37,7 +37,7 @@ public class PanelChantier extends JPanel {
 				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
 		GridBagConstraints c = new GridBagConstraints();
-		JButton button = new JButton("L'adresse du chantier est différente de l'adresse client");
+		JRadioButton radioButton = new JRadioButton("L'adresse du chantier est différente de l'adresse client");
 
 		c.weightx = 0.0;
 		c.gridwidth = 2;
@@ -45,9 +45,9 @@ public class PanelChantier extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
-		add(button, c);
+		add(radioButton, c);
 
-		button.addActionListener(new ActionListener() {
+		radioButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -75,7 +75,8 @@ public class PanelChantier extends JPanel {
 				putTextField(lc6.getTitre(), lc6.getTextField());
 				putTextField(lc7.getTitre(), lc7.getTextField());
 
-				getPanelEntete().getPanelProjet().getOnglet().show();
+				SwingUtilities.updateComponentTreeUI(PanelChantier.this);
+				PanelChantier.this.repaint();
 
 			}
 		});

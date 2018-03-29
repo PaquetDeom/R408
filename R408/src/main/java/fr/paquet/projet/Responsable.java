@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "RESPONSABLE")
 @AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "REREID")),
 		@AttributeOverride(name = "nom", column = @Column(name = "RERENOM", length = 20)),
-		@AttributeOverride(name = "prenom", column = @Column(name = "REREPRENOM", length = 50)),})
+		@AttributeOverride(name = "prenom", column = @Column(name = "REREPRENOM", length = 50)), })
 public class Responsable extends Personne {
 
 	/**
@@ -46,6 +46,12 @@ public class Responsable extends Personne {
 	}
 
 	public void addProjet(Projet projet) {
-		getProjets().add(projet);
+		if (!getProjets().contains(projet))
+			getProjets().add(projet);
+	}
+
+	public void removeProjet(Projet projet) {
+		if (getProjets().contains(projet))
+			getProjets().remove(projet);
 	}
 }
