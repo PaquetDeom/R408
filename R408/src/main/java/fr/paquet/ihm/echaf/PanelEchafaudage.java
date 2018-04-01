@@ -7,10 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.swing.*;
+
+import com.google.gwt.user.client.ui.CheckBox;
 
 import fr.paquet.echafaudage.ClasseEchaf;
 import fr.paquet.echafaudage.TypeSol;
@@ -65,8 +69,8 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanelProjet panelProjet = null;
-	private Hashtable<String, JCheckBox> HClasse = new Hashtable<String, JCheckBox>();
-	private Hashtable<String, JCheckBox> HType = new Hashtable<String, JCheckBox>();
+	private List<JCheckBox> classes = null;
+	private List<JCheckBox> types = null;
 
 	/**
 	 * Constructeur de la class<br/>
@@ -99,10 +103,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 		for (ClasseEchaf cl : EnumSet.allOf(ClasseEchaf.class)) {
 
-			putHClasse(cl.getClasse(), new JCheckBox(cl.getClasse()));
+			JCheckBox box = new JCheckBox(cl.getClasse());
+			addClasse(box);
 
-			new AddLineJCheckBox(this, getHClasse().get(cl.getClasse()), gridx, gridy, 1, 1, 0, 0,
-					GridBagConstraints.BOTH);
+			new AddLineJCheckBox(this, box, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
 
@@ -115,9 +119,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 		for (TypeSol ts : EnumSet.allOf(TypeSol.class)) {
 
-			putHType(ts.getType(), new JCheckBox(ts.getType()));
+			JCheckBox box1 = new JCheckBox(ts.getType());
+			addType(box1);
 
-			new AddLineJCheckBox(this, getHType().get(ts.getType()), gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
+			new AddLineJCheckBox(this, box1, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
 
@@ -131,41 +136,58 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 	}
 
-	private void putHClasse(String titre, JCheckBox box) {
+	private void addClasse(JCheckBox box) {
 
 		box.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO
+				JCheckBox box = (JCheckBox) e.getSource();
+
+				for (JCheckBox box1 : getClasses()) {
+
+					if (!box1.getText().equals(box.getText()))
+						box1.setSelected(false);
+				}
 
 			}
 		});
 
-		getHClasse().put(titre, box);
+		getClasses().add(box);
 	}
 
-	private void putHType(String titre, JCheckBox box) {
+	private void addType(JCheckBox box) {
 
 		box.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
+				JCheckBox box = (JCheckBox) e.getSource();
+
+				for (JCheckBox box1 : getTypes()) {
+
+					if (!box1.getText().equals(box.getText()))
+						box1.setSelected(false);
+				}
 
 			}
 		});
 
-		getHType().put(titre, box);
+		getTypes().add(box);
 	}
 
-	private Hashtable<String, JCheckBox> getHClasse() {
-		return HClasse;
+	private List<JCheckBox> getClasses() {
+		if (classes == null)
+			classes = new ArrayList<JCheckBox>();
+		return classes;
 	}
 
-	private Hashtable<String, JCheckBox> getHType() {
-		return HType;
+	private List<JCheckBox> getTypes() {
+		if (types == null)
+			types = new ArrayList<JCheckBox>();
+		return types;
 	}
 
 	public JPanelProjet getPanelProjet() {
