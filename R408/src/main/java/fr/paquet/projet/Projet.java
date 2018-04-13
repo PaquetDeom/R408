@@ -2,7 +2,6 @@ package fr.paquet.projet;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.*;
 
 import javax.persistence.*;
 
@@ -27,8 +26,8 @@ public class Projet {
 	@ManyToOne
 	private Client client = null;
 
-	@ManyToMany
-	private List<Chantier> chantiers = null;
+	@OneToOne
+	private Chantier chantier = null;
 
 	@ManyToOne
 	private Responsable resp = null;
@@ -74,12 +73,12 @@ public class Projet {
 		addPropertyChangeListener(listener);
 		setTitre(titre);
 		setClient(client);
-		addChantier(chantier);
+		setChantier(chantier);
 		setResp(resp);
 
 	}
 
-	private void setChangeSupport(PropertyChangeSupport pCS) {
+	public void setChangeSupport(PropertyChangeSupport pCS) {
 		this.changeSupport = pCS;
 	}
 
@@ -106,11 +105,9 @@ public class Projet {
 			titre = titre.substring(0, 1).toUpperCase() + titre.substring(1).toLowerCase();
 		}
 
-		if (this.titre != null) {
-			String oldValeur = this.titre;
-			this.titre = titre;
-			getChangeSupport().firePropertyChange("titre", oldValeur, titre);
-		}
+		String oldValeur = this.titre;
+		this.titre = titre;
+		getChangeSupport().firePropertyChange("titre", oldValeur, titre);
 
 		this.titre = titre;
 
@@ -126,14 +123,13 @@ public class Projet {
 		this.client = client;
 	}
 
-	public List<Chantier> getChantiers() {
-		if (chantiers == null)
-			chantiers = new ArrayList<Chantier>();
-		return chantiers;
+	public Chantier getChantier() {
+
+		return chantier;
 	}
 
-	private void addChantier(Chantier chantier) {
-		getChantiers().add(chantier);
+	private void setChantier(Chantier chantier) {
+		this.chantier = chantier;
 	}
 
 	public Responsable getResp() {

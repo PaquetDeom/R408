@@ -5,7 +5,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.KeyStroke;
 
+import fr.paquet.echafaudage.Echafaudage;
 import fr.paquet.ihm.echaf.OngletProjet;
+import fr.paquet.projet.Chantier;
+import fr.paquet.projet.Client;
+import fr.paquet.projet.Projet;
+import fr.paquet.projet.Responsable;
 
 public class ActionNouveau extends ActionBDA {
 
@@ -24,7 +29,7 @@ public class ActionNouveau extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		OngletProjet c = new OngletProjet(null);
+		OngletProjet c = new OngletProjet(new Projet(null, "", new Client(), new Chantier(null, new Echafaudage()), new Responsable()));
 		c.setVisible(true);
 	}
 

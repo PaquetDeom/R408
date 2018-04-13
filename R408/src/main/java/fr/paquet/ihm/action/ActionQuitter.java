@@ -2,6 +2,8 @@ package fr.paquet.ihm.action;
 
 import java.awt.event.ActionEvent;
 
+import fr.paquet.ihm.alert.AlertListener;
+import fr.paquet.ihm.alert.AlertWindow;
 import main.Main;
 
 public class ActionQuitter extends ActionBDA {
@@ -18,7 +20,15 @@ public class ActionQuitter extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Main.FermetureSansErreur();
+		new AlertWindow("Question", "Etes-vous sûre de vouloir quitter", new AlertListener() {
+
+			@Override
+			public void buttonClick(String button) {
+				if (button.equals("Oui"))
+					Main.FermetureSansErreur();
+
+			}
+		});
 	}
 
 	@Override

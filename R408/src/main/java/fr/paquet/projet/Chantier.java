@@ -27,6 +27,8 @@ public class Chantier implements Aadresse{
 	}
 	
 	public Chantier(Adresse adresse, Echafaudage echaf) {
+		
+		this();
 		setAdresse(adresse);
 		setEchafaudage(echaf);
 	}
@@ -43,7 +45,7 @@ public class Chantier implements Aadresse{
 		return echafaudage;
 	}
 
-	private void setEchafaudage(Echafaudage echafaudage) {
+	public void setEchafaudage(Echafaudage echafaudage) {
 		this.echafaudage = echafaudage;
 	}
 

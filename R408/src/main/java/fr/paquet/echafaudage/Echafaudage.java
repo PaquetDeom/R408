@@ -1,5 +1,7 @@
 package fr.paquet.echafaudage;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,11 @@ public class Echafaudage {
 	@Enumerated(EnumType.STRING)
 	private ClasseEchaf classe = null;
 
+	@Enumerated(EnumType.STRING)
+	private TypeSol typeSol = null;
+
+	PropertyChangeSupport changeSupport = null;
+
 	public Echafaudage() {
 		super();
 	}
@@ -49,6 +56,14 @@ public class Echafaudage {
 		setListElementEchaf(new ArrayList<ElementEchaf>());
 	}
 
+	public void setChangeSupport(PropertyChangeSupport pCS) {
+		this.changeSupport = pCS;
+	}
+
+	private PropertyChangeSupport getChangeSupport() {
+		return changeSupport;
+	}
+
 	private void setListElementEchaf(List<ElementEchaf> elements) {
 		this.elements = elements;
 	}
@@ -57,10 +72,10 @@ public class Echafaudage {
 		if (element.getConstructeur() == getConstructeur() && element.getTypeEchaf() == getTypeEchaf()) {
 			getElements().add(element);
 		} else
-			throw new Exception("L'�l�ment n'est pas compatible avec ce type d'echaffaudage");
+			throw new Exception("L'élément n'est pas compatible avec ce type d'echafaudage");
 	}
 
-	public TypeEchaf getTypeEchaf() {
+	public synchronized TypeEchaf getTypeEchaf() {
 		return type;
 	}
 
@@ -68,7 +83,7 @@ public class Echafaudage {
 		return constructeur;
 	}
 
-	public ClasseEchaf getClasseEchaf() {
+	public synchronized ClasseEchaf getClasseEchaf() {
 		return classe;
 	}
 
@@ -80,16 +95,20 @@ public class Echafaudage {
 		return elements;
 	}
 
-	private void setClasseEchaf(ClasseEchaf classe) {
+	public synchronized void setClasseEchaf(ClasseEchaf classe) {
+		ClasseEchaf ce = this.classe;
 		this.classe = classe;
+		getChangeSupport().firePropertyChange("classe", ce, classe);
 
 	}
 
-	private void setTypeEchaf(TypeEchaf type) {
+	public synchronized void setTypeEchaf(TypeEchaf type) {
+		TypeEchaf te = this.type;
 		this.type = type;
+		getChangeSupport().firePropertyChange("type", te, type);
 	}
 
-	private void setConstructeur(Constructeur constructeur) {
+	public void setConstructeur(Constructeur constructeur) {
 		this.constructeur = constructeur;
 	}
 
@@ -123,6 +142,36 @@ public class Echafaudage {
 		}
 
 		return i;
+	}
+
+	/**
+	 * 
+	 * @return le type de sol sur lequel est l'echafaudage<br/>
+	 */
+	public synchronized TypeSol getTypeSol() {
+		return typeSol;
+	}
+
+	public synchronized void setTypeSol(TypeSol typeSol) {
+		TypeSol ts = this.typeSol;
+		this.typeSol = typeSol;
+		getChangeSupport().firePropertyChange("typeSol", ts, typeSol);
+	}
+
+	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+
+		getChangeSupport().addPropertyChangeListener(l);
+	}
+
+	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+
+		getChangeSupport().addPropertyChangeListener(l);
+
+	}
+
+	public void setListElements(List<ElementEchaf> elements) {
+		this.elements = elements;
+
 	}
 
 }

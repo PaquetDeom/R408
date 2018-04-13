@@ -52,7 +52,7 @@ public class ProjetTest {
 
 			fr.paquet.projet.Projet projet = new Projet(null, "   tItRe    ", client, chantier, resp);
 
-			assertTrue(projet.getChantiers().get(0).equals(chantier));
+			assertTrue(projet.getChantier().equals(chantier));
 
 		} catch (Exception e) {
 			e.printStackTrace();

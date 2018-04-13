@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Pied extends ElementEchaf {
 
 	/**
-	 * @author Nathanaël
+	 * @author Nathanael
 	 * 
 	 *         Class qui gere les pieds d'echafaudage<br/>
 	 */

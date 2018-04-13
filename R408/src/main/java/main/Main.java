@@ -10,6 +10,8 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
+import fr.paquet.ihm.alert.AlertListener;
+import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.main.MainFrame;
 
 public class Main {
@@ -55,8 +57,17 @@ public class Main {
 					// fermeture du logiciel
 					WindowListener l = new WindowAdapter() {
 						public void windowClosing(WindowEvent e) {
-							// arret de la base de donn�e
-							FermetureSansErreur();
+
+							new AlertWindow("Question", "Etes-vous sûre de vouloir quitter", new AlertListener() {
+
+								@Override
+								public void buttonClick(String button) {
+									if (button.equals("Oui"))
+										FermetureSansErreur();
+
+								}
+							});
+
 						}
 					};
 

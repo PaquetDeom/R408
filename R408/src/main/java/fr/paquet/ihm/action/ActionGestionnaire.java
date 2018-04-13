@@ -2,6 +2,8 @@ package fr.paquet.ihm.action;
 
 import java.awt.event.ActionEvent;
 
+import fr.paquet.ihm.explorer.Gestionnaire;
+
 public class ActionGestionnaire extends ActionBDA {
 
 	/**
@@ -16,7 +18,8 @@ public class ActionGestionnaire extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("Gestionnaire is click");
+		Gestionnaire gest = new Gestionnaire();
+		gest.setVisible(true);
 
 	}
 

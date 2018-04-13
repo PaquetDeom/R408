@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class ElementEchaf {
 
 	/**
-	 * @author Nathanaël
+	 * @author NathanaÃ«l
 	 * 
 	 *         Class qui gere les elements d'echafaudage<br/>
 	 */
@@ -30,19 +30,34 @@ public class ElementEchaf {
 	@Column(name = "ELELTY")
 	private TypeEchaf type = null;
 
+	@Column(name = "ELELSU")
+	private double surface = 0.0;
+
+	private int position = 0;
+
 	public ElementEchaf() {
 
 	}
 
-	public ElementEchaf(Constructeur constructeur, String name, String reference,TypeEchaf type, double poids) {
+	public ElementEchaf(Constructeur constructeur, String name, String reference, TypeEchaf type, double poids,
+			int position) throws Exception {
 		super();
 		setConstructeur(constructeur);
 		setName(name);
 		setReference(reference);
 		setTypeEchaf(type);
 		setPoids(poids);
+		setPosition(position);
 	}
-	
+
+	private void setPosition(int position) throws Exception {
+
+		if (position != 0 && position != 1 && position != 2) {
+			throw new Exception("La position doit Ãªtre 0, 1 ou 2");
+		}
+		this.position = position;
+	}
+
 	private void setTypeEchaf(TypeEchaf type) {
 		this.type = type;
 	}
@@ -61,6 +76,16 @@ public class ElementEchaf {
 
 	private void setReference(String reference) {
 		this.reference = reference.trim();
+	}
+
+	/**
+	 * 
+	 * @return 0;1;2 : 0 Position du sol jusqu a 1<br/>
+	 *         1 Position en dessous de 2<br/>
+	 *         2 Position haute de l echaf<br/>
+	 */
+	public int getPosition() {
+		return position;
 	}
 
 	/**
@@ -97,8 +122,8 @@ public class ElementEchaf {
 	}
 
 	/**
-	 *  
-	 * @return le type d'échaffaudage<br/>
+	 * 
+	 * @return le type d'ï¿½chaffaudage<br/>
 	 */
 	public TypeEchaf getTypeEchaf() {
 		return type;

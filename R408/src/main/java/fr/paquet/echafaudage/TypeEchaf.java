@@ -14,9 +14,9 @@ public enum TypeEchaf {
 	public String getType() {
 		switch (this) {
 		case TYPE1:
-			return ("Echafaudage a cadre");
+			return ("Echafaudage à cadre");
 		case TYPE2:
-			return ("Echafaudage multi-directionelle");
+			return ("Echafaudage multi-directionel");
 		}
 		return null;
 	}

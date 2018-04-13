@@ -3,11 +3,36 @@ package fr.paquet.ihm.echaf;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PanelResultats extends JPanel {
+	
+	public class JButtonCalcul extends JButton implements ActionListener {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public JButtonCalcul() {
+			super();
+			setText("Lancer le calcul");
+			setEnabled(true);
+			addActionListener(this);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
 
 	/**
 	 * 

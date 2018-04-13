@@ -2,6 +2,7 @@ package fr.paquet.ihm.echaf;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.JComponent;
 import fr.paquet.ihm.main.MainOnglet;
@@ -24,9 +25,9 @@ public class OngletProjet extends JComponent implements PropertyChangeListener {
 
 		super();
 
-		// creer le projet si la variable de methode projet est nulle
-		if (projet == null)
-			setProjet(new Projet(this, "", new Client(), new Chantier(), new Responsable()));
+		projet.setChangeSupport(new PropertyChangeSupport(projet));
+		projet.addPropertyChangeListener(this);
+		setProjet(projet);
 
 		// Ajout de l'onglet
 		MainOnglet.getUniqInstance().addTab(getTitre(getProjet()), getJPanelProjet());

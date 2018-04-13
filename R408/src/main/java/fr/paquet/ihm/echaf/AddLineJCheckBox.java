@@ -5,7 +5,6 @@ import java.awt.Insets;
 
 import javax.swing.*;
 
-import com.google.gwt.user.client.ui.CheckBox;
 
 public class AddLineJCheckBox {
 
