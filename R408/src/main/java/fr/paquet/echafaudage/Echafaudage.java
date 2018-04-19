@@ -3,6 +3,7 @@ package fr.paquet.echafaudage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import javax.persistence.*;
@@ -127,21 +128,74 @@ public class Echafaudage {
 		return poids;
 	}
 
-	// TODO
 	/**
-	 * getPlateforme
+	 * 
+	 * @return La charge d'exploitation de l'echafaudage<br/>
 	 */
+	public double getChargeExploitation() {
 
-	public int getNbDePieds() {
+		return getClasseEchaf().getChargeExploitation() * getSurfaceExploitation();
+	}
 
-		int i = 0;
+	/**
+	 * 
+	 * @return La surface d'exploitation de l'echafaudage<br/>
+	 */
+	public double getSurfaceExploitation() {
 
-		for (ElementEchaf elEchaf : getElements()) {
-			if (elEchaf.getName() == "pied droit" || elEchaf.getName() == "pied inclinable")
-				i = i++;
+		double surface = 0;
+
+		for (ElementEchaf el : getPlateformes()) {
+			if (el.getPosition() == 2) {
+				surface = surface + el.getSurface() / 2;
+			} else {
+				surface = surface + el.getSurface();
+			}
 		}
 
-		return i;
+		return surface;
+	}
+
+	/**
+	 * 
+	 * @return la liste de plateforme d'echafaudage<br/>
+	 */
+	private List<ElementEchaf> getPlateformes() {
+
+		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
+
+		for (ElementEchaf el : getElements()) {
+			for (ElementEchafaudage elEchaf : EnumSet.allOf(ElementEchafaudage.class)) {
+				if (el.equals(elEchaf)) {
+					if (elEchaf.isPlateforme())
+						elEchafs.add(el);
+				}
+			}
+		}
+
+		return elEchafs;
+
+	}
+
+	/**
+	 * 
+	 * @return Le nombre de pieds d'echafaudage<br/>
+	 */
+	public int getNbDePieds() {
+
+		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
+
+		for (ElementEchaf el : getElements()) {
+			for (ElementEchafaudage elEchaf : EnumSet.allOf(ElementEchafaudage.class)) {
+				if (el.equals(elEchaf)) {
+					if (elEchaf.isPied())
+						elEchafs.add(el);
+				}
+			}
+		}
+
+		return elEchafs.size();
+
 	}
 
 	/**
@@ -172,6 +226,16 @@ public class Echafaudage {
 	public void setListElements(List<ElementEchaf> elements) {
 		this.elements = elements;
 
+	}
+
+	private double getSurfaceCale() {
+
+		return ((getChargeExploitation() + getPoidsPropre()) / getNbDePieds()) / getTypeSol().getChargeAdmissible();
+	}
+
+	public double getDimensionCale() {
+
+		return Math.sqrt(getSurfaceCale());
 	}
 
 }

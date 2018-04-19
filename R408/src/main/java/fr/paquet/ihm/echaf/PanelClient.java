@@ -2,16 +2,17 @@ package fr.paquet.ihm.echaf;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
+
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
 
-import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.projet.Client;
@@ -35,6 +36,8 @@ public class PanelClient extends JPanel implements PropertyChangeListener {
 	public PanelClient(PanelEntete panelEntete) {
 
 		super();
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED), "Données client"));
+
 
 		setPanelEntete(panelEntete);
 
@@ -42,10 +45,10 @@ public class PanelClient extends JPanel implements PropertyChangeListener {
 		getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient().addPropertyChangeListener(this);
 
 		setLayout(new GridBagLayout());
-
+/*
 		add(new JLabel("Données client"), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
+*/
 		AddLineJLabelJTextField lcl1 = new AddLineJLabelJTextField(this, "NOMCLIENT", "Nom du Client", 20, 0, 1, 1, 1,
 				0, 0, GridBagConstraints.NONE);
 		AddLineJLabelJTextField lcl2 = new AddLineJLabelJTextField(this, "PRENOMCLIENT", "Prenom du Client", 20, 0, 2,

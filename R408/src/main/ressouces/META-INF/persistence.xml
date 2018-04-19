@@ -7,8 +7,6 @@
 		<class>fr.paquet.echafaudage.Constructeur</class>
 		<class>fr.paquet.echafaudage.Echafaudage</class>
 		<class>fr.paquet.echafaudage.ElementEchaf</class>
-		<class>fr.paquet.echafaudage.Pied</class>
-		<class>fr.paquet.echafaudage.Plateforme</class>
 		<class>fr.paquet.projet.Adresse</class>
 		<class>fr.paquet.projet.Chantier</class>
 		<class>fr.paquet.projet.Client</class>

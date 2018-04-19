@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import fr.paquet.projet.Responsable;
 
@@ -32,13 +33,17 @@ public class PanelProj extends JPanel implements PropertyChangeListener {
 
 		super();
 		setPanelEntete(panelEntete);
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
+				"Données du projet"));
 
 		setLayout(new GridBagLayout());
 
 		// Titre du JPanel
-		add(new JLabel("Données du projet"), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
+		/*
+		 * add(new JLabel("Données du projet"), new GridBagConstraints(0, 0, 1, 1, 1.0,
+		 * 1.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new
+		 * Insets(0, 0, 0, 0), 0, 0));
+		 */
 		// Affichage des JLabel et JtextField sur le Panel en fonction du Layout
 		AddLineJLabelJTextField l1 = new AddLineJLabelJTextField(this, "TITRE", "Titre du projet", 20, 0, 1, 1, 1, 0, 0,
 				GridBagConstraints.NONE);
@@ -51,6 +56,9 @@ public class PanelProj extends JPanel implements PropertyChangeListener {
 		putTextField(l1.getTitre(), l1.getTextField());
 		putTextField(l2.getTitre(), l2.getTextField());
 		putTextField(l3.getTitre(), l3.getTextField());
+
+		add(new JPanel(), new GridBagConstraints(0, 3, 2, 1, 1, 1, GridBagConstraints.LAST_LINE_START,
+				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
 	}
 

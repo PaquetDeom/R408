@@ -6,7 +6,6 @@ import javax.swing.*;
 
 import fr.paquet.ihm.echaf.*;
 
-
 @SuppressWarnings("serial")
 public class MainOnglet extends JTabbedPane {
 
@@ -14,8 +13,9 @@ public class MainOnglet extends JTabbedPane {
 	private List<OngletProjet> onglets = null;
 
 	/**
-	 * Constructeur de la class private car ne doit etre instanciee qu une
-	 * fois<br/>
+	 * Constructeur de la class private car ne doit etre instanciee qu une fois<br/>
+	 * 
+	 * 
 	 */
 	private MainOnglet() {
 		super(SwingConstants.TOP);
@@ -30,6 +30,7 @@ public class MainOnglet extends JTabbedPane {
 	/**
 	 * 
 	 * @return Le main onglet unique<br/>
+	 * 
 	 */
 	public static MainOnglet getUniqInstance() {
 		if (onglet == null) {

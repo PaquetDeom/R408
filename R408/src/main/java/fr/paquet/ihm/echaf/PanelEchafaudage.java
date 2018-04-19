@@ -13,6 +13,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import fr.paquet.echafaudage.ClasseEchaf;
 import fr.paquet.echafaudage.Echafaudage;
@@ -46,6 +47,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().addPropertyChangeListener(this);
 		}
 
+		/**
+		 * 
+		 * @return true si tire, ClasseEchaf, TypeEchaf, TypeSol sont non null <br/>
+		 */
 		private boolean isClickable() {
 
 			if (getPanelProjet().getOnglet().getProjet().getTitre() != null
@@ -87,12 +92,18 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getPoidsPropre());
 				System.out.println(
 						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getClasseEchaf());
-				System.out.println(
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getConstructeur());
+				System.out.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
+						.getConstructeur().getName());
 				System.out.println(
 						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeEchaf());
 				System.out
 						.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeSol());
+				System.out.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
+						.getSurfaceExploitation());
+				System.out.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
+						.getChargeExploitation());
+				System.out.println(
+						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getDimensionCale());
 
 			} catch (Exception e1) {
 
@@ -103,7 +114,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			isClickable();
+
 			buttonEnabled();
 
 		}
@@ -127,6 +138,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 	public PanelEchafaudage(JPanelProjet panelProjet) {
 		super();
 		setPanelProjet(panelProjet);
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED), "Données de l'echafaudage"));
 
 		// Ajout d'un layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -136,11 +148,11 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		Echafaudage echaf = getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage();
 		echaf.setChangeSupport(new PropertyChangeSupport(echaf));
 		echaf.addPropertyChangeListener(this);
-
+/*
 		// titre du panel
-		add(new JLabel("Données de l'echafaudage"), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
+		add(new JLabel(""), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
-
+*/
 		int gridx = 0;
 		int gridy = 1;
 		// classe d'echafaudage

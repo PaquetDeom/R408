@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 public class PanelResultats extends JPanel {
 	
 	public class JButtonCalcul extends JButton implements ActionListener {
@@ -43,6 +44,8 @@ public class PanelResultats extends JPanel {
 	public PanelResultats(JPanelProjet panelProjet) {
 		super();
 		setPanelProjet(panelProjet);
+		
+		//TODO deux zones (feuille de calcul && nomenclature)
 
 		setLayout(new GridBagLayout());
 

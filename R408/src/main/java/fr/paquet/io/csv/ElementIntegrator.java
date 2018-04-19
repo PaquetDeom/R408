@@ -67,7 +67,7 @@ public class ElementIntegrator {
 				poids = Double.parseDouble(String.valueOf(tab));
 			}
 
-			if (!args[5].equals("")) {
+			if (args.length>=6 && !args[5].equals("")) {
 				String surf[] = args[5].split(" ");
 				char[] tab1 = surf[0].toCharArray();
 				for (int i = 0; i < tab1.length; i++) {
@@ -77,7 +77,7 @@ public class ElementIntegrator {
 				surface = Double.parseDouble(String.valueOf(tab1));
 			}
 
-			addElement(new ElementEchaf(constructeur, name, reference, type, poids, position));
+			addElement(new ElementEchaf(constructeur, name, reference, type, poids, surface, position));
 		}
 
 	}

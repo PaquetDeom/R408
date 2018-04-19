@@ -1,11 +1,12 @@
 package fr.paquet.io.csv;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
-import au.com.bytecode.opencsv.CSVReader;
 import fr.paquet.echafaudage.ElementEchafaudage;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.PanelEchafaudage;
@@ -14,30 +15,30 @@ public class CsvElementEchafReader {
 
 	private PanelEchafaudage pEchaf = null;
 	private File file = null;
-	private static char SEPARATOR = ';';
-	private CSVReader csvReader = null;
+	private static String SEPARATOR = ";";
 	private List<String[]> data = new ArrayList<String[]>();
 
+	/**
+	 * Constructeur
+	 * 
+	 * @param pEchaf
+	 * @param file
+	 * @throws Exception
+	 */
 	public CsvElementEchafReader(PanelEchafaudage pEchaf, File file) throws Exception {
 
 		super();
 		setFile(file);
 		setPanelEchafaudage(pEchaf);
-		FileReader fr = new FileReader(getFile());
-		setCsvReader(new CSVReader(fr, SEPARATOR));
-		addData();
+		//FileReader fr = new FileReader(getFile());
+		//TODO Récupérer l'encodage du fichier csv (UTF8, 16...)
+		BufferedReader buff=new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-16"));
+		addData(buff);
+		buff.close();
 	}
 
 	private void setPanelEchafaudage(PanelEchafaudage pEchaf) {
 		this.pEchaf = pEchaf;
-	}
-
-	private void setCsvReader(CSVReader cReader) {
-		this.csvReader = cReader;
-	}
-
-	private CSVReader getCsvReader() {
-		return csvReader;
 	}
 
 	public List<String[]> getData() {
@@ -46,52 +47,37 @@ public class CsvElementEchafReader {
 		return data;
 	}
 
-	private void addData() {
-
-		String[] nextLine = null;
-
+	/**
+	 * rempli le tableau data a partir du fichier CSV.
+	 */
+	private void addData(BufferedReader buff) {
 		try {
-
 			int ligneVide = 0;
 			while (ligneVide < 20) {
 
-				nextLine = getCsvReader().readNext();
-				int size = 0;
+				// lit 1 ligne du fichier CSV et rempli un tableau de String correspondant aux
+				// zones de la ligne
+				String ligne=buff.readLine();
 
-				if (nextLine != null)
-					size = nextLine.length;
-
-				if (nextLine == null || size < 5)
-					ligneVide = ligneVide + 1;
+				// si la ligne n'existe pas on ajoute 1 au nombre de ligne vide
+				String[] nextLine=null;
+				if (ligne == null || ligne.trim().length()==0 ||  (nextLine=ligne.split(SEPARATOR)).length==0)
+					ligneVide++;
 
 				else {
-
+					// on réinitialise le nombre de ligne vide
 					ligneVide = 0;
 
-					for (int i = 0; i < nextLine.length; i++) {
-						String ligne = nextLine[i];
-						char[] tab = ligne.toCharArray();
-
-						for (int n = 0; n < tab.length; n++) {
-							if (n == 0)
-								ligne = new String();
-							if (n != 0 && n % 2 != 0) {
-								ligne = ligne + tab[n];
-							}
-						}
-
-						nextLine[i] = ligne;
-
-					}
-
 					String debut = nextLine[0].trim();
-					if (debut.equals("") || debut.equals(":"))
-						continue;
-
-					for (ElementEchafaudage elt : EnumSet.allOf(ElementEchafaudage.class)) {
-						if (nextLine[0].equals(elt.getName()))
-							getData().add(nextLine);
-					}
+					// si le 1ier element de la ligne ne commence par par <<vide>> ou par :
+					if (!debut.equals("") && !debut.equals(":"))
+						// pour chaque element de Echafaudage
+						for (ElementEchafaudage elt : EnumSet.allOf(ElementEchafaudage.class)) {
+							// si le 1ier élement de la ligne egale le nom de l'element de l'échafaudage
+							if (nextLine[0].equals(elt.getName()))
+								// jajoute le tableau de string à data
+								getData().add(nextLine);
+						}
 
 				}
 

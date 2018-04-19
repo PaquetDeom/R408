@@ -2,7 +2,6 @@ package fr.paquet.ihm.echaf;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -10,6 +9,7 @@ import java.awt.event.FocusListener;
 import java.util.Hashtable;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 public class PanelChantier extends JPanel {
 
@@ -30,12 +30,14 @@ public class PanelChantier extends JPanel {
 
 		super();
 		setPanelEntete(panelEntete);
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED), "Données du chantier"));
+
 
 		setLayout(new GridBagLayout());
-
+/*
 		add(new JLabel("Données du chantier"), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
+*/
 		GridBagConstraints c = new GridBagConstraints();
 		JRadioButton radioButton = new JRadioButton("L'adresse du chantier est différente de l'adresse client");
 

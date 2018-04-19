@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.JComponent;
+
 import fr.paquet.ihm.main.MainOnglet;
 
 import fr.paquet.projet.*;
@@ -46,6 +47,7 @@ public class OngletProjet extends JComponent implements PropertyChangeListener {
 	/**
 	 * 
 	 * @return le titre de du document<br/>
+	 * 
 	 */
 	private String getTitre(Projet projet) {
 
@@ -69,6 +71,7 @@ public class OngletProjet extends JComponent implements PropertyChangeListener {
 
 		if (evt.getPropertyName().equals("titre")) {
 			String title = (String) evt.getNewValue();
+
 			getTitre(getProjet());
 			MainOnglet.getUniqInstance().setTitleAt(MainOnglet.getUniqInstance().getSelectedIndex(), title);
 

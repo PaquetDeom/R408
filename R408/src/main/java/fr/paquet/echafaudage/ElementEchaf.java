@@ -4,8 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "ELEMENT")
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ElementEchaf {
 
 	/**
@@ -40,14 +38,23 @@ public class ElementEchaf {
 	}
 
 	public ElementEchaf(Constructeur constructeur, String name, String reference, TypeEchaf type, double poids,
-			int position) throws Exception {
+			double surface, int position) throws Exception {
 		super();
 		setConstructeur(constructeur);
 		setName(name);
 		setReference(reference);
 		setTypeEchaf(type);
 		setPoids(poids);
+		setSurface(surface);
 		setPosition(position);
+	}
+
+	private void setSurface(double surface) {
+		this.surface = surface;
+	}
+
+	public double getSurface() {
+		return surface;
 	}
 
 	private void setPosition(int position) throws Exception {

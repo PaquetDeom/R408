@@ -1,7 +1,9 @@
 package fr.paquet.ihm.main;
 
+import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -22,6 +24,7 @@ public class MainFrame extends JFrame implements WindowListener {
 		super("Logiciel de calcul R408");
 		addWindowListener(this);
 		setAlwaysOnTop(false);
+		setMinimumSize(new Dimension(900, 600));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setJMenuBar(getMainMenu());
 		add(getMainOnglet());
@@ -47,17 +50,17 @@ public class MainFrame extends JFrame implements WindowListener {
 			mainMenu = new MainMenu();
 		return mainMenu;
 	}
-	
+
 	/**
 	 * 
 	 * @return le menu principal<br/>
+	 * @throws IOException
 	 */
-	public static MainOnglet getMainOnglet() {
+	public static MainOnglet getMainOnglet(){
 		if (mainOnglet == null)
 			mainOnglet = MainOnglet.getUniqInstance();
 		return mainOnglet;
 	}
-	
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
