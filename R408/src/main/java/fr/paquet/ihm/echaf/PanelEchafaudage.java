@@ -87,24 +87,6 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 					getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
 							.setListElements(integrator.getElements());
 
-				System.out.println(getPanelProjet().getOnglet().getProjet().getTitre());
-				System.out.println(
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getPoidsPropre());
-				System.out.println(
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getClasseEchaf());
-				System.out.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
-						.getConstructeur().getName());
-				System.out.println(
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeEchaf());
-				System.out
-						.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeSol());
-				System.out.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
-						.getSurfaceExploitation());
-				System.out.println(getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
-						.getChargeExploitation());
-				System.out.println(
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getDimensionCale());
-
 			} catch (Exception e1) {
 
 				new AlertWindow("Erreur", "Fichier csv non lisible");
@@ -138,7 +120,8 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 	public PanelEchafaudage(JPanelProjet panelProjet) {
 		super();
 		setPanelProjet(panelProjet);
-		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED), "Données de l'echafaudage"));
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
+				"Données de l'echafaudage"));
 
 		// Ajout d'un layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -148,11 +131,11 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		Echafaudage echaf = getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage();
 		echaf.setChangeSupport(new PropertyChangeSupport(echaf));
 		echaf.addPropertyChangeListener(this);
-/*
-		// titre du panel
-		add(new JLabel(""), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
-*/
+		/*
+		 * // titre du panel add(new JLabel(""), new GridBagConstraints(0, 0, 1, 1, 1.0,
+		 * 1.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new
+		 * Insets(0, 0, 5, 0), 0, 0));
+		 */
 		int gridx = 0;
 		int gridy = 1;
 		// classe d'echafaudage
@@ -206,6 +189,35 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		// fichier *.csv
 		add(new JButtonChooser(), new GridBagConstraints(gridx + 1, gridy, 1, 1, 1, 1,
 				GridBagConstraints.FIRST_LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
+
+		// button "Lancer le calcul"
+		JButton calcul = new JButton("Lancer le calcul");
+
+		calcul.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					
+					//Code pas a la bonne place
+					getPanelProjet().getpResul().add(new PanelNoteDeCalcul(getPanelProjet().getpResul()),
+							new GridBagConstraints(0, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
+									GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+					getPanelProjet().getpResul().add(new PanelNomenclature(getPanelProjet().getpResul()),
+							new GridBagConstraints(1, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
+									GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+					
+				} catch (Exception e2) {
+					new AlertWindow("Erreur", "Calcul impossible");
+					e2.printStackTrace(System.out);
+				}
+
+			}
+		});
+
+		// affichage du button Jcalcul
+		add(calcul, new GridBagConstraints(gridx + 1, gridy + 1, 1, 1, 1, 1, GridBagConstraints.FIRST_LINE_END,
+				GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
 
 	}
 

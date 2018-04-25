@@ -5,53 +5,28 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 public class PanelResultats extends JPanel {
-	
-	public class JButtonCalcul extends JButton implements ActionListener {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public JButtonCalcul() {
-			super();
-			setText("Lancer le calcul");
-			setEnabled(true);
-			addActionListener(this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
 
 	/**
+	 * @author paquet<br/>
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
 	private JPanelProjet panelProjet = null;
 
 	public PanelResultats(JPanelProjet panelProjet) {
 		super();
 		setPanelProjet(panelProjet);
-		
-		//TODO deux zones (feuille de calcul && nomenclature)
 
 		setLayout(new GridBagLayout());
-
-		JLabel a = new JLabel("C'est pas fait");
-		add(a, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-				new Insets(5, 5, 5, 5), 0, 0));
+		
 	}
 
 	public JPanelProjet getPanelProjet() {

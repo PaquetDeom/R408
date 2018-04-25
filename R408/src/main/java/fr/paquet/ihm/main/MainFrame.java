@@ -19,7 +19,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	private static MainMenu mainMenu = null;
 	private static MainFrame mainFrame = null;
 	private static MainOnglet mainOnglet = null;
-
+	
 	private MainFrame() {
 		super("Logiciel de calcul R408");
 		addWindowListener(this);

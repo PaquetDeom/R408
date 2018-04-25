@@ -78,8 +78,11 @@ public class Main {
 				} catch (Exception e) {
 
 					// fermeture avec erreur
-					FermetureAvecErreur();
+					System.out.println("Fermeture avec erreur");
+					new AlertWindow("Erreur", "Fatal Erreur");
 					e.printStackTrace();
+					FermetureAvecErreur();
+					
 				}
 			}
 		});

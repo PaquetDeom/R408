@@ -6,7 +6,7 @@ public enum TypeSol {
 
 	/**
 	 * 
-	 * @return le nom de la classe d'utilisation de l'échafaudage<br/>
+	 * @return le nom de la classe d'utilisation de l'ï¿½chafaudage<br/>
 	 */
 	public String getType() {
 		switch (this) {
@@ -20,10 +20,10 @@ public enum TypeSol {
 	
 	public double getChargeAdmissible() {
 		switch (this) {
-		case SOL1 : return 0.5;
-		case SOL2 : return 0.75;
-		case SOL3 : return 1.00;
-		case SOL4 : return 1.50;
+		case SOL1 : return 50;
+		case SOL2 : return 75;
+		case SOL3 : return 100;
+		case SOL4 : return 150;
 		}
 		return 0;
 	}

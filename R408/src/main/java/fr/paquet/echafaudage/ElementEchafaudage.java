@@ -44,31 +44,6 @@ public enum ElementEchafaudage {
 		return null;
 	}
 
-	/**
-	 * 
-	 * @return true si c'est un pied qui transmet un effort au sol<br/>
-	 */
-	public boolean isPied() {
-		switch (this) {
-		case socleReglable50:
-			return true;
-		default:
-			return false;
-		}
-	}
-
-	/**
-	 * 
-	 * @return true si c'est une plateforme (avec une surface)<br/>
-	 */
-	public boolean isPlateforme() {
-		switch (this) {
-		case plateau3:
-			return true;
-		case plateau70:
-			return true;
-		default:
-			return false;
-		}
-	}
+	
+	
 }

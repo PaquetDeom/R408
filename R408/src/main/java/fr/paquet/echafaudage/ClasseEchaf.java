@@ -11,17 +11,17 @@ public enum ClasseEchaf {
 	public String getClasse() {
 		switch (this) {
 		case CLASSE1:
-			return ("Classe 1 : 0.75KN/m2");
+			return ("Classe 1 : 75 DAN/m2");
 		case CLASSE2:
-			return ("Classe 2 : 1.50KN/m2");
+			return ("Classe 2 : 150 DAN/m2");
 		case CLASSE3:
-			return ("Classe 3 : 2.00KN/m2");
+			return ("Classe 3 : 200 DAN/m2");
 		case CLASSE4:
-			return ("Classe 4 : 3.00KN/m2");
+			return ("Classe 4 : 300 DAN/m2");
 		case CLASSE5:
-			return ("Classe 5 : 4.50KN/m2");
+			return ("Classe 5 : 450 DAN/m2");
 		case CLASSE6:
-			return ("Classe 6 : 6.00KN/m2");
+			return ("Classe 6 : 600 DAN/m2");
 		}
 		return null;
 	}
@@ -29,17 +29,17 @@ public enum ClasseEchaf {
 	public double getChargeExploitation() {
 		switch (this) {
 		case CLASSE1:
-			return 0.75;
+			return 75;
 		case CLASSE2:
-			return 1.50;
+			return 150;
 		case CLASSE3:
-			return 2.00;
+			return 200;
 		case CLASSE4:
-			return 3.00;
+			return 300;
 		case CLASSE5:
-			return 4.50;
+			return 450;
 		case CLASSE6:
-			return 6.00;
+			return 600;
 		}
 		return 0;
 	}

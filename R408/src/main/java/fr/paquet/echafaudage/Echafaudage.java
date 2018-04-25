@@ -165,11 +165,8 @@ public class Echafaudage {
 		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
 
 		for (ElementEchaf el : getElements()) {
-			for (ElementEchafaudage elEchaf : EnumSet.allOf(ElementEchafaudage.class)) {
-				if (el.equals(elEchaf)) {
-					if (elEchaf.isPlateforme())
-						elEchafs.add(el);
-				}
+			if (el.getSurface() != 0) {
+				elEchafs.add(el);
 			}
 		}
 
@@ -186,12 +183,10 @@ public class Echafaudage {
 		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
 
 		for (ElementEchaf el : getElements()) {
-			for (ElementEchafaudage elEchaf : EnumSet.allOf(ElementEchafaudage.class)) {
-				if (el.equals(elEchaf)) {
-					if (elEchaf.isPied())
-						elEchafs.add(el);
-				}
-			}
+			String name = el.getName();
+			String[] tab = name.split(" ");
+			if (tab[0].equals("Socle"))
+				elEchafs.add(el);
 		}
 
 		return elEchafs.size();
@@ -230,12 +225,17 @@ public class Echafaudage {
 
 	private double getSurfaceCale() {
 
-		return ((getChargeExploitation() + getPoidsPropre()) / getNbDePieds()) / getTypeSol().getChargeAdmissible();
+		return (getChargeAReprendre() / getNbDePieds()) / getTypeSol().getChargeAdmissible();
 	}
 
 	public double getDimensionCale() {
 
 		return Math.sqrt(getSurfaceCale());
+	}
+
+	public double getChargeAReprendre() {
+
+		return getPoidsPropre() + getChargeExploitation();
 	}
 
 }
