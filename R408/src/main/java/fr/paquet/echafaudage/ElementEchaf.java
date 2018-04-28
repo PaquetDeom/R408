@@ -31,6 +31,9 @@ public class ElementEchaf {
 	@Column(name = "ELELSU")
 	private double surface = 0.0;
 
+	@Enumerated(EnumType.STRING)
+	private TypeElement tElement = null;
+
 	private int position = 0;
 
 	public ElementEchaf() {
@@ -38,7 +41,7 @@ public class ElementEchaf {
 	}
 
 	public ElementEchaf(Constructeur constructeur, String name, String reference, TypeEchaf type, double poids,
-			double surface, int position) throws Exception {
+			double surface, int position, TypeElement typeElemnt) throws Exception {
 		super();
 		setConstructeur(constructeur);
 		setName(name);
@@ -47,6 +50,15 @@ public class ElementEchaf {
 		setPoids(poids);
 		setSurface(surface);
 		setPosition(position);
+		setTypeElement(typeElemnt);
+	}
+
+	private void setTypeElement(TypeElement typeElement) {
+		this.tElement = typeElement;
+	}
+
+	public TypeElement getTypeElement() {
+		return tElement;
 	}
 
 	private void setSurface(double surface) {
@@ -135,5 +147,4 @@ public class ElementEchaf {
 	public TypeEchaf getTypeEchaf() {
 		return type;
 	}
-
 }

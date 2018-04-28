@@ -31,48 +31,52 @@ public class PanelNoteDeCalcul extends JPanel {
 		// ajoute un layout
 		setLayout(new GridBagLayout());
 
-		// Creation des JLabel
-		JLabel lpp = new JLabel("Poids propre : ");
-		JLabel lpp1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getPoidsPropre()));
+		// Creation et affichage des JLabel
 
-		JLabel lce = new JLabel("Classe echafaudage : ");
-		JLabel lce1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getClasseEchaf()));
+		addLineLabel(new JLabel("Constructeur : "), new JLabel(String.valueOf(getPanelResultats().getPanelProjet()
+				.getOnglet().getProjet().getChantier().getEchafaudage().getConstructeur().getName())), 0);
 
-		JLabel lc = new JLabel("Constructeur : ");
-		JLabel lc1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getConstructeur().getName()));
+		addLineLabel(new JLabel("Type Echafaudage : "), new JLabel(getPanelResultats().getPanelProjet().getOnglet()
+				.getProjet().getChantier().getEchafaudage().getTypeEchaf().getType()), 1);
 
-		JLabel lt = new JLabel("Type Echafaudage : ");
-		JLabel lt1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getTypeEchaf()));
+		addLineLabel(new JLabel("Type de sol : "), new JLabel(getPanelResultats().getPanelProjet().getOnglet()
+				.getProjet().getChantier().getEchafaudage().getTypeSol().getType()), 2);
 
-		JLabel lts = new JLabel("Type de sol : ");
-		JLabel lts1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getTypeSol()));
+		
 
-		JLabel lche = new JLabel("Charge d'exploitation : ");
-		JLabel lche1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getChargeExploitation()));
+		addLineLabel(new JLabel("Poids propre : "), new JLabel(String.valueOf(getPanelResultats().getPanelProjet()
+				.getOnglet().getProjet().getChantier().getEchafaudage().getPoidsPropre()) + " DAN"), 3);
+		
+		addLineLabel(new JLabel("Classe echafaudage : "), new JLabel(getPanelResultats().getPanelProjet().getOnglet()
+				.getProjet().getChantier().getEchafaudage().getClasseEchaf().getClasse()), 4);
 
-		JLabel lnp = new JLabel("Nombre de pieds : ");
-		JLabel lnp1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getNbDePieds()));
+		addLineLabel(new JLabel("Charge d'exploitation totale : "),
+				new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet().getChantier()
+						.getEchafaudage().getChargeExploitation()) + " DAN"),
+				5);
 
-		JLabel ldc = new JLabel("Dimension mini de la cale : ");
-		JLabel ldc1 = new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet()
-				.getChantier().getEchafaudage().getDimensionCale()));
+		addLineLabel(new JLabel("Nombre de pieds : "), new JLabel(String.valueOf(getPanelResultats().getPanelProjet()
+				.getOnglet().getProjet().getChantier().getEchafaudage().getNbDePieds()) + " U"), 6);
 
-		// creation d'un numeros de ligne
-		int l = 0;
+		addLineLabel(new JLabel("Dimension mini de la cale : "), new JLabel(String.valueOf(getPanelResultats()
+				.getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getDimensionCale()) + " cm"),
+				7);
 
-		// affichagegr
-		add(lpp, new GridBagConstraints(l, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
-				new Insets(0, 0, 0, 0), 0, 0));
-		add(lpp1, new GridBagConstraints(l, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
-				new Insets(0, 0, 0, 0), 0, 0));
-		l = l++;
+		// Panel de remplissage à la fin
+		/*
+		 * add(new JPanel(), new GridBagConstraints(0, 8, 1, 2, 0, 1,
+		 * GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0),
+		 * 0, 0));
+		 */
+	}
+
+	private void addLineLabel(JLabel label, JLabel label2, int nLine) {
+
+		add(label, new GridBagConstraints(0, nLine, 1, 1, 0, 0, GridBagConstraints.BASELINE,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		add(label2, new GridBagConstraints(1, nLine, 1, 1, 1, 0, GridBagConstraints.BASELINE,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+
 	}
 
 	public PanelResultats getPanelResultats() {

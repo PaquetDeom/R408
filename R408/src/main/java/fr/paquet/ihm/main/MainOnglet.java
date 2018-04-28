@@ -30,20 +30,6 @@ public class MainOnglet extends JTabbedPane {
 
 	}
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		BufferedImage img = null;
-
-		try {
-			img = ImageIO.read(new File("/home/paquet/git/R408/R408/src/images/echafaudage.jpeg"));
-		} catch (IOException e) {
-			new AlertWindow("Erreur", e.getMessage());
-			e.printStackTrace(System.out);
-		}
-
-		g.drawImage(img.getScaledInstance(getWidth(), -1, Image.SCALE_SMOOTH), 0, 0, null);
-	}
-
 	private void setOnglets(ArrayList<OngletProjet> onglets) {
 		this.onglets = onglets;
 	}

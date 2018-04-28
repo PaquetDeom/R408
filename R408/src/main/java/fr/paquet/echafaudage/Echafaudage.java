@@ -4,6 +4,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.persistence.*;
@@ -37,11 +39,34 @@ public class Echafaudage {
 
 	@Enumerated(EnumType.STRING)
 	private TypeSol typeSol = null;
+	
+	@Transient
+	Hashtable<TypeElement, Integer> elementEchafs=null;
 
+
+	private void initHashtable() {
+		elementEchafs = new Hashtable<TypeElement, Integer>();
+		for(ElementEchaf el:getElements()) {
+			if(elementEchafs.get(el.getTypeElement())==null)
+				elementEchafs.put(el.getTypeElement(), 1);
+			else
+				elementEchafs.put(el.getTypeElement(), elementEchafs.get(el.getTypeElement())+1);
+		}
+	}
+	
+	private Hashtable<TypeElement, Integer> getElementEchafs() {
+		if(elementEchafs==null) {
+			initHashtable();
+		}
+		return elementEchafs;
+	}
+
+	@Transient
 	PropertyChangeSupport changeSupport = null;
 
 	public Echafaudage() {
 		super();
+		changeSupport = new PropertyChangeSupport(this);
 	}
 
 	public Echafaudage(Constructeur constructeur, TypeEchaf type, ClasseEchaf classe, List<ElementEchaf> elements) {
@@ -50,7 +75,7 @@ public class Echafaudage {
 	}
 
 	public Echafaudage(Constructeur constructeur, TypeEchaf type, ClasseEchaf classe) {
-		super();
+		this();
 		setConstructeur(constructeur);
 		setTypeEchaf(type);
 		setClasseEchaf(classe);
@@ -94,6 +119,14 @@ public class Echafaudage {
 	 */
 	public List<ElementEchaf> getElements() {
 		return elements;
+	}
+	
+	public Enumeration<TypeElement> getDistinctElements() {
+		return getElementEchafs().keys();
+	}
+	
+	public int getElementCount(TypeElement element) {
+		return getElementEchafs().get(element);
 	}
 
 	public synchronized void setClasseEchaf(ClasseEchaf classe) {
@@ -183,9 +216,7 @@ public class Echafaudage {
 		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
 
 		for (ElementEchaf el : getElements()) {
-			String name = el.getName();
-			String[] tab = name.split(" ");
-			if (tab[0].equals("Socle"))
+			if (el.getTypeElement().isPied())
 				elEchafs.add(el);
 		}
 

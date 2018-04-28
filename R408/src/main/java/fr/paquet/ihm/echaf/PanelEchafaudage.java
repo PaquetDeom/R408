@@ -1,13 +1,16 @@
 package fr.paquet.ihm.echaf;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -24,7 +27,93 @@ import fr.paquet.io.csv.ElementIntegrator;
 import fr.paquet.io.csv.CsvElementEchafReader;
 
 public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
+	
+	private JLabel labelFichier =null;
 
+
+	public class JButtonCalcul extends JButton implements ActionListener, PropertyChangeListener {
+
+		/**
+		 * Button particulier il est clickable lorsque le projet à un titre, que les
+		 * paramètres de l'echafaudage sont entrés<br/>
+		 */
+
+		private boolean clickable = false;
+
+		private static final long serialVersionUID = 1L;
+
+		public JButtonCalcul() {
+			super();
+			setText("Lancer le calcul");
+			buttonEnabled();
+
+			// listeners
+			addActionListener(this);
+			getPanelProjet().getOnglet().getProjet().addPropertyChangeListener(this);
+			getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().addPropertyChangeListener(this);
+		}
+
+		/**
+		 * 
+		 * @return true si tire, ClasseEchaf, TypeEchaf, TypeSol sont non null <br/>
+		 */
+		private boolean isClickable() {
+
+			if (getPanelProjet().getOnglet().getProjet().getTitre() != null
+					&& !getPanelProjet().getOnglet().getProjet().getTitre().equals("")
+					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getClasseEchaf() != null
+					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeEchaf() != null
+					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeSol() != null) {
+
+				clickable = true;
+
+			} else {
+				clickable = false;
+			}
+
+			return clickable;
+		}
+
+		private void buttonEnabled() {
+			this.setEnabled(isClickable());
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			try {
+				getPanelProjet().getpResul().removeAll();
+
+				getPanelProjet().getpResul().add(new PanelNoteDeCalcul(getPanelProjet().getpResul()),
+						new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.FIRST_LINE_START,
+								GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+
+				getPanelProjet().getpResul().add(new PanelNomenclature(getPanelProjet().getpResul()),
+						new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BASELINE,
+								GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
+
+				getPanelProjet().getpResul().add(new PanelImprimer(getPanelProjet().getpResul()),
+						new GridBagConstraints(1, 0, 1, 2, 0, 0, GridBagConstraints.BASELINE,
+								GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+
+				getPanelProjet().getpResul().revalidate();
+
+			} catch (Exception e2) {
+				new AlertWindow("Erreur", "Calcul impossible");
+				e2.printStackTrace(System.out);
+			}
+
+		}
+
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+
+			buttonEnabled();
+
+		}
+
+	}
+	
 	public class JButtonChooser extends JButton implements ActionListener, PropertyChangeListener {
 
 		/**
@@ -87,9 +176,15 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 					getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
 							.setListElements(integrator.getElements());
 
+				new AlertWindow("Attention", "Le fichier " + fc.getFile().getName() + " est correctement chargé");
+
+				addFichier(fc.getFile());
+
+				getPanelProjet().getpResul().revalidate();
+
 			} catch (Exception e1) {
 
-				new AlertWindow("Erreur", "Fichier csv non lisible");
+				new AlertWindow("Erreur", "Erreur lors du chargement du fichier");
 				e1.printStackTrace(System.out);
 			}
 		}
@@ -127,15 +222,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 
-		// listener
-		Echafaudage echaf = getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage();
-		echaf.setChangeSupport(new PropertyChangeSupport(echaf));
-		echaf.addPropertyChangeListener(this);
-		/*
-		 * // titre du panel add(new JLabel(""), new GridBagConstraints(0, 0, 1, 1, 1.0,
-		 * 1.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new
-		 * Insets(0, 0, 5, 0), 0, 0));
-		 */
+
+		// contient la ligne des boutons
+		int ligneButton=0;
+
 		int gridx = 0;
 		int gridy = 1;
 		// classe d'echafaudage
@@ -152,8 +242,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			new AddLineJCheckBox(this, box, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
+		//TODO: Boulot pour Nath
+		ligneButton=ligneButton<gridy?gridy:ligneButton;
 
-		gridx = gridx + 1;
+		gridx++;
 		gridy = 1;
 		// type d'echafaudage
 		add(new JLabel("Type d'échafaudage"), new GridBagConstraints(gridx, gridy, 1, 1, 1.0, 1.0,
@@ -169,8 +261,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			new AddLineJCheckBox(this, box2, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
+		//TODO: Boulot pour Nath
+		ligneButton=ligneButton<gridy?gridy:ligneButton;
 
-		gridx = gridx + 2;
+		gridx++;
 		gridy = 1;
 		// type de sol
 		add(new JLabel("Type de sol"), new GridBagConstraints(gridx, gridy, 1, 1, 1.0, 1.0,
@@ -185,40 +279,26 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			new AddLineJCheckBox(this, box1, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
+		//TODO: Boulot pour Nath
+		ligneButton=ligneButton<gridy?gridy:ligneButton;
 
+		JPanel buttonPanel=new JPanel();
+		add(buttonPanel, new GridBagConstraints(0, ligneButton, 3, 1, 1, 0,
+				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0));
+		
+		buttonPanel.setLayout(new BorderLayout());
+		labelFichier = new JLabel();
+		buttonPanel.add(labelFichier, BorderLayout.CENTER);
+		
+		JPanel panelButton2 = new JPanel();
+		panelButton2.setLayout(new GridLayout());
 		// fichier *.csv
-		add(new JButtonChooser(), new GridBagConstraints(gridx + 1, gridy, 1, 1, 1, 1,
-				GridBagConstraints.FIRST_LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
-
-		// button "Lancer le calcul"
-		JButton calcul = new JButton("Lancer le calcul");
-
-		calcul.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					//Code pas a la bonne place
-					getPanelProjet().getpResul().add(new PanelNoteDeCalcul(getPanelProjet().getpResul()),
-							new GridBagConstraints(0, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
-					getPanelProjet().getpResul().add(new PanelNomenclature(getPanelProjet().getpResul()),
-							new GridBagConstraints(1, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-					
-				} catch (Exception e2) {
-					new AlertWindow("Erreur", "Calcul impossible");
-					e2.printStackTrace(System.out);
-				}
-
-			}
-		});
-
+		panelButton2.add(new JButtonChooser());
 		// affichage du button Jcalcul
-		add(calcul, new GridBagConstraints(gridx + 1, gridy + 1, 1, 1, 1, 1, GridBagConstraints.FIRST_LINE_END,
-				GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
+		panelButton2.add(new JButtonCalcul());
 
+		buttonPanel.add(panelButton2, BorderLayout.EAST);
+	
 	}
 
 	/**
@@ -316,6 +396,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		});
 
 		getTypesEchaf().add(box);
+	}
+
+	public void addFichier(File file) {
+		labelFichier.setText("le fichier "+file.getName()+" est correctement chargé");
 	}
 
 	/**

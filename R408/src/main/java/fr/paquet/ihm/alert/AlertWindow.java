@@ -40,17 +40,17 @@ public class AlertWindow extends JOptionPane {
 		ImageIcon img = new ImageIcon();
 
 		if (title.equals("Erreur")) {
-			img = new ImageIcon("/home/paquet/git/R408/R408/src/images/iconErreur.jpeg");
+			img = new ImageIcon("target/image/iconErreur.jpeg");
 
 			showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE, img);
 		}
 		if (title.equals("Information")) {
-			img = new ImageIcon("/home/paquet/git/R408/R408/src/images/iconInfo.jpeg");
+			img = new ImageIcon("target/image/iconInfo.jpeg");
 
 			showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, img);
 		}
 		if (title.equals("Attention")) {
-			img = new ImageIcon("/home/paquet/git/R408/R408/src/images/iconWarning.jpeg");
+			img = new ImageIcon("target/image/iconWarning.jpeg");
 
 			showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE, img);
 		}

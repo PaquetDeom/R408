@@ -35,7 +35,7 @@ public class JPanelProjet extends JPanel {
 		add(getpEchaf(), new GridBagConstraints(0, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
 		add(getpResul(), new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
 
 	}
 

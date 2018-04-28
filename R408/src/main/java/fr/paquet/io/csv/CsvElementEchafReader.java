@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-import fr.paquet.echafaudage.ElementEchafaudage;
+import fr.paquet.echafaudage.*;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.PanelEchafaudage;
 
@@ -30,9 +30,9 @@ public class CsvElementEchafReader {
 		super();
 		setFile(file);
 		setPanelEchafaudage(pEchaf);
-		//FileReader fr = new FileReader(getFile());
-		//TODO Récupérer l'encodage du fichier csv (UTF8, 16...)
-		BufferedReader buff=new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-16"));
+		// FileReader fr = new FileReader(getFile());
+		// TODO Récupérer l'encodage du fichier csv (UTF8, 16...)
+		BufferedReader buff = new BufferedReader(new InputStreamReader(new FileInputStream(getFile()), "UTF-16"));
 		addData(buff);
 		buff.close();
 	}
@@ -57,11 +57,11 @@ public class CsvElementEchafReader {
 
 				// lit 1 ligne du fichier CSV et rempli un tableau de String correspondant aux
 				// zones de la ligne
-				String ligne=buff.readLine();
+				String ligne = buff.readLine();
 
 				// si la ligne n'existe pas on ajoute 1 au nombre de ligne vide
-				String[] nextLine=null;
-				if (ligne == null || ligne.trim().length()==0 ||  (nextLine=ligne.split(SEPARATOR)).length==0)
+				String[] nextLine = null;
+				if (ligne == null || ligne.trim().length() == 0 || (nextLine = ligne.split(SEPARATOR)).length == 0)
 					ligneVide++;
 
 				else {
@@ -72,7 +72,7 @@ public class CsvElementEchafReader {
 					// si le 1ier element de la ligne ne commence par par <<vide>> ou par :
 					if (!debut.equals("") && !debut.equals(":"))
 						// pour chaque element de Echafaudage
-						for (ElementEchafaudage elt : EnumSet.allOf(ElementEchafaudage.class)) {
+						for (TypeElement elt : EnumSet.allOf(TypeElement.class)) {
 							// si le 1ier élement de la ligne egale le nom de l'element de l'échafaudage
 							if (nextLine[0].equals(elt.getName()))
 								// jajoute le tableau de string à data
@@ -108,7 +108,6 @@ public class CsvElementEchafReader {
 		// On récupere le chemin du fichier selectionné
 		String fichierSelect = file.toString();
 
-		System.out.println("Nom du fichier : " + fichierSelect);
 		// si l'utilisateur a entré un point
 		if (fichierSelect.lastIndexOf(".") > 0) {
 			// On récupère l'extension du fichier

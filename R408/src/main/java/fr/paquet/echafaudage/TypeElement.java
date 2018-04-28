@@ -1,6 +1,6 @@
 package fr.paquet.echafaudage;
 
-public enum ElementEchafaudage {
+public enum TypeElement {
 
 	amarrageBaie, embasePoteaux, equereGardeCoprs70, equereGardeCoprsMulti3, gardeCorps70, jambeForce, lisse70, plancherTrappe3, plateau3, plateau70, plinthe70, plinthe3, poteau1, poteau2, poteau3, socleReglable50, verinDeButtee;
 
@@ -44,6 +44,24 @@ public enum ElementEchafaudage {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @return true si l'element est un pied<br/>
+	 */
+	public boolean isPied() {
+
+		switch (this) {
+		case socleReglable50:
+			return true;
+		default:
+			break;
+		}
+		return false;
+
+	}
 	
-	
+	public String toString() {
+		return getName();
+	}
+
 }
