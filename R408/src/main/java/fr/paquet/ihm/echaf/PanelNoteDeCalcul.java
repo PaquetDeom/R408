@@ -7,6 +7,9 @@ import java.awt.Insets;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+import fr.paquet.echafaudage.Arrondi;
+import fr.paquet.ihm.alert.AlertWindow;
+
 public class PanelNoteDeCalcul extends JPanel {
 
 	/**
@@ -42,32 +45,33 @@ public class PanelNoteDeCalcul extends JPanel {
 		addLineLabel(new JLabel("Type de sol : "), new JLabel(getPanelResultats().getPanelProjet().getOnglet()
 				.getProjet().getChantier().getEchafaudage().getTypeSol().getType()), 2);
 
-		
-
 		addLineLabel(new JLabel("Poids propre : "), new JLabel(String.valueOf(getPanelResultats().getPanelProjet()
 				.getOnglet().getProjet().getChantier().getEchafaudage().getPoidsPropre()) + " DAN"), 3);
-		
+
 		addLineLabel(new JLabel("Classe echafaudage : "), new JLabel(getPanelResultats().getPanelProjet().getOnglet()
 				.getProjet().getChantier().getEchafaudage().getClasseEchaf().getClasse()), 4);
 
+		Arrondi chaExp = new Arrondi(getPanelResultats().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getEchafaudage().getChargeExploitation(), 2);
 		addLineLabel(new JLabel("Charge d'exploitation totale : "),
-				new JLabel(String.valueOf(getPanelResultats().getPanelProjet().getOnglet().getProjet().getChantier()
-						.getEchafaudage().getChargeExploitation()) + " DAN"),
-				5);
+				new JLabel(String.valueOf(chaExp.getDoubleArrondi()) + " DAN"), 5);
 
-		addLineLabel(new JLabel("Nombre de pieds : "), new JLabel(String.valueOf(getPanelResultats().getPanelProjet()
-				.getOnglet().getProjet().getChantier().getEchafaudage().getNbDePieds()) + " U"), 6);
+		try {
+			addLineLabel(new JLabel("Nombre de pieds : "), new JLabel(String.valueOf(getPanelResultats()
+					.getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getNbDePieds()) + " U"),
+					6);
+			Arrondi dim = new Arrondi(getPanelResultats().getPanelProjet().getOnglet().getProjet().getChantier()
+					.getEchafaudage().getDimensionCale(), 2);
 
-		addLineLabel(new JLabel("Dimension mini de la cale : "), new JLabel(String.valueOf(getPanelResultats()
-				.getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getDimensionCale()) + " cm"),
-				7);
+			addLineLabel(new JLabel("Dimension mini de la cale : "), new JLabel(
+					String.valueOf(dim.getDoubleArrondi()) + " x " + String.valueOf(dim.getDoubleArrondi() + " cm2")),
+					7);
 
-		// Panel de remplissage à la fin
-		/*
-		 * add(new JPanel(), new GridBagConstraints(0, 8, 1, 2, 0, 1,
-		 * GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0),
-		 * 0, 0));
-		 */
+		} catch (Exception e) {
+			new AlertWindow("Erreur", e.getMessage());
+			e.printStackTrace(System.out);
+		}
+
 	}
 
 	private void addLineLabel(JLabel label, JLabel label2, int nLine) {

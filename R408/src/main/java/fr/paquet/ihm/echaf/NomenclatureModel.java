@@ -11,9 +11,9 @@ import fr.paquet.echafaudage.ElementEchaf;
 import fr.paquet.echafaudage.TypeElement;
 
 public class NomenclatureModel implements TableModel {
-	
-	private Echafaudage echaf=null;
-	
+
+	private Echafaudage echaf = null;
+
 	private Echafaudage getEchaf() {
 		return echaf;
 	}
@@ -37,11 +37,11 @@ public class NomenclatureModel implements TableModel {
 		return Collections.list(getEchaf().getDistinctElements()).size();
 	}
 
-
 	@Override
 	public Class<?> getColumnClass(int column) {
-		if(column==0)
+		if (column == 0)
 			return ElementEchaf.class;
+		
 		else
 			return Integer.class;
 	}
@@ -50,20 +50,22 @@ public class NomenclatureModel implements TableModel {
 	public void addTableModelListener(TableModelListener arg0) {
 	}
 
-
 	@Override
 	public String getColumnName(int column) {
-		if(column==0)
+		if (column == 0)
 			return "type d'element";
+
 		else
 			return "nombre";
 	}
 
 	@Override
 	public Object getValueAt(int line, int column) {
-		TypeElement element=Collections.list(getEchaf().getDistinctElements()).get(line);
-		if(column==0)
+
+		TypeElement element = Collections.list(getEchaf().getDistinctElements()).get(line);
+		if (column == 0)
 			return element;
+
 		else
 			return getEchaf().getElementCount(element);
 	}

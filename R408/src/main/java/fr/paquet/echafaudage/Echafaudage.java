@@ -2,6 +2,7 @@ package fr.paquet.echafaudage;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Enumeration;
@@ -39,23 +40,22 @@ public class Echafaudage {
 
 	@Enumerated(EnumType.STRING)
 	private TypeSol typeSol = null;
-	
-	@Transient
-	Hashtable<TypeElement, Integer> elementEchafs=null;
 
+	@Transient
+	Hashtable<TypeElement, Integer> elementEchafs = null;
 
 	private void initHashtable() {
 		elementEchafs = new Hashtable<TypeElement, Integer>();
-		for(ElementEchaf el:getElements()) {
-			if(elementEchafs.get(el.getTypeElement())==null)
+		for (ElementEchaf el : getElements()) {
+			if (elementEchafs.get(el.getTypeElement()) == null)
 				elementEchafs.put(el.getTypeElement(), 1);
 			else
-				elementEchafs.put(el.getTypeElement(), elementEchafs.get(el.getTypeElement())+1);
+				elementEchafs.put(el.getTypeElement(), elementEchafs.get(el.getTypeElement()) + 1);
 		}
 	}
-	
+
 	private Hashtable<TypeElement, Integer> getElementEchafs() {
-		if(elementEchafs==null) {
+		if (elementEchafs == null) {
 			initHashtable();
 		}
 		return elementEchafs;
@@ -120,11 +120,11 @@ public class Echafaudage {
 	public List<ElementEchaf> getElements() {
 		return elements;
 	}
-	
+
 	public Enumeration<TypeElement> getDistinctElements() {
 		return getElementEchafs().keys();
 	}
-	
+
 	public int getElementCount(TypeElement element) {
 		return getElementEchafs().get(element);
 	}
@@ -157,6 +157,10 @@ public class Echafaudage {
 		for (ElementEchaf elEchaf : getElements()) {
 			poids = poids + elEchaf.getPoids();
 		}
+
+		BigDecimal bd = new BigDecimal(poids);
+		bd = bd.setScale(2, BigDecimal.ROUND_DOWN);
+		poids = bd.doubleValue();
 
 		return poids;
 	}
@@ -210,8 +214,9 @@ public class Echafaudage {
 	/**
 	 * 
 	 * @return Le nombre de pieds d'echafaudage<br/>
+	 * @throws Exception l'echafaudage n'a pas de pieds<br/>
 	 */
-	public int getNbDePieds() {
+	public int getNbDePieds() throws Exception {
 
 		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
 
@@ -219,6 +224,9 @@ public class Echafaudage {
 			if (el.getTypeElement().isPied())
 				elEchafs.add(el);
 		}
+		
+		if(elEchafs.size() == 0)
+			throw new Exception("L'echafaudage doit contenir des pieds");
 
 		return elEchafs.size();
 
@@ -254,14 +262,20 @@ public class Echafaudage {
 
 	}
 
-	private double getSurfaceCale() {
+	private double getSurfaceCale() throws Exception {
 
 		return (getChargeAReprendre() / getNbDePieds()) / getTypeSol().getChargeAdmissible();
 	}
 
-	public double getDimensionCale() {
+	public double getDimensionCale() throws Exception {
 
-		return Math.sqrt(getSurfaceCale());
+		double dim = 0.0;
+		dim = Math.sqrt(getSurfaceCale());
+		
+		if (dim < 20)
+			return 20;
+
+		return dim;
 	}
 
 	public double getChargeAReprendre() {

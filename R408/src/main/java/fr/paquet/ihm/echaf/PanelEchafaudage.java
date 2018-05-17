@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -19,7 +19,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 import fr.paquet.echafaudage.ClasseEchaf;
-import fr.paquet.echafaudage.Echafaudage;
+
 import fr.paquet.echafaudage.TypeEchaf;
 import fr.paquet.echafaudage.TypeSol;
 import fr.paquet.ihm.alert.AlertWindow;
@@ -27,9 +27,8 @@ import fr.paquet.io.csv.ElementIntegrator;
 import fr.paquet.io.csv.CsvElementEchafReader;
 
 public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
-	
-	private JLabel labelFichier =null;
 
+	private JLabel labelFichier = null;
 
 	public class JButtonCalcul extends JButton implements ActionListener, PropertyChangeListener {
 
@@ -89,8 +88,8 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 								GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
 				getPanelProjet().getpResul().add(new PanelNomenclature(getPanelProjet().getpResul()),
-						new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BASELINE,
-								GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
+						new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BASELINE, GridBagConstraints.BOTH,
+								new Insets(5, 5, 5, 5), 5, 5));
 
 				getPanelProjet().getpResul().add(new PanelImprimer(getPanelProjet().getpResul()),
 						new GridBagConstraints(1, 0, 1, 2, 0, 0, GridBagConstraints.BASELINE,
@@ -98,6 +97,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 				getPanelProjet().getpResul().revalidate();
 
+				
 			} catch (Exception e2) {
 				new AlertWindow("Erreur", "Calcul impossible");
 				e2.printStackTrace(System.out);
@@ -113,7 +113,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		}
 
 	}
-	
+
 	public class JButtonChooser extends JButton implements ActionListener, PropertyChangeListener {
 
 		/**
@@ -222,9 +222,8 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 
-
 		// contient la ligne des boutons
-		int ligneButton=0;
+		int ligneButton = 0;
 
 		int gridx = 0;
 		int gridy = 1;
@@ -242,8 +241,8 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			new AddLineJCheckBox(this, box, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
-		//TODO: Boulot pour Nath
-		ligneButton=ligneButton<gridy?gridy:ligneButton;
+		// TODO: Boulot pour Nath
+		ligneButton = ligneButton < gridy ? gridy : ligneButton;
 
 		gridx++;
 		gridy = 1;
@@ -261,8 +260,8 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			new AddLineJCheckBox(this, box2, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
-		//TODO: Boulot pour Nath
-		ligneButton=ligneButton<gridy?gridy:ligneButton;
+		// TODO: Boulot pour Nath
+		ligneButton = ligneButton < gridy ? gridy : ligneButton;
 
 		gridx++;
 		gridy = 1;
@@ -279,17 +278,17 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			new AddLineJCheckBox(this, box1, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
-		//TODO: Boulot pour Nath
-		ligneButton=ligneButton<gridy?gridy:ligneButton;
+		// TODO: Boulot pour Nath
+		ligneButton = ligneButton < gridy ? gridy : ligneButton;
 
-		JPanel buttonPanel=new JPanel();
-		add(buttonPanel, new GridBagConstraints(0, ligneButton, 3, 1, 1, 0,
-				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0));
-		
+		JPanel buttonPanel = new JPanel();
+		add(buttonPanel, new GridBagConstraints(0, ligneButton, 3, 1, 1, 0, GridBagConstraints.FIRST_LINE_START,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0));
+
 		buttonPanel.setLayout(new BorderLayout());
 		labelFichier = new JLabel();
 		buttonPanel.add(labelFichier, BorderLayout.CENTER);
-		
+
 		JPanel panelButton2 = new JPanel();
 		panelButton2.setLayout(new GridLayout());
 		// fichier *.csv
@@ -298,7 +297,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		panelButton2.add(new JButtonCalcul());
 
 		buttonPanel.add(panelButton2, BorderLayout.EAST);
-	
+
 	}
 
 	/**
@@ -399,7 +398,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 	}
 
 	public void addFichier(File file) {
-		labelFichier.setText("le fichier "+file.getName()+" est correctement chargé");
+		labelFichier.setText("le fichier " + file.getName() + " est correctement chargé");
 	}
 
 	/**
