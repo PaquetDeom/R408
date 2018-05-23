@@ -7,7 +7,6 @@ import java.io.IOException;
 import javax.swing.KeyStroke;
 
 import fr.paquet.ihm.alert.AlertWindow;
-import fr.paquet.ihm.echaf.FrameEchaf3D;
 
 public class Action3D extends ActionBDA {
 
@@ -27,8 +26,9 @@ public class Action3D extends ActionBDA {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		try {
-			//TODO Visionneuse 3D
-			Runtime.getRuntime().exec("firefox");
+			// TODO Visionneuse 3D
+			Runtime.getRuntime().exec(
+					"firefox https://myhub.autodesk360.com/ue2a6a670/shares/public/SHabee1QT1a327cf2b7afa739ff959d55066?mode=embed");
 		} catch (IOException e) {
 			new AlertWindow("Erreur", "Le programme n'est pas installé sur l'ordinateur");
 			e.printStackTrace(System.out);

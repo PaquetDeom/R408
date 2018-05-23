@@ -20,10 +20,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.lf5.Log4JLogRecord;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.browser.Browser;
@@ -56,6 +55,10 @@ import org.eclipse.swt.widgets.Shell;
  */
 public final class SwtBrowserCanvas extends Canvas {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Required for Linux, harmless for other OS.
 	 * <p>

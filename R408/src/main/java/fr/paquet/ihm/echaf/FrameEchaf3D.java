@@ -1,15 +1,13 @@
 package fr.paquet.ihm.echaf;
 
-import java.awt.Dimension;
-import java.io.IOException;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import fr.paquet.ihm.alert.AlertWindow;
+import javax.swing.*;
 
 public class FrameEchaf3D extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @author paquet
@@ -22,11 +20,7 @@ public class FrameEchaf3D extends JFrame {
 		setTitle("Visionneuse 3D");
 		setSize(640, 480);
 		setVisible(true);
-
-		
-		
-		
-		
+	
 
 	}
 

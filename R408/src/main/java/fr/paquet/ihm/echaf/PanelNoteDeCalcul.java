@@ -51,20 +51,25 @@ public class PanelNoteDeCalcul extends JPanel {
 		addLineLabel(new JLabel("Classe echafaudage : "), new JLabel(getPanelResultats().getPanelProjet().getOnglet()
 				.getProjet().getChantier().getEchafaudage().getClasseEchaf().getClasse()), 4);
 
-		Arrondi chaExp = new Arrondi(getPanelResultats().getPanelProjet().getOnglet().getProjet().getChantier()
-				.getEchafaudage().getChargeExploitation(), 2);
 		addLineLabel(new JLabel("Charge d'exploitation totale : "),
-				new JLabel(String.valueOf(chaExp.getDoubleArrondi()) + " DAN"), 5);
+				new JLabel(String.valueOf(Arrondi.getDoubleArrondi(getPanelResultats().getPanelProjet().getOnglet()
+						.getProjet().getChantier().getEchafaudage().getChargeExploitation(), 2)) + " DAN"),
+				5);
 
 		try {
 			addLineLabel(new JLabel("Nombre de pieds : "), new JLabel(String.valueOf(getPanelResultats()
 					.getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getNbDePieds()) + " U"),
 					6);
-			Arrondi dim = new Arrondi(getPanelResultats().getPanelProjet().getOnglet().getProjet().getChantier()
-					.getEchafaudage().getDimensionCale(), 2);
 
-			addLineLabel(new JLabel("Dimension mini de la cale : "), new JLabel(
-					String.valueOf(dim.getDoubleArrondi()) + " x " + String.valueOf(dim.getDoubleArrondi() + " cm2")),
+			addLineLabel(new JLabel("Dimension mini de la cale : "),
+					new JLabel(
+							String.valueOf(Arrondi.getDoubleArrondi(getPanelResultats().getPanelProjet().getOnglet()
+									.getProjet().getChantier().getEchafaudage().getDimensionCale(), 2))
+									+ " x "
+									+ String.valueOf(Arrondi
+											.getDoubleArrondi(getPanelResultats().getPanelProjet().getOnglet()
+													.getProjet().getChantier().getEchafaudage().getDimensionCale(), 2)
+											+ " cm2")),
 					7);
 
 		} catch (Exception e) {
