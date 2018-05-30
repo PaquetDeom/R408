@@ -37,7 +37,7 @@ public class Chantier implements Aadresse{
 		return adresse;
 	}
 
-	private void setAdresse(Adresse adresse) {
+	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
 

@@ -43,6 +43,7 @@ public class AddLineJLabelJTextField {
 
 		setTitre(titre);
 		setJTextField(new JTextField(taille));
+		this.textField.setName(getTitre());
 
 		panel.add(new JLabel(textLabel), new GridBagConstraints(gridx, gridy, gridwidth, gridheiht, 0, 0,
 				GridBagConstraints.FIRST_LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
