@@ -8,17 +8,16 @@ import fr.paquet.projet.*;
 
 public class ProjetTest {
 
+	private Projet getProjet() throws Exception {
+		DonneesTest dN = new DonneesTest();
+		return dN.getProjet1();
+	}
+
 	@Test
 	public void testProjetTitre() {
 		try {
 
-			Client client = new Client();
-			Chantier chantier = new Chantier();
-			Responsable resp = new Responsable();
-
-			fr.paquet.projet.Projet projet = new Projet(null, "   tItRe    ", client, chantier, resp);
-
-			assertTrue(projet.getTitre().equals("Titre"));
+			assertTrue(getProjet().getTitre().equals("Projet1"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,13 +28,7 @@ public class ProjetTest {
 	public void testProjetClient() {
 		try {
 
-			Client client = new Client();
-			Chantier chantier = new Chantier();
-			Responsable resp = new Responsable();
-
-			fr.paquet.projet.Projet projet = new Projet(null, "   tItRe    ", client, chantier, resp);
-
-			assertTrue(projet.getClient().equals(client));
+			assertTrue(getProjet().getClient().getNom().equals("PAQUET-DEOM"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,13 +39,7 @@ public class ProjetTest {
 	public void testProjetChantier() {
 		try {
 
-			Client client = new Client();
-			Chantier chantier = new Chantier();
-			Responsable resp = new Responsable();
-
-			fr.paquet.projet.Projet projet = new Projet(null, "   tItRe    ", client, chantier, resp);
-
-			assertTrue(projet.getChantier().equals(chantier));
+			assertTrue(getProjet().getChantier().getiD() == 1);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,13 +50,7 @@ public class ProjetTest {
 	public void testProjetResponsable() {
 		try {
 
-			Client client = new Client();
-			Chantier chantier = new Chantier();
-			Responsable resp = new Responsable();
-
-			fr.paquet.projet.Projet projet = new Projet(null, "   tItRe    ", client, chantier, resp);
-
-			assertTrue(projet.getResp().equals(resp));
+			assertTrue(getProjet().getResp().getNom().equals("BOUCHARD"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -7,7 +7,6 @@ import javax.validation.constraints.Null;
 
 //import com.sun.istack.Nullable;
 
-
 @Entity
 @Table(name = "ADRESSE")
 public class Adresse {
@@ -48,8 +47,6 @@ public class Adresse {
 	@Column(name = "ADADTEL", length = 20)
 	private String tel = null;
 
-
-
 	/**
 	 * Constructeur vide<br/>
 	 */
@@ -57,8 +54,7 @@ public class Adresse {
 		super();
 	}
 
-	public Adresse(String add1, String add2, String add3, String add4, Commune commune) throws Exception
-			{
+	public Adresse(String add1, String add2, String add3, String add4, Commune commune) throws Exception {
 		this();
 		setAdresse1(add1);
 		setAdresse2(add2);
@@ -73,19 +69,23 @@ public class Adresse {
 	}
 
 	public void setAdresse1(String adresse) {
-		this.adresse1 = adresse.trim();
+		if (adresse != null)
+			this.adresse1 = adresse.trim();
 	}
 
 	public void setAdresse2(String adresse) {
-		this.adresse2 = adresse.trim();
+		if (adresse != null)
+			this.adresse2 = adresse.trim();
 	}
 
 	public void setAdresse3(String adresse) {
-		this.adresse3 = adresse.trim();
+		if (adresse != null)
+			this.adresse3 = adresse.trim();
 	}
 
 	public void setAdresse4(String adresse) {
-		this.adresse4 = adresse.trim();
+		if (adresse != null)
+			this.adresse4 = adresse.trim();
 	}
 
 	public void setCommune(Commune commune) throws Exception {
@@ -96,8 +96,9 @@ public class Adresse {
 
 	public void setMail(String mail) throws Exception {
 
+		mail = mail.trim();
 		boolean a = false;
-		a = Pattern.matches("(*@*.*)", mail);
+		a = Pattern.matches("^[A-Za-z0-9+_.-]+@(.+)$", mail);
 
 		if (a == false)
 			throw new Exception("Adresse mail invalide");
@@ -106,15 +107,15 @@ public class Adresse {
 
 	public void setTelephone(String tel) throws Exception {
 
+		tel=tel.trim();
 		boolean a = false;
-		a = Pattern.matches("(+33[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])", tel);
+		a = Pattern.matches("^(\\\\+33|0|0033)[0-9]{9}$", tel);
 
 		if (a == false)
 			throw new Exception("Numéros invalide");
 		this.tel = tel;
 	}
 
-	
 	/**
 	 * 
 	 * @return le ligne d'adresse 1 sans espace a droite et a gauche<br/>
@@ -178,7 +179,5 @@ public class Adresse {
 	public long getId() {
 		return id;
 	}
-
-
 
 }

@@ -37,6 +37,7 @@ public class Main {
 		} catch (IOException | AclFormatException e1) {
 
 			// fermeture avec erreur
+			e1.printStackTrace(System.out);
 			FermetureAvecErreur();
 
 		} finally {
@@ -82,7 +83,7 @@ public class Main {
 					new AlertWindow("Erreur", "Fatal Erreur");
 					e.printStackTrace();
 					FermetureAvecErreur();
-					
+
 				}
 			}
 		});

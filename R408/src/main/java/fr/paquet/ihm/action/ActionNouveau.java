@@ -18,6 +18,7 @@ public class ActionNouveau extends ActionBDA {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private ActionSave actionSave = new ActionSave();
 
 	public ActionNouveau() {
 		super();
@@ -29,8 +30,17 @@ public class ActionNouveau extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		OngletProjet c = new OngletProjet(new Projet(null, "", new Client(), new Chantier(null, new Echafaudage()), new Responsable()));
+		
+		OngletProjet c;
+		c = new OngletProjet(
+				new Projet(null, "", new Client(), new Chantier(null, new Echafaudage()), new Responsable()));
+		actionSave.setOngletProjet(c);
 		c.setVisible(true);
+
+	}
+	
+	public ActionSave getActionSave() {
+		return actionSave;
 	}
 
 	@Override

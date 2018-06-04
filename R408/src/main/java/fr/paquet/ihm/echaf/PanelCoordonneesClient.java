@@ -3,26 +3,26 @@ package fr.paquet.ihm.echaf;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 
 import fr.paquet.ihm.alert.AlertWindow;
 
-public class PanelCoordonneesChantier extends PanelCoordonnees {
+public class PanelCoordonneesClient extends PanelCoordonnees {
 
 	/**
 	 * @author paquet
 	 */
-	private PanelChantier panelChantier = null;
+	private PanelClient panelClient = null;
 	private static final long serialVersionUID = 1L;
 
-	public PanelCoordonneesChantier(PanelChantier panelChantier) {
+	public PanelCoordonneesClient(PanelClient panelClient) {
 		super();
 
 		// effacer tous les components
 		removeAll();
 
 		// mutte la variable panelChantier
-		setPanelChantier(panelChantier);
+		setPanelClient(panelClient);
 
 		// construit le panel de Coordonnes
 		buildPanel();
@@ -40,20 +40,20 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 					if (!textField.getText().equals("")) {
 
 						if (title.equals("ADRESSE1")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+							getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
 									.getAdresse().setAdresse1(textField.getText());
 						}
 						if (title.equals("ADRESSE2")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+							getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
 									.getAdresse().setAdresse2(textField.getText());
 						}
 						if (title.equals("ADRESSE3")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+							getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
 									.getAdresse().setAdresse3(textField.getText());
 						}
 						if (title.equals("CODEPOSTAL")) {
 							try {
-								getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+								getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
 										.getAdresse().getCommune().setCodeCommune(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
@@ -61,12 +61,12 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 							}
 						}
 						if (title.equals("COMMUNE")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+							getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
 									.getAdresse().getCommune().setCommune(textField.getText());
 						}
 						if (title.equals("MAIL")) {
 							try {
-								getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+								getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
 										.getAdresse().setMail(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
@@ -75,7 +75,7 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 						}
 						if (title.equals("TEL")) {
 							try {
-								getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
+								getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
 										.getAdresse().setTelephone(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
@@ -99,16 +99,16 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 
 	}
 
-	private void setPanelChantier(PanelChantier panelChantier) {
-		this.panelChantier = panelChantier;
+	private void setPanelClient(PanelClient panelClient) {
+		this.panelClient = panelClient;
 	}
 
 	/**
 	 * 
-	 * @return le panelChantier correspondant<br/>
+	 * @return le panelClient correspondant<br/>
 	 */
-	private PanelChantier getPanelChantier() {
-		return panelChantier;
+	private PanelClient getPanelClient() {
+		return panelClient;
 	}
 
 }

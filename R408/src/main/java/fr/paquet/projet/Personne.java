@@ -36,6 +36,7 @@ public class Personne {
 
 	public Personne() {
 		super();
+		setChangeSupport(new PropertyChangeSupport(this));
 	}
 
 	public Personne(String nom, String prenom) {
@@ -53,15 +54,15 @@ public class Personne {
 	}
 
 	public synchronized void setNom(String nom) {
-		nom = nom.trim().toUpperCase();
 
-		if (!nom.equals("") || nom != null) {
+		if (!nom.equals("") && nom != null) {
+			nom = nom.trim().toUpperCase();
 			String oldValue = this.nom;
 			this.nom = nom;
 			getChangeSupport().firePropertyChange("nom", oldValue, nom);
 		}
-
 		this.nom = nom;
+
 	}
 
 	public long getiD() {
@@ -74,8 +75,8 @@ public class Personne {
 
 	/**
 	 * 
-	 * @return le prenom sans espace à droite et à gauche avec la première
-	 *         lettre en majuscule<br/>
+	 * @return le prenom sans espace à droite et à gauche avec la première lettre en
+	 *         majuscule<br/>
 	 */
 	public synchronized String getPrenom() {
 

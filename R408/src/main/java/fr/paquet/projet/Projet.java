@@ -26,7 +26,7 @@ public class Projet {
 	@ManyToOne
 	private Client client = null;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Chantier chantier = null;
 
 	@ManyToOne
@@ -39,6 +39,7 @@ public class Projet {
 	 */
 	public Projet() {
 		super();
+		setChangeSupport(new PropertyChangeSupport(this));
 	}
 
 	/**
@@ -49,7 +50,6 @@ public class Projet {
 	 */
 	public Projet(PropertyChangeListener listener) {
 		this();
-		setChangeSupport(new PropertyChangeSupport(this));
 		addPropertyChangeListener(listener);
 	}
 
@@ -66,10 +66,10 @@ public class Projet {
 	 *            de type Chantier<br/>
 	 * @param resp
 	 *            de Type Reponsable<br/>
+	 * @throws Exception
 	 */
 	public Projet(PropertyChangeListener listener, String titre, Client client, Chantier chantier, Responsable resp) {
 		this(listener);
-		setChangeSupport(new PropertyChangeSupport(this));
 		addPropertyChangeListener(listener);
 		setTitre(titre);
 		setClient(client);
@@ -98,16 +98,22 @@ public class Projet {
 		return titre;
 	}
 
+	/**
+	 * 
+	 * @param titre
+	 * @throws Exception
+	 *             pas de titre<br/>
+	 */
 	public synchronized void setTitre(String titre) {
 
 		if (!titre.equals("") && titre != null) {
 			titre = titre.toLowerCase().trim();
 			titre = titre.substring(0, 1).toUpperCase() + titre.substring(1).toLowerCase();
-		}
 
-		String oldValeur = this.titre;
-		this.titre = titre;
-		getChangeSupport().firePropertyChange("titre", oldValeur, titre);
+			String oldValeur = this.titre;
+			this.titre = titre;
+			getChangeSupport().firePropertyChange("titre", oldValeur, titre);
+		}
 
 		this.titre = titre;
 
@@ -138,9 +144,22 @@ public class Projet {
 
 	public void setResp(Responsable resp) {
 
-		resp.addProjet(this);
-		this.resp = resp;
+		if (getResp() != null)
+			removeRespProjet(getResp(), this);
 
+		this.resp = resp;
+		addRespProjet(getResp(), this);
+
+	}
+
+	private void addRespProjet(Responsable resp, Projet projet) {
+		if (!resp.getProjets().contains(projet))
+			resp.getProjets().add(projet);
+	}
+
+	private void removeRespProjet(Responsable resp, Projet projet) {
+		if (resp.getProjets().contains(projet))
+			resp.getProjets().remove(projet);
 	}
 
 	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {

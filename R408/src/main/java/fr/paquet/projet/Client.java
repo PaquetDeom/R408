@@ -16,18 +16,18 @@ import javax.persistence.Table;
 @Table(name = "CLIENT")
 @AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "CLCLID")),
 		@AttributeOverride(name = "nom", column = @Column(name = "CLCLNOM", length = 20)),
-		@AttributeOverride(name = "prenom", column = @Column(name = "CLCLPRENOM", length = 50)),})
+		@AttributeOverride(name = "prenom", column = @Column(name = "CLCLPRENOM", length = 50)), })
 public class Client extends Personne implements Aadresse {
 
 	/**
 	 * @author Nathanaël
 	 * 
-	 *         Clas qui gere les clients<br/>
+	 *         Class qui gere les clients<br/>
 	 */
 
 	@ManyToMany
 	private List<Projet> projets = null;
-	
+
 	@ManyToOne
 	private Adresse adresse = null;
 
@@ -36,16 +36,15 @@ public class Client extends Personne implements Aadresse {
 	 */
 	public Client() {
 		super();
-		setChangeSupport(new PropertyChangeSupport(this));
+
 	}
-	
+
 	/**
 	 * 
 	 * @param listener
 	 */
-	public Client(PropertyChangeListener listener){
+	public Client(PropertyChangeListener listener) {
 		this();
-		setChangeSupport(new PropertyChangeSupport(this));
 		addPropertyChangeListener(listener);
 	}
 
@@ -59,7 +58,6 @@ public class Client extends Personne implements Aadresse {
 	public Client(PropertyChangeListener listener, String nom, String prenom, Adresse adresse) {
 		super(nom, prenom);
 		setAdresse(adresse);
-		setChangeSupport(new PropertyChangeSupport(this));
 		addPropertyChangeListener(listener);
 	}
 

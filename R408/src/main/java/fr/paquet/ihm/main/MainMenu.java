@@ -17,10 +17,12 @@ public class MainMenu extends JMenuBar {
 	 * Constructeur de la class ajoute les Action a MainMenu<br/>
 	 */
 	public MainMenu() {
-		addAction(new ActionNouveau());
+		ActionNouveau aN = new ActionNouveau();
+		addAction(aN);
 		addAction(new ActionGestionnaire());
 		addAction(new ActionQuitter());
 		addAction(new Action3D());
+		addAction(aN.getActionSave());
 	}
 
 	private Hashtable<String, JMenu> menus = new Hashtable<String, JMenu>();

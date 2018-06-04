@@ -33,7 +33,7 @@ public class Connect {
 	 * @return entity manager unique<br/>
 	 */
 	public static EntityManager getEm() {
-		if(em == null)
+		if (em == null)
 			em = getEmf().createEntityManager();
 		return em;
 	}

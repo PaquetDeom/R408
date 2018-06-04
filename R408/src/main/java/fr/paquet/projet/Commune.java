@@ -31,9 +31,7 @@ public class Commune {
 	public Commune() {
 		super();
 	}
-	
-	
-	
+
 	/**
 	 * Constructeur de la class
 	 * 
@@ -52,6 +50,7 @@ public class Commune {
 
 	public void setCodeCommune(String codeCommune) throws Exception {
 
+		codeCommune = codeCommune.trim().toUpperCase();
 		boolean a = false;
 		a = Pattern.matches("([0-9]([0-9]||[AB])[0-9][0-9][0-9])", codeCommune);
 
@@ -92,7 +91,5 @@ public class Commune {
 	public int getId() {
 		return id;
 	}
-
-
 
 }

@@ -63,6 +63,7 @@ public class OngletProjet extends JComponent implements PropertyChangeListener {
 	}
 
 	private void setProjet(Projet projet) {
+
 		this.projet = projet;
 	}
 

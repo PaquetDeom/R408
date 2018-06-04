@@ -19,7 +19,7 @@ public class Chantier implements Aadresse{
 	@ManyToOne
 	private Adresse adresse = null;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Echafaudage echafaudage = null;
 	
 	public Chantier() {

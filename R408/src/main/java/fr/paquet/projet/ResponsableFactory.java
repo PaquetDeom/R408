@@ -4,12 +4,12 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import fr.paquet.dataBase.R408Factory;
+import fr.paquet.dataBase.Connect;
 
-public class ResponsableFactory extends R408Factory {
+public class ResponsableFactory extends Connect {
 
 	public ResponsableFactory() {
-		
+
 	}
 
 	/**

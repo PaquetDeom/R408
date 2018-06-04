@@ -1,20 +1,19 @@
 package fr.paquet.ihm.echaf;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-import fr.paquet.projet.Responsable;
+import fr.paquet.ihm.alert.AlertWindow;
 
-public class PanelProj extends JPanel implements PropertyChangeListener {
+public class PanelProj extends JPanel {
 
 	/**
 	 * @author paquet
@@ -22,7 +21,7 @@ public class PanelProj extends JPanel implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 	private PanelEntete panelEntete = null;
-	private Hashtable<String, JTextField> textFields = null;
+	private List<JTextField> textFields = null;
 
 	/**
 	 * Constructeur de la class<br/>
@@ -38,12 +37,6 @@ public class PanelProj extends JPanel implements PropertyChangeListener {
 
 		setLayout(new GridBagLayout());
 
-		// Titre du JPanel
-		/*
-		 * add(new JLabel("Données du projet"), new GridBagConstraints(0, 0, 1, 1, 1.0,
-		 * 1.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new
-		 * Insets(0, 0, 0, 0), 0, 0));
-		 */
 		// Affichage des JLabel et JtextField sur le Panel en fonction du Layout
 		AddLineJLabelJTextField l1 = new AddLineJLabelJTextField(this, "TITRE", "Titre du projet", 20, 0, 1, 1, 1, 0, 0,
 				GridBagConstraints.NONE);
@@ -53,9 +46,9 @@ public class PanelProj extends JPanel implements PropertyChangeListener {
 				1, 1, 0, 1, GridBagConstraints.NONE);
 
 		// listener + put dans la HashTable
-		putTextField(l1.getTitre(), l1.getTextField());
-		putTextField(l2.getTitre(), l2.getTextField());
-		putTextField(l3.getTitre(), l3.getTextField());
+		putTextField(l1.getTextField());
+		putTextField(l2.getTextField());
+		putTextField(l3.getTextField());
 
 		add(new JPanel(), new GridBagConstraints(0, 3, 2, 1, 1, 1, GridBagConstraints.LAST_LINE_START,
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
@@ -69,43 +62,67 @@ public class PanelProj extends JPanel implements PropertyChangeListener {
 	 * @param titre
 	 * @param textField
 	 */
-	private void putTextField(String titre, JTextField textField) {
+	private void putTextField(JTextField textField) {
+
+		getTextFields().add(textField);
+
 		textField.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
 
-				if (titre.equals("TITRE")) {
-					if (!textField.getText().trim().equals(""))
-						getPanelEntete().getPanelProjet().getOnglet().getProjet().setTitre(textField.getText());
+				JTextField tF = (JTextField) e.getSource();
 
-				} else {
-					if (getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp() == null)
-						getPanelEntete().getPanelProjet().getOnglet().getProjet().setResp(new Responsable());
-					if (titre.equals("NOMRESP")) {
+				if (tF.getName().equals("TITRE")) {
+
+					if (!tF.getText().equals(""))
+						getPanelEntete().getPanelProjet().getOnglet().getProjet().setTitre(textField.getText());
+					if (tF.getText().equals("") || tF.getText() == null
+							|| tF.getText().equals("Veuillez saisir un titre au projet")) {
+						new AlertWindow("Erreur", "Le projet doit avoir un titre");
+						tF.setText("Veuillez saisir un titre au projet");
+						tF.setForeground(Color.red);
+						//TODO Bruno
+						tF.requestFocus();
+						tF.moveCaretPosition(0);
+
+					}
+				}
+
+				if (tF.getName().equals("NOMRESP")) {
+					if (!tF.getText().equals("")) {
 						getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().setNom(textField.getText());
 						textField.setText(getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().getNom());
+						System.out
+								.println(getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().getNom());
 					}
 
-					if (titre.equals("PRENOMRESP")) {
+				}
+
+				if (tF.getName().equals("PRENOMRESP")) {
+					if (!tF.getText().equals("")) {
 						getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp()
 								.setPrenom(textField.getText());
 						textField.setText(
 								getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().getPrenom());
+						System.out.println(
+								getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp().getPrenom());
 					}
-
 				}
 
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
+
+				// Sélectionne tout le texte du textField
+				JTextField tF = (JTextField) e.getSource();
+				tF.selectAll();
 
 			}
+
 		});
 
-		getTextFields().put(titre, textField);
 	}
 
 	/**
@@ -124,16 +141,10 @@ public class PanelProj extends JPanel implements PropertyChangeListener {
 	 * 
 	 * @return la Hashtabe<TITRE, JtextField><br/>
 	 */
-	private Hashtable<String, JTextField> getTextFields() {
+	private List<JTextField> getTextFields() {
 		if (textFields == null)
-			textFields = new Hashtable<String, JTextField>();
+			textFields = new ArrayList<JTextField>();
 		return textFields;
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

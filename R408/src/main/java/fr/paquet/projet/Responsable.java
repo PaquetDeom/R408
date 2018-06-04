@@ -33,6 +33,7 @@ public class Responsable extends Personne {
 	 */
 	public Responsable(String nom, String prenom) {
 		super(nom, prenom);
+
 	}
 
 	/**
@@ -45,13 +46,6 @@ public class Responsable extends Personne {
 		return projets;
 	}
 
-	public void addProjet(Projet projet) {
-		if (!getProjets().contains(projet))
-			getProjets().add(projet);
-	}
+	
 
-	public void removeProjet(Projet projet) {
-		if (getProjets().contains(projet))
-			getProjets().remove(projet);
-	}
 }
