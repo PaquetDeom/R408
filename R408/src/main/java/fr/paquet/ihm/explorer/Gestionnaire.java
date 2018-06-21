@@ -21,8 +21,14 @@ import javax.swing.event.ListSelectionListener;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.FileChooser;
+import fr.paquet.ihm.echaf.PanelEchafaudage;
+import fr.paquet.io.csv.CsvElementEchafReader;
+import fr.paquet.io.csv.ElementIntegrator;
+import fr.paquet.io.xml.importxml.XMLFileIntegration;
 import fr.paquet.projet.Projet;
 import fr.paquet.projet.ProjetFactory;
+
+import org.w3c.dom.Element;
 
 public class Gestionnaire extends JFrame implements AlertListener {
 
@@ -168,8 +174,32 @@ public class Gestionnaire extends JFrame implements AlertListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FileChooser();
 
+				FileChooser fc = new FileChooser();
+
+				try {
+
+					XMLFileIntegration xmlIntegre;
+					
+					if (fc.getFile() != null)					
+					 xmlIntegre = new XMLFileIntegration(fc.getFile()) {
+						
+						@Override
+						public void integre(String projet) throws Exception {
+							
+							for (Element elt : getElements("projet")) {
+								System.out.println("elt");
+							}
+							
+						}
+					};					
+					
+
+				} catch (Exception e1) {
+
+					new AlertWindow("Erreur", "Erreur lors du chargement du fichier");
+					e1.printStackTrace(System.out);
+				}
 			}
 		});
 

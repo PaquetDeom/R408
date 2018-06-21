@@ -18,6 +18,7 @@ public class FileChooser extends JFileChooser {
 		super();
 
 		addChoosableFileFilter(new FileNameExtensionFilter("*.csv", "csv"));
+		addChoosableFileFilter(new FileNameExtensionFilter("*.xml", "xml"));
 		int returnValue = showOpenDialog(null);
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {

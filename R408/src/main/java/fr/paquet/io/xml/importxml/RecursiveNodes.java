@@ -1,4 +1,4 @@
-package fr.paquet.io.xml.exportxml;
+package fr.paquet.io.xml.importxml;
 
 import java.util.ArrayList;
 
