@@ -1,15 +1,12 @@
 package fr.paquet.projet;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
+
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,10 +22,10 @@ public class Client extends Personne implements Aadresse {
 	 *         Class qui gere les clients<br/>
 	 */
 
-	@ManyToMany
+	@OneToMany()
 	private List<Projet> projets = null;
 
-	@ManyToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Adresse adresse = null;
 
 	/**
@@ -40,28 +37,16 @@ public class Client extends Personne implements Aadresse {
 	}
 
 	/**
-	 * 
-	 * @param listener
-	 */
-	public Client(PropertyChangeListener listener) {
-		this();
-		addPropertyChangeListener(listener);
-	}
-
-	/**
 	 * Constructeur de la class<br/>
 	 * 
 	 * @param nom
 	 * @param prenom
-	 * @param adresse
 	 */
-	public Client(PropertyChangeListener listener, String nom, String prenom, Adresse adresse) {
+	public Client(String nom, String prenom) {
 		super(nom, prenom);
-		setAdresse(adresse);
-		addPropertyChangeListener(listener);
 	}
 
-	private void setAdresse(Adresse adresse) {
+	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
 
@@ -87,4 +72,7 @@ public class Client extends Personne implements Aadresse {
 		return adresse;
 	}
 
+	public String toString() {
+		return getNom() + " " + getPrenom();
+	}
 }

@@ -15,7 +15,7 @@ public class Responsable extends Personne {
 	 * 
 	 */
 
-	@ManyToMany
+	@OneToMany()
 	private List<Projet> projets = null;
 
 	/**
@@ -46,6 +46,9 @@ public class Responsable extends Personne {
 		return projets;
 	}
 
+	public String toString() {
+		return getNom() + " " + getPrenom();
+	}
 	
 
 }

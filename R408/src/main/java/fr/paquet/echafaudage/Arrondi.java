@@ -9,8 +9,6 @@ public class Arrondi {
 	 * 
 	 */
 
-	
-
 	public static double getDoubleArrondi(double a, int b) {
 
 		BigDecimal bd = new BigDecimal(a);
@@ -19,7 +17,5 @@ public class Arrondi {
 
 		return a;
 	}
-
-	
 
 }

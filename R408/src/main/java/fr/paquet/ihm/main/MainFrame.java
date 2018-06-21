@@ -14,7 +14,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import fr.paquet.ihm.alert.AlertWindow;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements WindowListener {

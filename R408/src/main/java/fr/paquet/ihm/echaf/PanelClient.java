@@ -38,7 +38,7 @@ public class PanelClient extends JPanel {
 		// creation des panels
 		setPanelNomPrenomClient(new PanelNomPrenomClient(this));
 		setPanelCoordonnesClient(new PanelCoordonneesClient(this));
-
+		
 		// ajout des Panel a PanelClient.
 		add(getPanelNomPrenomClient(), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));

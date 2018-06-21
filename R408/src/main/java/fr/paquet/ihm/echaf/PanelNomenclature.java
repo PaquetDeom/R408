@@ -1,19 +1,10 @@
 package fr.paquet.ihm.echaf;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-import fr.paquet.echafaudage.ElementEchaf;
-import fr.paquet.echafaudage.TypeEchaf;
-import fr.paquet.echafaudage.TypeElement;
 
 public class PanelNomenclature extends JPanel {
 

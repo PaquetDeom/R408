@@ -24,19 +24,17 @@ public class Personne {
 	@Column(name = "PEPEPR", length = 20)
 	private String prenom = null;
 
+	@Transient
 	private PropertyChangeSupport changeSupport = null;
 
-	protected void setChangeSupport(PropertyChangeSupport pCS) {
-		this.changeSupport = pCS;
-	}
-
-	private PropertyChangeSupport getChangeSupport() {
+	protected PropertyChangeSupport getChangeSupport() {
+		if (changeSupport == null)
+			changeSupport = new PropertyChangeSupport(this);
 		return changeSupport;
 	}
 
 	public Personne() {
 		super();
-		setChangeSupport(new PropertyChangeSupport(this));
 	}
 
 	public Personne(String nom, String prenom) {
@@ -78,7 +76,7 @@ public class Personne {
 	 * @return le prenom sans espace à droite et à gauche avec la première lettre en
 	 *         majuscule<br/>
 	 */
-	public synchronized String getPrenom() {
+	public String getPrenom() {
 
 		return prenom;
 	}

@@ -1,11 +1,13 @@
 package fr.paquet.projet;
 
+import java.util.List;
+
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import fr.paquet.dataBase.Connect;
-import fr.paquet.ihm.alert.AlertWindow;
+
 
 /**
  * 
@@ -39,14 +41,31 @@ public class ProjetFactory extends Connect {
 			return (Projet) query.getSingleResult();
 
 		} catch (NoResultException e) {
-
-			new AlertWindow("Erreur", "Le projet n'existe pas dans la base");
+			
 			e.printStackTrace(System.out);
 			return null;
 		}
 
 	}
 
+	/**
+	 * 
+	 * @return tous les projets de la DB<br/>
+	 * @throws Exception la liste est vide<br/>
+	 */
+	public List<Projet> findAllProjets() throws Exception {
+
+		Query query = getEm().createQuery("Select projet FROM Projet projet");
+		@SuppressWarnings("unchecked")
+		List<Projet> projets = (List<Projet>) query.getResultList();
+		
+		if(projets.isEmpty())
+			throw new Exception("Il n'y a pas de projet dans la base de donnees");
+
+		return projets;
+	}
+
+	
 	/**
 	 * 
 	 * @param projet

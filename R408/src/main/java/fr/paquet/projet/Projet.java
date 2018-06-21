@@ -23,15 +23,16 @@ public class Projet {
 	@Column(name = "PRPRTI", length = 20)
 	private String titre = null;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Client client = null;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "projet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Chantier chantier = null;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Responsable resp = null;
 
+	@Transient
 	PropertyChangeSupport changeSupport = null;
 
 	/**
@@ -39,7 +40,6 @@ public class Projet {
 	 */
 	public Projet() {
 		super();
-		setChangeSupport(new PropertyChangeSupport(this));
 	}
 
 	/**
@@ -78,11 +78,9 @@ public class Projet {
 
 	}
 
-	public void setChangeSupport(PropertyChangeSupport pCS) {
-		this.changeSupport = pCS;
-	}
-
 	private PropertyChangeSupport getChangeSupport() {
+		if (changeSupport == null)
+			changeSupport = new PropertyChangeSupport(this);
 		return changeSupport;
 	}
 
@@ -134,7 +132,7 @@ public class Projet {
 		return chantier;
 	}
 
-	private void setChantier(Chantier chantier) {
+	public void setChantier(Chantier chantier) {
 		this.chantier = chantier;
 	}
 
@@ -171,6 +169,10 @@ public class Projet {
 
 		getChangeSupport().addPropertyChangeListener(l);
 
+	}
+
+	public String toString() {
+		return getTitre();
 	}
 
 }

@@ -15,10 +15,6 @@ public class Commune {
 	 */
 
 	@Id
-	@GeneratedValue
-	@Column(name = "CMCMID")
-	private int id = 0;
-
 	@Column(name = "CMCMCOMMUNE", length = 50)
 	private String commune = null;
 
@@ -59,11 +55,7 @@ public class Commune {
 		this.codeCommune = codeCommune;
 	}
 
-	public void setId(int id) {
-
-		this.id = id;
-	}
-
+	
 	public void setCommune(String commune) {
 		this.commune = commune.trim().toUpperCase();
 	}
@@ -84,12 +76,5 @@ public class Commune {
 		return commune;
 	}
 
-	/**
-	 * 
-	 * @return L'id pour la gestion de la DB<br/>
-	 */
-	public int getId() {
-		return id;
-	}
 
 }

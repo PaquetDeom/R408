@@ -5,12 +5,11 @@ import java.net.URL;
 
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
+
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLEditorKit;
+
+
 
 public class PanelEchaf3D extends JPanel {
 
@@ -19,7 +18,7 @@ public class PanelEchaf3D extends JPanel {
 	 */
 
 	private static final long serialVersionUID = 1L;
-	private HTML iFrame = null;
+	//private HTML iFrame = null;
 
 	public PanelEchaf3D() {
 
@@ -32,7 +31,7 @@ public class PanelEchaf3D extends JPanel {
 
 		try {
 			
-			HTMLEditorKit kit = new HTMLEditorKit();
+			//HTMLEditorKit kit = new HTMLEditorKit();
 			URL url = new URL("https://www.google.com");
 			url.openConnection();
 
@@ -63,14 +62,14 @@ public class PanelEchaf3D extends JPanel {
 		return null;
 	}
 
-	private void setIFrame(HTML iframe) {
+	/**private void setIFrame(HTML iframe) {
 
-		/**
+		
 		 * "<iframe src=
 		 * "https://myhub.autodesk360.com/ue2a6a670/shares/public/SHabee1QT1a327cf2b7afa739ff959d55066?mode=embed"
 		 * width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true"
 		 * mozallowfullscreen="true" frameborder="0"></iframe>"
-		 */
+		 
 
 		this.iFrame = iframe;
 
@@ -78,6 +77,6 @@ public class PanelEchaf3D extends JPanel {
 
 	private HTML getIFrame() {
 		return iFrame;
-	}
+	}*/
 
 }

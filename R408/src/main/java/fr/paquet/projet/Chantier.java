@@ -6,8 +6,8 @@ import fr.paquet.echafaudage.Echafaudage;
 
 @Entity
 @Table(name = "CHANTIER")
-public class Chantier implements Aadresse{
-	
+public class Chantier implements Aadresse {
+
 	/**
 	 * 
 	 */
@@ -15,26 +15,32 @@ public class Chantier implements Aadresse{
 	@Column(name = "CHCHID")
 	@GeneratedValue
 	private long iD = 0;
-	
-	@ManyToOne
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private Adresse adresse = null;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Echafaudage echafaudage = null;
-	
+
+	@OneToOne
+	private Projet projet = null;
+
 	public Chantier() {
 		super();
 	}
-	
-	public Chantier(Adresse adresse, Echafaudage echaf) {
-		
+
+	public Chantier(Projet projet, Echafaudage echaf) {
+
 		this();
-		setAdresse(adresse);
+		setProjet(projet);
 		setEchafaudage(echaf);
 	}
 
 	public Adresse getAdresse() {
-		return adresse;
+		if (adresse == null)
+			return getProjet().getClient().getAdresse();
+		else
+			return adresse;
 	}
 
 	public void setAdresse(Adresse adresse) {
@@ -55,6 +61,14 @@ public class Chantier implements Aadresse{
 
 	public void setiD(long iD) {
 		this.iD = iD;
+	}
+
+	public Projet getProjet() {
+		return projet;
+	}
+
+	public void setProjet(Projet projet) {
+		this.projet = projet;
 	}
 
 }

@@ -18,6 +18,7 @@ public class Connect {
 	/**
 	 * 
 	 * @return la connection a la base de donnee "derby"<br/>
+	 *         url de la db jdbc:hsqldb:hsql://localhost:5434/r408
 	 */
 	public static EntityManagerFactory getEmf() {
 		if (emf == null)

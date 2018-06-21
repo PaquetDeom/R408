@@ -20,7 +20,8 @@ public class DonneesTest {
 	}
 
 	public Client getClient() throws Exception {
-		Client client = new Client(null, "            PaqUet-dEom  ", "        natHanel     ", getAdresseClient());
+		Client client = new Client( "            PaqUet-dEom  ", "        natHanel     ");
+		client.setAdresse(getAdresseClient());
 		return client;
 	}
 
@@ -78,7 +79,7 @@ public class DonneesTest {
 	}
 
 	public Chantier getChantier1() throws Exception {
-		Chantier chantier = new Chantier(getAdresseChantier(), getEchaf1());
+		Chantier chantier = new Chantier(getProjet1(), getEchaf1());
 		chantier.setiD(001);
 		return chantier;
 	}

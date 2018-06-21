@@ -1,6 +1,5 @@
 package fr.paquet.ihm.echaf;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import javax.swing.event.TableModelListener;
@@ -41,7 +40,7 @@ public class NomenclatureModel implements TableModel {
 	public Class<?> getColumnClass(int column) {
 		if (column == 0)
 			return ElementEchaf.class;
-		
+
 		else
 			return Integer.class;
 	}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!ELEMENT projet (titre, responsable, client, chantier, adresses)>
+<!ELEMENT titre (#PCDATA)>
+<!ELEMENT responsable (nomResp, prenomResp)>
+<!ELEMENT nomResp (#PCDATA)>
+<!ELEMENT prenomResp (#PCDATA)>
+<!ELEMENT client (nomClient, prenomClient, adresseIdClient)>
+<!ELEMENT nomClient (#PCDATA)>
+<!ELEMENT prenomClient (#PCDATA)>
+<!ELEMENT adresseIdClient (#PCDATA)>
+<!ELEMENT chantier (adresseIdChantier, echafaudage)>
+<!ELEMENT adresseIdChantier (#PCDATA)>
+<!ELEMENT echafaudage (constructeur, typeEchafaudage, classeEchafaudage, typeSol, elements)>
+<!ELEMENT constructeur (#PCDATA)>
+<!ELEMENT typeEchafaudage (cadre, multidirectionnel)>
+<!ELEMENT cadre EMPTY>
+<!ATTLIST cadre trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT multidirectionnel EMPTY>
+<!ATTLIST multidirectionnel trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT classeEchafaudage (CL1, CL2, CL3, CL4, CL5)>
+<!ELEMENT CL1 EMPTY>
+<!ATTLIST CL1 trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT CL2 EMPTY>
+<!ATTLIST CL2 trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT CL3 EMPTY>
+<!ATTLIST CL3 trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT CL4 EMPTY>
+<!ATTLIST CL4 trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT CL5 EMPTY>
+<!ATTLIST CL5 trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT typeSol (sableFin, sableGrossier, argileMolle, argile, argileDure, roche, bitume, briquePleine, pierre, ba)>
+<!ELEMENT sableFin EMPTY>
+<!ATTLIST sableFin trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT sableGrossier EMPTY>
+<!ATTLIST sableGrossier trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT argileMolle EMPTY>
+<!ATTLIST argileMolle trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT argile EMPTY>
+<!ATTLIST argile trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT argileDure EMPTY>
+<!ATTLIST argileDure trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT roche EMPTY>
+<!ATTLIST roche trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT bitume EMPTY>
+<!ATTLIST bitume trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT briquePleine EMPTY>
+<!ATTLIST briquePleine trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT pierre EMPTY>
+<!ATTLIST pierre trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT ba EMPTY>
+<!ATTLIST ba trueOrFalse (false|true) #REQUIRED>
+<!ELEMENT elements (element+)>
+<!ELEMENT element (constructeurElement, nom, reference, poids, surface, nombre)>
+<!ELEMENT constructeurElement (#PCDATA)>
+<!ELEMENT nom (#PCDATA)>
+<!ELEMENT reference (#PCDATA)>
+<!ELEMENT poids (#PCDATA)>
+<!ELEMENT surface (#PCDATA)>
+<!ELEMENT nombre (#PCDATA)>
+<!ELEMENT adresses (adresse+)>
+<!ELEMENT adresse (adresse1, adresse2, adresse3, adresse4, commune, mail, telephone)>
+<!ATTLIST adresse id CDATA #REQUIRED>
+<!ELEMENT adresse1 (#PCDATA)>
+<!ELEMENT adresse2 (#PCDATA)>
+<!ELEMENT adresse3 (#PCDATA)>
+<!ELEMENT adresse4 (#PCDATA)>
+<!ELEMENT mail (#PCDATA)>
+<!ELEMENT telephone (#PCDATA)>
+<!ELEMENT commune (communeName)>
+<!ATTLIST commune codeCommune CDATA #REQUIRED>
+<!ELEMENT communeName (#PCDATA)>

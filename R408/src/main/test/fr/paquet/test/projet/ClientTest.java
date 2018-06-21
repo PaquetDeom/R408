@@ -15,8 +15,9 @@ public class ClientTest {
 
 		// creation adresse
 		Adresse adresse = new Adresse(null, null, null, null, new Commune("81500", "         aMbres"));
-		Client client = new Client(null, "             PAQUET-deom        ", "           NaThanAel         ", adresse);
-
+		Client client = new Client( "             PAQUET-deom        ", "           NaThanAel         ");
+		client.setAdresse(adresse);
+		
 		// creation des projets
 		Projet p1 = new Projet();
 		Projet p2 = new Projet();

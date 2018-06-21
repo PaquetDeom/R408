@@ -14,16 +14,16 @@ import javax.swing.JTextField;
 
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertWindow;
-import fr.paquet.projet.Client;
-import fr.paquet.projet.ClientFactory;
+import fr.paquet.projet.RespFactory;
+import fr.paquet.projet.Responsable;
 
-public class PanelNomPrenomClient extends JPanel {
+public class PanelNomPrenomResp extends JPanel {
 
 	/**
 	 * @author paquet
 	 */
 	private static final long serialVersionUID = 1L;
-	private PanelClient panelClient = null;
+	private PanelProj panelProj = null;
 	private JTextField jTextFieldNom = null;
 	private JTextField jTextFieldPrenom = null;
 	private JButtonTest buttonTest = null;
@@ -36,7 +36,7 @@ public class PanelNomPrenomClient extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public JButtonTest() {
-			super("Recherche le client dans la base");
+			super("Recherche le responsable dans la base");
 
 			addActionListener(this);
 			setEnabled(isEnable());
@@ -57,21 +57,21 @@ public class PanelNomPrenomClient extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			Client clt = null;
+			Responsable resp = null;
 			// si le jTextFieldNom et jTextFiledprenom sont non null;
 			if (!getjTextFieldNom().getText().equals("") && !getjTextFieldPrenom().getText().equals("")) {
 
-				// Recherche par le nom et prenom si le client est dans la base de données.
-				clt = new ClientFactory().findClientByNameAndFirstName(getjTextFieldNom().getText(),
+				// Recherche par le nom et prenom si le responsable est dans la base de données.
+				resp = new RespFactory().findResponsableByNameAndFirstName(getjTextFieldNom().getText(),
 						getjTextFieldPrenom().getText());
 
 				// Si le resultat de la recherche est null
-				if (clt == null) {
-					// creation du nouveau client.
-					clt = new Client(getjTextFieldNom().getText(), getjTextFieldPrenom().getText());
-					getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().setClient(clt);
+				if (resp == null) {
+					// creation du nouveau responsable.
+					resp = new Responsable(getjTextFieldNom().getText(), getjTextFieldPrenom().getText());
+					getPanelProj().getPanelEntete().getPanelProjet().getOnglet().getProjet().setResp(resp);
 					// Alert est propose de l'enregistrer dans la base de données.
-					new AlertWindow("Question", "Ce client n'est pas dans la base. Voulez-vous l'ajouter?", this);
+					new AlertWindow("Question", "Ce responsable n'est pas dans la base. Voulez-vous l'ajouter?", this);
 
 				}
 			}
@@ -84,10 +84,9 @@ public class PanelNomPrenomClient extends JPanel {
 			// si le boutton cliqué est égale à "oui".
 			if (button.equals("Oui")) {
 				// Persit le cline dans la base de données.
-				ClientFactory clF = new ClientFactory();
+				RespFactory reF = new RespFactory();
 				try {
-					clF.saveClient(
-							getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient());
+					reF.saveResp(getPanelProj().getPanelEntete().getPanelProjet().getOnglet().getProjet().getResp());
 				} catch (Exception e) {
 
 					e.printStackTrace(System.out);
@@ -99,19 +98,19 @@ public class PanelNomPrenomClient extends JPanel {
 
 	}
 
-	public PanelNomPrenomClient(PanelClient panelClient) {
+	public PanelNomPrenomResp(PanelProj panelProj) {
 		super();
 
-		setPanelClient(panelClient);
+		setPanelProj(panelProj);
 
 		// ajout du layout
 		setLayout(new GridBagLayout());
 
 		// ajout des Component au panel
-		AddLineJLabelJTextField lcl1 = new AddLineJLabelJTextField(this, "NOMCLIENT", "Nom du Client", 20, 0, 0, 1, 1,
-				0, 0, GridBagConstraints.NONE);
-		AddLineJLabelJTextField lcl2 = new AddLineJLabelJTextField(this, "PRENOMCLIENT", "Prenom du Client", 20, 0, 1,
-				1, 1, 0, 0, GridBagConstraints.NONE);
+		AddLineJLabelJTextField lcl1 = new AddLineJLabelJTextField(this, "NOMCLIENT", "Nom du Responsable", 20, 0, 0, 1,
+				1, 0, 0, GridBagConstraints.NONE);
+		AddLineJLabelJTextField lcl2 = new AddLineJLabelJTextField(this, "PRENOMCLIENT", "Prenom du Responsable", 20, 0,
+				1, 1, 1, 0, 0, GridBagConstraints.NONE);
 
 		JPanel panelButton = new JPanel();
 		panelButton.setLayout(new GridBagLayout());
@@ -207,12 +206,12 @@ public class PanelNomPrenomClient extends JPanel {
 		this.jTextFieldPrenom = jTextFieldPrenom;
 	}
 
-	public PanelClient getPanelClient() {
-		return panelClient;
+	public PanelProj getPanelProj() {
+		return panelProj;
 	}
 
-	public void setPanelClient(PanelClient panelClient) {
-		this.panelClient = panelClient;
+	public void setPanelProj(PanelProj panelProj) {
+		this.panelProj = panelProj;
 	}
 
 }

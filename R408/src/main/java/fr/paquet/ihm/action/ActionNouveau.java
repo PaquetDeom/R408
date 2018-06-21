@@ -30,15 +30,24 @@ public class ActionNouveau extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+
+		Client client = new Client();
+		Responsable resp = new Responsable();
+		Echafaudage echaf = new Echafaudage();
+		Projet projet = new Projet();
+		Chantier chantier = new Chantier(projet, echaf);
+		projet.setClient(client);
+		projet.setResp(resp);
+		projet.setChantier(chantier);
+
 		OngletProjet c;
-		c = new OngletProjet(
-				new Projet(null, "", new Client(), new Chantier(null, new Echafaudage()), new Responsable()));
+		c = new OngletProjet(projet);
+		
 		actionSave.setOngletProjet(c);
 		c.setVisible(true);
 
 	}
-	
+
 	public ActionSave getActionSave() {
 		return actionSave;
 	}

@@ -6,9 +6,9 @@ import javax.persistence.Query;
 
 import fr.paquet.dataBase.Connect;
 
-public class ClientFactory extends Connect {
+public class RespFactory extends Connect {
 
-	public ClientFactory() {
+	public RespFactory() {
 
 	}
 
@@ -16,18 +16,18 @@ public class ClientFactory extends Connect {
 	 * 
 	 * @param name
 	 * @param firstName
-	 * @return un client selon son nom et son prenom<br/>
+	 * @return un responsable selon son nom et son prenom<br/>
 	 */
-	public Client findClientByNameAndFirstName(String name, String firstName) {
+	public Responsable findResponsableByNameAndFirstName(String name, String firstName) {
 
-		Query query = getEm()
-				.createQuery("SELECT Client FROM Client client where client.nom=:name and client.prenom=:firstName");
+		Query query = getEm().createQuery(
+				"SELECT Responsable FROM Responsable responsable where responsable.nom=:name and responsable.prenom=:firstName");
 		query.setParameter("name", name);
 		query.setParameter("firstName", firstName);
 
 		try {
 
-			return (Client) query.getSingleResult();
+			return (Responsable) query.getSingleResult();
 
 		} catch (NoResultException e) {
 			e.printStackTrace(System.out);
@@ -37,14 +37,14 @@ public class ClientFactory extends Connect {
 	}
 
 	/**
-	 * Sauvegarde de client<br/>
+	 * Sauvegarde de responsable<br/>
 	 * 
 	 * @param resp
 	 * @throws Exception
 	 */
-	public void saveClient(Client client) throws Exception {
+	public void saveResp(Responsable resp) throws Exception {
 
-		if (findClientByNameAndFirstName(client.getNom(), client.getPrenom()) != null) {
+		if (findResponsableByNameAndFirstName(resp.getNom(), resp.getPrenom()) != null) {
 			throw new Exception("ce client existe deja");
 		} else {
 
@@ -52,7 +52,7 @@ public class ClientFactory extends Connect {
 			try {
 
 				t.begin();
-				getEm().persist(client);
+				getEm().persist(resp);
 				t.commit();
 
 			} catch (Exception e) {
@@ -65,17 +65,17 @@ public class ClientFactory extends Connect {
 	}
 
 	/**
-	 * Suppression de client<br/>
+	 * Suppression de resp<br/>
 	 * 
 	 * @param resp
 	 */
-	public void removeClient(Client client) {
+	public void removeResp(Responsable resp) {
 
 		EntityTransaction t = getEm().getTransaction();
 		try {
 
 			t.begin();
-			getEm().remove(client);
+			getEm().remove(resp);
 			t.commit();
 
 		} catch (Exception e) {
