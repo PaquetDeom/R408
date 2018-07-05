@@ -15,7 +15,7 @@ public class ElementEchaf {
 	@Column(name = "ELELNA", length = 50)
 	private String name = null;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Constructeur constructeur = null;
 
 	@Id

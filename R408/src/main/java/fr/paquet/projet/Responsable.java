@@ -15,7 +15,7 @@ public class Responsable extends Personne {
 	 * 
 	 */
 
-	@OneToMany()
+	@Transient
 	private List<Projet> projets = null;
 
 	/**
@@ -33,6 +33,7 @@ public class Responsable extends Personne {
 	 */
 	public Responsable(String nom, String prenom) {
 		super(nom, prenom);
+		getProjets();
 
 	}
 

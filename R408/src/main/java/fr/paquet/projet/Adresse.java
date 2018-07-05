@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import javax.persistence.*;
 import javax.validation.constraints.Null;
 
-//import com.sun.istack.Nullable;
+
 
 @Entity
 @Table(name = "ADRESSE")

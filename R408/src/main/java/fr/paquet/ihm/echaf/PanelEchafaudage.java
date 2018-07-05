@@ -7,8 +7,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,18 +17,20 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 import fr.paquet.echafaudage.ClasseEchaf;
-
+import fr.paquet.echafaudage.Echafaudage;
 import fr.paquet.echafaudage.TypeEchaf;
 import fr.paquet.echafaudage.TypeSol;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.io.csv.ElementIntegrator;
+import fr.paquet.projet.Chantier;
 import fr.paquet.io.csv.CsvElementEchafReader;
 
-public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
+public class PanelEchafaudage extends JPanel {
 
 	private JLabel labelFichier = null;
+	private JButton JbuttonChooser = null;
 
-	public class JButtonCalcul extends JButton implements ActionListener, PropertyChangeListener {
+	public class JButtonCalcul extends JButton implements ActionListener {
 
 		/**
 		 * Button particulier il est clickable lorsque le projet à un titre, que les
@@ -38,6 +38,9 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		 */
 
 		private boolean clickable = false;
+		private ClasseEchaf classe = null;
+		private TypeEchaf typeEchaf = null;
+		private TypeSol typeSol = null;
 
 		private static final long serialVersionUID = 1L;
 
@@ -48,8 +51,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 			// listeners
 			addActionListener(this);
-			getPanelProjet().getOnglet().getProjet().addPropertyChangeListener(this);
-			getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().addPropertyChangeListener(this);
+
 		}
 
 		/**
@@ -58,11 +60,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		 */
 		private boolean isClickable() {
 
-			if (getPanelProjet().getOnglet().getProjet().getTitre() != null
-					&& !getPanelProjet().getOnglet().getProjet().getTitre().equals("")
-					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getClasseEchaf() != null
-					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeEchaf() != null
-					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeSol() != null) {
+			if (isFileCharged()) {
 
 				clickable = true;
 
@@ -73,7 +71,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 			return clickable;
 		}
 
-		private void buttonEnabled() {
+		public void buttonEnabled() {
 			this.setEnabled(isClickable());
 		}
 
@@ -81,8 +79,16 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		public void actionPerformed(ActionEvent e) {
 
 			try {
+
+				// efface tous les composants
 				getPanelProjet().getpResul().removeAll();
 
+				// set la classe, le typesol et le type echaf.
+				getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setClasseEchaf(getClasse());
+				getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeSol(getTypeSol());
+				getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeEchaf(getTypeEchaf());
+
+				// affiche les résultats.
 				getPanelProjet().getpResul().add(new PanelNoteDeCalcul(getPanelProjet().getpResul()),
 						new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.FIRST_LINE_START,
 								GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
@@ -95,9 +101,9 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 						new GridBagConstraints(1, 0, 1, 2, 0, 0, GridBagConstraints.BASELINE,
 								GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
+				// affiche ce qu'il y a en mémoire (refrech screen)
 				getPanelProjet().getpResul().revalidate();
 
-				
 			} catch (Exception e2) {
 				new AlertWindow("Erreur", "Calcul impossible");
 				e2.printStackTrace(System.out);
@@ -105,97 +111,77 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 		}
 
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
+		private ClasseEchaf getClasse() {
+			return classe;
+		}
 
-			buttonEnabled();
+		public void setClasse(ClasseEchaf classe) {
+			this.classe = classe;
+		}
 
+		private TypeEchaf getTypeEchaf() {
+			return typeEchaf;
+		}
+
+		public void setTypeEchaf(TypeEchaf typeEchaf) {
+			this.typeEchaf = typeEchaf;
+		}
+
+		private TypeSol getTypeSol() {
+			return typeSol;
+		}
+
+		public void setTypeSol(TypeSol typeSol) {
+			this.typeSol = typeSol;
 		}
 
 	}
 
-	public class JButtonChooser extends JButton implements ActionListener, PropertyChangeListener {
+	private void setJbuttonChooser(JButton button) {
 
-		/**
-		 * Button particulier il est clickable lorsque le projet à un titre, que les
-		 * paramètres de l'echafaudage sont entrés<br/>
-		 */
+		button.setText("Intégrer un echafaudage");
 
-		private boolean clickable = false;
+		button.addActionListener(new ActionListener() {
 
-		private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
 
-		public JButtonChooser() {
-			super();
-			setText("Intégrer un echafaudage");
-			buttonEnabled();
+				FileChooser fc = new FileChooser();
 
-			// listeners
-			addActionListener(this);
-			getPanelProjet().getOnglet().getProjet().addPropertyChangeListener(this);
-			getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().addPropertyChangeListener(this);
-		}
+				try {
 
-		/**
-		 * 
-		 * @return true si tire, ClasseEchaf, TypeEchaf, TypeSol sont non null <br/>
-		 */
-		private boolean isClickable() {
+					Echafaudage echaf = new Echafaudage();
+					Chantier chantier = new Chantier(getPanelProjet().getOnglet().getProjet(), echaf);
+					getPanelProjet().getOnglet().getProjet().setChantier(chantier);
 
-			if (getPanelProjet().getOnglet().getProjet().getTitre() != null
-					&& !getPanelProjet().getOnglet().getProjet().getTitre().equals("")
-					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getClasseEchaf() != null
-					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeEchaf() != null
-					&& getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().getTypeSol() != null) {
+					CsvElementEchafReader reader = new CsvElementEchafReader(PanelEchafaudage.this, fc.getFile());
+					ElementIntegrator integrator = new ElementIntegrator(reader);
 
-				clickable = true;
+					if (fc.getFile() != null) {
 
-			} else {
-				clickable = false;
+						chantier.getEchafaudage().setListElements(integrator.getElements());
+					}
+
+					new AlertWindow("Attention", "Le fichier " + fc.getFile().getName() + " est correctement chargé");
+					setFileCharged(true);
+					getJButtonCalcul().buttonEnabled();
+
+					addFichier(fc.getFile());
+
+					getPanelProjet().getpResul().revalidate();
+
+				} catch (Exception e1) {
+
+					new AlertWindow("Erreur", "Erreur lors du chargement du fichier");
+					e1.printStackTrace(System.out);
+				}
 			}
+		});
+		this.JbuttonChooser = button;
+	}
 
-			return clickable;
-		}
-
-		private void buttonEnabled() {
-			this.setEnabled(isClickable());
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			FileChooser fc = new FileChooser();
-
-			try {
-
-				CsvElementEchafReader reader = new CsvElementEchafReader(PanelEchafaudage.this, fc.getFile());
-				ElementIntegrator integrator = new ElementIntegrator(reader);
-
-				if (fc.getFile() != null)
-
-					getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
-							.setListElements(integrator.getElements());
-
-				new AlertWindow("Attention", "Le fichier " + fc.getFile().getName() + " est correctement chargé");
-
-				addFichier(fc.getFile());
-
-				getPanelProjet().getpResul().revalidate();
-
-			} catch (Exception e1) {
-
-				new AlertWindow("Erreur", "Erreur lors du chargement du fichier");
-				e1.printStackTrace(System.out);
-			}
-		}
-
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-
-			buttonEnabled();
-
-		}
-
+	private JButton getJbuttonChooser() {
+		return JbuttonChooser;
 	}
 
 	/**
@@ -206,6 +192,24 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 	private List<JCheckBox> classes = null;
 	private List<JCheckBox> types = null;
 	private List<JCheckBox> typeEchafs = null;
+	private boolean fileIsCharged = false;
+	private JButtonCalcul jButtonCalcul = null;
+
+	private void setJButtonCalcul(JButtonCalcul bc) {
+		this.jButtonCalcul = bc;
+	}
+
+	private JButtonCalcul getJButtonCalcul() {
+		return jButtonCalcul;
+	}
+
+	private void setFileCharged(boolean b) {
+		this.fileIsCharged = b;
+	}
+
+	private boolean isFileCharged() {
+		return fileIsCharged;
+	}
 
 	/**
 	 * Constructeur de la class<br/>
@@ -221,6 +225,10 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		// Ajout d'un layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
+
+		// mutte la variable JButtonChooser
+		setJbuttonChooser(new JButton());
+		setJButtonCalcul(new JButtonCalcul());
 
 		// contient la ligne des boutons
 		int ligneButton = 0;
@@ -292,9 +300,9 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 		JPanel panelButton2 = new JPanel();
 		panelButton2.setLayout(new GridLayout());
 		// fichier *.csv
-		panelButton2.add(new JButtonChooser());
+		panelButton2.add(getJbuttonChooser());
 		// affichage du button Jcalcul
-		panelButton2.add(new JButtonCalcul());
+		panelButton2.add(getJButtonCalcul());
 
 		buttonPanel.add(panelButton2, BorderLayout.EAST);
 
@@ -322,7 +330,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 				for (ClasseEchaf clE : EnumSet.allOf(ClasseEchaf.class)) {
 					if (clE.getClasse().equals(box.getText()))
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setClasseEchaf(clE);
+						getJButtonCalcul().setClasse(clE);
 				}
 
 			}
@@ -354,7 +362,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 				for (TypeSol tS : EnumSet.allOf(TypeSol.class)) {
 
 					if (tS.getType().equals(box.getText()))
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeSol(tS);
+						getJButtonCalcul().setTypeSol(tS);
 
 				}
 
@@ -387,7 +395,7 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 				for (TypeEchaf tE : EnumSet.allOf(TypeEchaf.class)) {
 
 					if (tE.getType().equals(box.getText()))
-						getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeEchaf(tE);
+						getJButtonCalcul().setTypeEchaf(tE);
 
 				}
 
@@ -433,12 +441,6 @@ public class PanelEchafaudage extends JPanel implements PropertyChangeListener {
 
 	private void setPanelProjet(JPanelProjet panelProjet) {
 		this.panelProjet = panelProjet;
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

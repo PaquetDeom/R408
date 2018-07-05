@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!ELEMENT projet (titre, url, responsable, client, chantier, adresses)>
+<!ELEMENT titre (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT responsable (nomResp, prenomResp)>
+<!ELEMENT nomResp (#PCDATA)>
+<!ELEMENT prenomResp (#PCDATA)>
+<!ELEMENT client (nomClient, prenomClient, adresseIdClient)>
+<!ELEMENT nomClient (#PCDATA)>
+<!ELEMENT prenomClient (#PCDATA)>
+<!ELEMENT adresseIdClient (#PCDATA)>
+<!ELEMENT chantier (adresseIdChantier, echafaudage)>
+<!ELEMENT adresseIdChantier (#PCDATA)>
+<!ELEMENT echafaudage (constructeur, elements)>
+<!ATTLIST echafaudage classe (CL1|CL2|CL3|CL4|CL5) #REQUIRED>
+<!ATTLIST echafaudage sol (sableFin|sableGrossier|argileMolle|argile|argileDure|roche|bitume|briquePleine|pierre|ba) #REQUIRED> 
+<!ATTLIST echafaudage type (cadre|multidirectionnel) #REQUIRED>
+<!ELEMENT constructeur (#PCDATA)>
+<!ELEMENT elements (element+)>
+<!ELEMENT element (constructeurElement, nom, reference, poids, surface, nombre, position)>
+<!ELEMENT constructeurElement (#PCDATA)>
+<!ELEMENT nom (#PCDATA)>
+<!ELEMENT reference (#PCDATA)>
+<!ELEMENT poids (#PCDATA)>
+<!ELEMENT surface (#PCDATA)>
+<!ELEMENT nombre (#PCDATA)>
+<!ELEMENT position EMPTY>
+<!ATTLIST position niveau (0|1|2) #REQUIRED>
+<!ELEMENT adresses (adresse+)>
+<!ELEMENT adresse (adresse1, adresse2, adresse3, adresse4, commune, mail, telephone)>
+<!ATTLIST adresse id CDATA #REQUIRED>
+<!ELEMENT adresse1 (#PCDATA)>
+<!ELEMENT adresse2 (#PCDATA)>
+<!ELEMENT adresse3 (#PCDATA)>
+<!ELEMENT adresse4 (#PCDATA)>
+<!ELEMENT mail (#PCDATA)>
+<!ELEMENT telephone (#PCDATA)>
+<!ELEMENT commune (communeName)>
+<!ATTLIST commune codeCommune CDATA #REQUIRED>
+<!ELEMENT communeName (#PCDATA)>

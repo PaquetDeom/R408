@@ -4,8 +4,6 @@ import java.util.*;
 
 import javax.persistence.*;
 
-
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,7 +20,7 @@ public class Client extends Personne implements Aadresse {
 	 *         Class qui gere les clients<br/>
 	 */
 
-	@OneToMany()
+	@Transient
 	private List<Projet> projets = null;
 
 	@OneToOne(cascade = CascadeType.ALL)

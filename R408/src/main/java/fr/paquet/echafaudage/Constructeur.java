@@ -16,7 +16,7 @@ public class Constructeur {
 	@Column(name = "COCONA", length = 50)
 	private String name = null;
 	
-	@OneToMany(mappedBy = "constructeur")
+	@Transient
 	private List<ElementEchaf> elements = null;
 	
 	

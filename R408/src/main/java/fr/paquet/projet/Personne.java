@@ -5,6 +5,8 @@ import java.beans.PropertyChangeSupport;
 
 import javax.persistence.*;
 
+import org.w3c.dom.Element;
+
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Personne {
@@ -106,5 +108,4 @@ public class Personne {
 		getChangeSupport().addPropertyChangeListener(l);
 
 	}
-
 }

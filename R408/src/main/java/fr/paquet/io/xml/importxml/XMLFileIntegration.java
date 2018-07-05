@@ -26,6 +26,14 @@ public abstract class XMLFileIntegration {
 
 	public XMLFileIntegration(File xmlFile) {
 
+		//Verification de la grammaire du fichier
+		try {
+			new DTDValidator(xmlFile);
+		} catch (SAXException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		// Nous récupérons une instance de factory qui se chargera de nous fournir
 		// un parseur
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -71,6 +79,6 @@ public abstract class XMLFileIntegration {
 		return list;
 	}
 
-	public abstract void integre(String projet) throws Exception;
+	public abstract void integre() throws Exception;
 
 }

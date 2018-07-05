@@ -25,10 +25,10 @@ public class Echafaudage {
 	@GeneratedValue
 	private long id = 0;
 
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST)
 	private List<ElementEchaf> elements = null;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Constructeur constructeur = null;
 
 	@Enumerated(EnumType.STRING)

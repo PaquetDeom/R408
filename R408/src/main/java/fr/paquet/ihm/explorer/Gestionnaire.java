@@ -11,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -21,14 +23,9 @@ import javax.swing.event.ListSelectionListener;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.FileChooser;
-import fr.paquet.ihm.echaf.PanelEchafaudage;
-import fr.paquet.io.csv.CsvElementEchafReader;
-import fr.paquet.io.csv.ElementIntegrator;
-import fr.paquet.io.xml.importxml.XMLFileIntegration;
+import fr.paquet.io.xml.importxml.ProjetIntegration;
 import fr.paquet.projet.Projet;
 import fr.paquet.projet.ProjetFactory;
-
-import org.w3c.dom.Element;
 
 public class Gestionnaire extends JFrame implements AlertListener {
 
@@ -101,7 +98,7 @@ public class Gestionnaire extends JFrame implements AlertListener {
 			// creation de la fenêtre
 			setAlwaysOnTop(false);
 			setSize(900, 600);
-			
+
 			// creation du layout
 
 			GridBagLayout gridBagLayout = new GridBagLayout();
@@ -176,29 +173,17 @@ public class Gestionnaire extends JFrame implements AlertListener {
 			public void actionPerformed(ActionEvent e) {
 
 				FileChooser fc = new FileChooser();
+				ProjetIntegration projetInt = null;
 
-				try {
+				if (fc.getFile() != null) {
+					projetInt = new ProjetIntegration(fc.getFile());
+					try {
+						projetInt.integre();
+					} catch (Exception e1) {
 
-					XMLFileIntegration xmlIntegre;
-					
-					if (fc.getFile() != null)					
-					 xmlIntegre = new XMLFileIntegration(fc.getFile()) {
-						
-						@Override
-						public void integre(String projet) throws Exception {
-							
-							for (Element elt : getElements("projet")) {
-								System.out.println("elt");
-							}
-							
-						}
-					};					
-					
-
-				} catch (Exception e1) {
-
-					new AlertWindow("Erreur", "Erreur lors du chargement du fichier");
-					e1.printStackTrace(System.out);
+						e1.printStackTrace(System.out);
+						new AlertWindow("Erreur", "Projet non integrer");
+					}
 				}
 			}
 		});
@@ -235,8 +220,19 @@ public class Gestionnaire extends JFrame implements AlertListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
-
+				try {
+				       XMLEncoder encoder = new XMLEncoder(new FileOutputStream("toto.xml"));
+				        try {
+						// serialisation de l'objet
+						encoder.writeObject(getProjetSelected());
+						encoder.flush();
+					} finally {
+						// fermeture de l'encodeur
+						encoder.close();
+					}
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
 			}
 		});
 
