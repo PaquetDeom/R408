@@ -7,6 +7,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import fr.paquet.dataBase.Connect;
+import fr.paquet.ihm.alert.AlertType;
+import fr.paquet.ihm.alert.AlertWindow;
 
 
 /**
@@ -87,9 +89,11 @@ public class ProjetFactory extends Connect {
 				t.begin();
 				getEm().persist(projet);
 				t.commit();
+				new AlertWindow(AlertType.INFORMATION, "Le projet a bien été sauvegardé");
 
 			} catch (Exception e) {
 				t.rollback();
+				new AlertWindow(AlertType.ERREUR, "Le projet n'a pas été sauvé");
 				throw (e);
 			}
 		}

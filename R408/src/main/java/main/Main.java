@@ -11,6 +11,7 @@ import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
 import fr.paquet.ihm.alert.AlertListener;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.main.MainFrame;
 
@@ -61,7 +62,7 @@ public class Main {
 					WindowListener l = new WindowAdapter() {
 						public void windowClosing(WindowEvent e) {
 
-							new AlertWindow("Question", "Etes-vous sûre de vouloir quitter", new AlertListener() {
+							new AlertWindow(AlertType.QUESTION, "Etes-vous sûre de vouloir quitter", new AlertListener() {
 
 								@Override
 								public void buttonClick(String button) {
@@ -82,7 +83,7 @@ public class Main {
 
 					// fermeture avec erreur
 					System.out.println("Fermeture avec erreur");
-					new AlertWindow("Erreur", "Fatal Erreur");
+					new AlertWindow(AlertType.ERREUR, "Fatal Erreur");
 					e.printStackTrace();
 					FermetureAvecErreur();
 

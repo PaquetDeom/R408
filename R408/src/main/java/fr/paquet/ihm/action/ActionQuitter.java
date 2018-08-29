@@ -3,6 +3,7 @@ package fr.paquet.ihm.action;
 import java.awt.event.ActionEvent;
 
 import fr.paquet.ihm.alert.AlertListener;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import main.Main;
 
@@ -20,7 +21,7 @@ public class ActionQuitter extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new AlertWindow("Question", "Etes-vous sûre de vouloir quitter", new AlertListener() {
+		new AlertWindow(AlertType.QUESTION, "Etes-vous sûre de vouloir quitter", new AlertListener() {
 
 			@Override
 			public void buttonClick(String button) {

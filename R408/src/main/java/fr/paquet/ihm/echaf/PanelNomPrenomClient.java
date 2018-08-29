@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import fr.paquet.ihm.alert.AlertListener;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.projet.Client;
 import fr.paquet.projet.ClientFactory;
@@ -71,7 +72,7 @@ public class PanelNomPrenomClient extends JPanel {
 					clt = new Client(getjTextFieldNom().getText(), getjTextFieldPrenom().getText());
 					getPanelClient().getPanelEntete().getPanelProjet().getOnglet().getProjet().setClient(clt);
 					// Alert est propose de l'enregistrer dans la base de données.
-					new AlertWindow("Question", "Ce client n'est pas dans la base. Voulez-vous l'ajouter?", this);
+					new AlertWindow(AlertType.QUESTION, "Ce client n'est pas dans la base. Voulez-vous l'ajouter?", this);
 
 				}
 			}
@@ -91,7 +92,7 @@ public class PanelNomPrenomClient extends JPanel {
 				} catch (Exception e) {
 
 					e.printStackTrace(System.out);
-					new AlertWindow("Erreur", e.getMessage());
+					new AlertWindow(AlertType.ERREUR, e.getMessage());
 				}
 			}
 

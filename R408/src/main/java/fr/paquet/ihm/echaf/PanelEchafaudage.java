@@ -20,6 +20,7 @@ import fr.paquet.echafaudage.ClasseEchaf;
 import fr.paquet.echafaudage.Echafaudage;
 import fr.paquet.echafaudage.TypeEchaf;
 import fr.paquet.echafaudage.TypeSol;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.io.csv.ElementIntegrator;
 import fr.paquet.projet.Chantier;
@@ -105,7 +106,7 @@ public class PanelEchafaudage extends JPanel {
 				getPanelProjet().getpResul().revalidate();
 
 			} catch (Exception e2) {
-				new AlertWindow("Erreur", "Calcul impossible");
+				new AlertWindow(AlertType.ERREUR, "Calcul impossible");
 				e2.printStackTrace(System.out);
 			}
 
@@ -162,7 +163,7 @@ public class PanelEchafaudage extends JPanel {
 						chantier.getEchafaudage().setListElements(integrator.getElements());
 					}
 
-					new AlertWindow("Attention", "Le fichier " + fc.getFile().getName() + " est correctement chargé");
+					new AlertWindow(AlertType.ATTENTION, "Le fichier " + fc.getFile().getName() + " est correctement chargé");
 					setFileCharged(true);
 					getJButtonCalcul().buttonEnabled();
 
@@ -172,7 +173,7 @@ public class PanelEchafaudage extends JPanel {
 
 				} catch (Exception e1) {
 
-					new AlertWindow("Erreur", "Erreur lors du chargement du fichier");
+					new AlertWindow(AlertType.ERREUR, "Erreur lors du chargement du fichier");
 					e1.printStackTrace(System.out);
 				}
 			}

@@ -21,10 +21,10 @@ public class Connect {
 	 *         url de la db jdbc:hsqldb:hsql://localhost:5434/r408
 	 */
 	public static EntityManagerFactory getEmf() {
-		if (emf == null)
-			emf = Persistence.createEntityManagerFactory("R408");
-		if (emf.isOpen())
+		if (emf != null && emf.isOpen())
 			return emf;
+		else
+			emf = Persistence.createEntityManagerFactory("R408");
 		return emf;
 
 	}

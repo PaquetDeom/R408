@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import fr.paquet.ihm.alert.AlertListener;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.projet.RespFactory;
 import fr.paquet.projet.Responsable;
@@ -71,7 +72,7 @@ public class PanelNomPrenomResp extends JPanel {
 					resp = new Responsable(getjTextFieldNom().getText(), getjTextFieldPrenom().getText());
 					getPanelProj().getPanelEntete().getPanelProjet().getOnglet().getProjet().setResp(resp);
 					// Alert est propose de l'enregistrer dans la base de données.
-					new AlertWindow("Question", "Ce responsable n'est pas dans la base. Voulez-vous l'ajouter?", this);
+					new AlertWindow(AlertType.QUESTION, "Ce responsable n'est pas dans la base. Voulez-vous l'ajouter?", this);
 
 				}
 			}
@@ -90,7 +91,7 @@ public class PanelNomPrenomResp extends JPanel {
 				} catch (Exception e) {
 
 					e.printStackTrace(System.out);
-					new AlertWindow("Erreur", e.getMessage());
+					new AlertWindow(AlertType.ERREUR, e.getMessage());
 				}
 			}
 

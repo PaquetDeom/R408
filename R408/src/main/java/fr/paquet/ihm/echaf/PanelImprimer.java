@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 
 public class PanelImprimer extends JPanel {
@@ -38,7 +39,7 @@ public class PanelImprimer extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				new AlertWindow("Attention", "bientôt sa va imprimer");
+				new AlertWindow(AlertType.ATTENTION, "bientôt sa va imprimer");
 			}
 		});
 

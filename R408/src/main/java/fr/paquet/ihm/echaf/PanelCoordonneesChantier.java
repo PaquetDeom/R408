@@ -5,6 +5,7 @@ import java.awt.event.FocusListener;
 
 import javax.swing.*;
 
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 
 public class PanelCoordonneesChantier extends PanelCoordonnees {
@@ -57,7 +58,7 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 										.getAdresse().getCommune().setCodeCommune(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
-								new AlertWindow("ERREUR", e1.getMessage());
+								new AlertWindow(AlertType.ERREUR, e1.getMessage());
 							}
 						}
 						if (title.equals("COMMUNE")) {
@@ -70,7 +71,7 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 										.getAdresse().setMail(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
-								new AlertWindow("ERREUR", e1.getMessage());
+								new AlertWindow(AlertType.ERREUR, e1.getMessage());
 							}
 						}
 						if (title.equals("TEL")) {
@@ -79,7 +80,7 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 										.getAdresse().setTelephone(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
-								new AlertWindow("ERREUR", e1.getMessage());
+								new AlertWindow(AlertType.ERREUR, e1.getMessage());
 							}
 						}
 					}

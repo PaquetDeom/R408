@@ -6,6 +6,7 @@ import fr.paquet.echafaudage.Constructeur;
 import fr.paquet.echafaudage.ElementEchaf;
 import fr.paquet.echafaudage.TypeEchaf;
 import fr.paquet.echafaudage.TypeElement;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.io.csv.CsvElementEchafReader;
 
@@ -20,7 +21,7 @@ public class ElementIntegrator {
 			createElement();
 		} catch (Exception e) {
 
-			new AlertWindow("Erreur", e.getMessage());
+			new AlertWindow(AlertType.ERREUR, e.getMessage());
 			e.printStackTrace(System.out);
 		}
 	}

@@ -1,7 +1,6 @@
 package fr.paquet.ihm.alert;
 
 import java.util.ArrayList;
-
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -11,6 +10,7 @@ public class AlertWindow extends JOptionPane {
 	private String message = null;
 	@SuppressWarnings("unused")
 	private String[] buttons = null;
+	private AlertType alertType = null;
 
 	private ArrayList<AlertListener> listenerList = new ArrayList<AlertListener>();
 
@@ -33,26 +33,25 @@ public class AlertWindow extends JOptionPane {
 	 * @param message
 	 *            d'erreur ou d'alerte<br/>
 	 */
-	public AlertWindow(String title, String message) {
+	public AlertWindow(AlertType type, String message) {
 
 		super();
 
 		ImageIcon img = new ImageIcon();
 
-		if (title.equals("Erreur")) {
+		if (type == AlertType.ERREUR) {
 			img = new ImageIcon("target/image/iconErreur.jpeg");
-
-			showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE, img);
+			showMessageDialog(null, message, type.getStringType(), JOptionPane.ERROR_MESSAGE, img);
 		}
-		if (title.equals("Information")) {
-			img = new ImageIcon("target/image/iconInfo.jpeg");
-
-			showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, img);
-		}
-		if (title.equals("Attention")) {
+		if (type == AlertType.ATTENTION) {
 			img = new ImageIcon("target/image/iconWarning.jpeg");
 
-			showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE, img);
+			showMessageDialog(null, message, type.getStringType(), JOptionPane.WARNING_MESSAGE, img);
+		}
+		if (type == AlertType.INFORMATION) {
+			img = new ImageIcon("target/image/iconInfo.jpeg");
+
+			showMessageDialog(null, message, type.getStringType(), JOptionPane.INFORMATION_MESSAGE, img);
 		}
 
 	}
@@ -70,14 +69,14 @@ public class AlertWindow extends JOptionPane {
 	 *            la class qui passe le listener doit implementer l'interface
 	 *            AlertListener<br/>
 	 */
-	public AlertWindow(String title, String message, AlertListener listener) {
-		this(title, message);
+	public AlertWindow(AlertType type, String message, AlertListener listener) {
+		this(type, message);
 		addButtonListener(listener);
 
-		if (title.equals("Question")) {
+		if (type == AlertType.QUESTION) {
 			ImageIcon img = new ImageIcon("/home/paquet/git/R408/R408/src/images/iconQuestion.jpeg");
 
-			int option = showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION,
+			int option = showConfirmDialog(null, message, type.getStringType(), JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, img);
 
 			if (option == JOptionPane.OK_OPTION) {
@@ -93,6 +92,14 @@ public class AlertWindow extends JOptionPane {
 				}
 			}
 		}
+	}
+
+	public AlertType getAlertType() {
+		return alertType;
+	}
+
+	public void setAlertType(AlertType alertType) {
+		this.alertType = alertType;
 	}
 
 }

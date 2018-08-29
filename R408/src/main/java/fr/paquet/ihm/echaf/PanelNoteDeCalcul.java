@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 import fr.paquet.echafaudage.Arrondi;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 
 public class PanelNoteDeCalcul extends JPanel {
@@ -73,7 +74,7 @@ public class PanelNoteDeCalcul extends JPanel {
 					7);
 
 		} catch (Exception e) {
-			new AlertWindow("Erreur", e.getMessage());
+			new AlertWindow(AlertType.ERREUR, e.getMessage());
 			e.printStackTrace(System.out);
 		}
 

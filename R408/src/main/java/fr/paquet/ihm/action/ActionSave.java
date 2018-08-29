@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.KeyStroke;
 
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.OngletProjet;
 import fr.paquet.projet.Projet;
@@ -43,7 +44,7 @@ public class ActionSave extends ActionBDA {
 			pF.saveProjet(getProjet());
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
-			new AlertWindow("Erreur", e.getMessage());
+			new AlertWindow(AlertType.ERREUR, e.getMessage());
 		}
 	}
 

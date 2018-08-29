@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 
 /**
@@ -54,7 +55,7 @@ public abstract class XMLFileIntegration {
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 
 			e.printStackTrace(System.out);
-			new AlertWindow("Erreur", "Fichier non conforme");
+			new AlertWindow(AlertType.ERREUR, "Fichier non conforme");
 
 		}
 

@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 import fr.paquet.echafaudage.*;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.PanelEchafaudage;
 
@@ -86,7 +87,7 @@ public class CsvElementEchafReader {
 		} catch (
 
 		IOException e) {
-			new AlertWindow("Erreur", e.getMessage());
+			new AlertWindow(AlertType.ERREUR, e.getMessage());
 			e.printStackTrace(System.out);
 		}
 	}

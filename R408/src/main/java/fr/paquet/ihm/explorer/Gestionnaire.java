@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLEncoder;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -21,6 +22,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import fr.paquet.ihm.alert.AlertListener;
+import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.FileChooser;
 import fr.paquet.io.xml.importxml.ProjetIntegration;
@@ -42,10 +44,7 @@ public class Gestionnaire extends JFrame implements AlertListener {
 	private JButton buttonDelete = null;
 
 	private List<Projet> getProjets() throws Exception {
-		if (projets == null) {
-			projets = new ProjetFactory().findAllProjets();
-		}
-
+		projets = new ProjetFactory().findAllProjets();
 		return projets;
 	}
 
@@ -157,7 +156,7 @@ public class Gestionnaire extends JFrame implements AlertListener {
 			getContentPane().add(getTableProjets(), gbc_table);
 
 		} catch (Exception e) {
-			new AlertWindow("Erreur", e.getMessage());
+			new AlertWindow(AlertType.ERREUR, e.getMessage());
 			e.printStackTrace(System.out);
 		}
 
@@ -182,7 +181,7 @@ public class Gestionnaire extends JFrame implements AlertListener {
 					} catch (Exception e1) {
 
 						e1.printStackTrace(System.out);
-						new AlertWindow("Erreur", "Projet non integrer");
+						new AlertWindow(AlertType.ERREUR, "Projet non integrer");
 					}
 				}
 			}
@@ -202,7 +201,8 @@ public class Gestionnaire extends JFrame implements AlertListener {
 
 				if (getProjetSelected() != null) {
 
-					new AlertWindow("Question", "Etes vous sûre de vouloir supprimer le projet", Gestionnaire.this);
+					new AlertWindow(AlertType.QUESTION, "Etes vous sûre de vouloir supprimer le projet",
+							Gestionnaire.this);
 
 				}
 
@@ -221,8 +221,8 @@ public class Gestionnaire extends JFrame implements AlertListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-				       XMLEncoder encoder = new XMLEncoder(new FileOutputStream("toto.xml"));
-				        try {
+					XMLEncoder encoder = new XMLEncoder(new FileOutputStream("toto.xml"));
+					try {
 						// serialisation de l'objet
 						encoder.writeObject(getProjetSelected());
 						encoder.flush();
@@ -260,7 +260,16 @@ public class Gestionnaire extends JFrame implements AlertListener {
 		if (button.equals("Oui")) {
 			new ProjetFactory().removeProjet(getProjetSelected());
 			setProjetSelected(null);
-			repaint();
+			Gestionnaire.this.dispose();
+			try {
+				new Gestionnaire();
+				setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace(System.out);
+				new AlertWindow(AlertType.ERREUR, e.getMessage());
+			}
+			Gestionnaire.this.repaint();
 		}
 
 	}
