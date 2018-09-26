@@ -4,10 +4,15 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+@XStreamAlias("constructeur")
 @Entity
 @Table(name = "Constructeur")
 public class Constructeur {
 	
+	@XStreamOmitField
 	@Id
 	@GeneratedValue
 	@Column(name = "COCOID")
@@ -16,6 +21,7 @@ public class Constructeur {
 	@Column(name = "COCONA", length = 50)
 	private String name = null;
 	
+	@XStreamOmitField
 	@Transient
 	private List<ElementEchaf> elements = null;
 	

@@ -39,13 +39,14 @@ public class ActionSave extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		ProjetFactory pF = new ProjetFactory();
+		
 		try {
-			pF.saveProjet(getProjet());
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			new AlertWindow(AlertType.ERREUR, e.getMessage());
+		ProjetFactory pF = new ProjetFactory(getProjet());
+		pF.saveProjet();
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 
 	@Override

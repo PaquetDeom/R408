@@ -2,6 +2,9 @@ package fr.paquet.echafaudage;
 
 import javax.persistence.*;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("elementEchafaudage")
 @Entity
 @Table(name = "ELEMENT")
 public class ElementEchaf {
@@ -15,7 +18,7 @@ public class ElementEchaf {
 	@Column(name = "ELELNA", length = 50)
 	private String name = null;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Constructeur constructeur = null;
 
 	@Id
@@ -34,14 +37,13 @@ public class ElementEchaf {
 	@Enumerated(EnumType.STRING)
 	private TypeElement tElement = null;
 
-	private int position = 0;
-
 	public ElementEchaf() {
+		super();
 
 	}
 
 	public ElementEchaf(Constructeur constructeur, String name, String reference, TypeEchaf type, double poids,
-			double surface, int position, TypeElement typeElemnt) throws Exception {
+			double surface, TypeElement typeElemnt) throws Exception {
 		super();
 		setConstructeur(constructeur);
 		setName(name);
@@ -49,7 +51,6 @@ public class ElementEchaf {
 		setTypeEchaf(type);
 		setPoids(poids);
 		setSurface(surface);
-		setPosition(position);
 		setTypeElement(typeElemnt);
 	}
 
@@ -67,14 +68,6 @@ public class ElementEchaf {
 
 	public double getSurface() {
 		return surface;
-	}
-
-	private void setPosition(int position) throws Exception {
-
-		if (position != 0 && position != 1 && position != 2) {
-			throw new Exception("La position doit être 0, 1 ou 2");
-		}
-		this.position = position;
 	}
 
 	private void setTypeEchaf(TypeEchaf type) {
@@ -95,16 +88,6 @@ public class ElementEchaf {
 
 	private void setReference(String reference) {
 		this.reference = reference.trim();
-	}
-
-	/**
-	 * 
-	 * @return 0;1;2 : 0 Position du sol jusqu a 1<br/>
-	 *         1 Position en dessous de 2<br/>
-	 *         2 Position haute de l echaf<br/>
-	 */
-	public int getPosition() {
-		return position;
 	}
 
 	/**

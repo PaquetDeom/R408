@@ -7,6 +7,10 @@ import javax.persistence.*;
 
 import org.w3c.dom.Element;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Personne {
@@ -15,6 +19,7 @@ public class Personne {
 	 * 
 	 */
 
+	@XStreamOmitField
 	@Id
 	@Column(name = "PEPEID")
 	@GeneratedValue
@@ -26,6 +31,7 @@ public class Personne {
 	@Column(name = "PEPEPR", length = 20)
 	private String prenom = null;
 
+	@XStreamOmitField
 	@Transient
 	private PropertyChangeSupport changeSupport = null;
 

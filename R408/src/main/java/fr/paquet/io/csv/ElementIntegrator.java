@@ -45,28 +45,26 @@ public class ElementIntegrator {
 				getElRe().getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
 						.setConstructeur(constructeur);
 			String name = args[0];
-			
+
 			TypeElement tElement = null;
 			for (TypeElement tE : EnumSet.allOf(TypeElement.class)) {
 				String string = tE.getName();
-				if(name.equals(string))
+				if (name.equals(string))
 					tElement = tE;
 			}
-			
+
 			String reference = args[2];
 			TypeEchaf type = null;
 			double poids = 0.0;
 			double surface = 0.0;
 			int position = 0;
 
-			if (!args[3].equals("Plateau 1") && !args[3].equals("Plateau 2")) {
+			String[] a = args[3].split(" ");
+
+			if (a.length > 1)
+				position = Integer.parseInt(a[1]);
+			else
 				position = 0;
-			} else {
-				if (args[3].equals("Plateau 1"))
-					position = 2;
-				if (args[3].equals("Plateau 2"))
-					position = 1;
-			}
 
 			if (!args[4].equals("")) {
 				char[] tab = args[4].toCharArray();
@@ -77,7 +75,7 @@ public class ElementIntegrator {
 				poids = Double.parseDouble(String.valueOf(tab));
 			}
 
-			if (args.length>=6 && !args[5].equals("")) {
+			if (args.length >= 6 && !args[5].equals("")) {
 				String surf[] = args[5].split(" ");
 				char[] tab1 = surf[0].toCharArray();
 				for (int i = 0; i < tab1.length; i++) {
@@ -87,7 +85,10 @@ public class ElementIntegrator {
 				surface = Double.parseDouble(String.valueOf(tab1));
 			}
 
-			addElement(new ElementEchaf(constructeur, name, reference, type, poids, surface, position, tElement));
+			ElementEchaf el = new ElementEchaf(constructeur, name, reference, type, poids, surface, tElement);
+			getElRe().getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
+					.setPositionDesElements(el, position);
+			addElement(el);
 		}
 
 	}

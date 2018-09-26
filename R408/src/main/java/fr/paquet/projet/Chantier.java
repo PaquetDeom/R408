@@ -2,8 +2,12 @@ package fr.paquet.projet;
 
 import javax.persistence.*;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import fr.paquet.echafaudage.Echafaudage;
 
+@XStreamAlias("chantier")
 @Entity
 @Table(name = "CHANTIER")
 public class Chantier implements Aadresse {
@@ -11,6 +15,7 @@ public class Chantier implements Aadresse {
 	/**
 	 * 
 	 */
+	@XStreamOmitField
 	@Id
 	@Column(name = "CHCHID")
 	@GeneratedValue
@@ -22,6 +27,7 @@ public class Chantier implements Aadresse {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Echafaudage echafaudage = null;
 
+	@XStreamOmitField
 	@OneToOne
 	private Projet projet = null;
 

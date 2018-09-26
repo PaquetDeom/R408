@@ -26,10 +26,9 @@ public class AlertWindow extends JOptionPane {
 	/**
 	 * Constructeur de la class<br/>
 	 * 
-	 * @param title
+	 * @param AlertType
 	 *            de la JOptionPane<br/>
-	 *            le titre doit etre soit "Erreur" soit "Information" soit
-	 *            "Attention"<br/>
+	 *            ex : AlertType.ERREUR, AlertType.ATTENTION...<br/>
 	 * @param message
 	 *            d'erreur ou d'alerte<br/>
 	 */

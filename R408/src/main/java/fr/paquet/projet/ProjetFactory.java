@@ -7,9 +7,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import fr.paquet.dataBase.Connect;
+import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
-
 
 /**
  * 
@@ -17,7 +17,9 @@ import fr.paquet.ihm.alert.AlertWindow;
  *
  */
 
-public class ProjetFactory extends Connect {
+public class ProjetFactory extends Connect implements AlertListener {
+
+	private Projet projet = null;
 
 	/**
 	 * 
@@ -25,7 +27,14 @@ public class ProjetFactory extends Connect {
 	 *
 	 */
 	public ProjetFactory() {
+		super();
 
+	}
+
+	public ProjetFactory(Projet projet) {
+		this();
+
+		setProjet(projet);
 	}
 
 	/**
@@ -43,7 +52,7 @@ public class ProjetFactory extends Connect {
 			return (Projet) query.getSingleResult();
 
 		} catch (NoResultException e) {
-			
+
 			e.printStackTrace(System.out);
 			return null;
 		}
@@ -53,51 +62,60 @@ public class ProjetFactory extends Connect {
 	/**
 	 * 
 	 * @return tous les projets de la DB<br/>
-	 * @throws Exception la liste est vide<br/>
+	 * @throws Exception
+	 *             la liste est vide<br/>
 	 */
 	public List<Projet> findAllProjets() throws Exception {
 
 		Query query = getEm().createQuery("Select projet FROM Projet projet");
 		@SuppressWarnings("unchecked")
 		List<Projet> projets = (List<Projet>) query.getResultList();
-		
-		if(projets.isEmpty())
+
+		if (projets.isEmpty())
 			throw new Exception("Il n'y a pas de projet dans la base de donnees");
 
 		return projets;
 	}
 
-	
-	/**
-	 * 
-	 * @param projet
-	 * @throws Exception
-	 *             le projet existe déja dans la DB<br/>
-	 */
-	public void saveProjet(Projet projet) throws Exception {
+	public void saveProjet() throws Exception {
 
-		if (projet.getTitre() == null || projet.getTitre().equals("")) {
+		if (getProjet().getTitre() == null || getProjet().getTitre().equals("")) {
 			throw new Exception("le projet doit avoir un titre");
 		}
 
-		if (findProjetByTitle(projet.getTitre()) != null) {
-			throw new Exception("ce projet existe deja");
+		if (findProjetByTitle(getProjet().getTitre()) != null) {
+			new AlertWindow(AlertType.QUESTION, "ce projet existe déja voulez-vous le mettre à jour", this);
 		} else {
 			EntityTransaction t = getEm().getTransaction();
 			try {
 
 				t.begin();
-				getEm().persist(projet);
+				getEm().persist(getProjet());
 				t.commit();
 				new AlertWindow(AlertType.INFORMATION, "Le projet a bien été sauvegardé");
 
 			} catch (Exception e) {
-				t.rollback();
+				
 				new AlertWindow(AlertType.ERREUR, "Le projet n'a pas été sauvé");
+				t.rollback();
 				throw (e);
 			}
 		}
 
+	}
+
+	public void RefrechProjet() {
+		EntityTransaction t = getEm().getTransaction();
+
+		try {
+			t.begin();
+			getEm().refresh(getProjet());
+			new AlertWindow(AlertType.INFORMATION, "Le projet a bien été mis à jour");
+		} catch (Exception e) {
+			t.rollback();
+			new AlertWindow(AlertType.ERREUR, "Le projet n'a pas été mis à jour");
+			throw(e);
+		}
 	}
 
 	/**
@@ -105,19 +123,34 @@ public class ProjetFactory extends Connect {
 	 * 
 	 * @param projet
 	 */
-	public void removeProjet(Projet projet) {
+	public void removeProjet() {
 
 		EntityTransaction t = getEm().getTransaction();
 		try {
 
 			t.begin();
-			getEm().remove(projet);
+			getEm().remove(getProjet());
 			t.commit();
 
 		} catch (Exception e) {
 			t.rollback();
 			throw (e);
 		}
+
+	}
+
+	private Projet getProjet() {
+		return projet;
+	}
+
+	private void setProjet(Projet projet) {
+		this.projet = projet;
+	}
+
+	@Override
+	public void buttonClick(String button) {
+		if (button == "Oui")
+			RefrechProjet();
 
 	}
 

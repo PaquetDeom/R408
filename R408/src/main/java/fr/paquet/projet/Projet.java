@@ -5,6 +5,11 @@ import java.beans.PropertyChangeSupport;
 
 import javax.persistence.*;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+@XStreamAlias("projet")
 @Entity
 @Table(name = "PROJET")
 public class Projet {
@@ -15,6 +20,7 @@ public class Projet {
 	 *         Class qui gere un projet<br/>
 	 */
 
+	@XStreamOmitField
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue
@@ -32,6 +38,7 @@ public class Projet {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Responsable resp = null;
 
+	@XStreamOmitField
 	@Transient
 	PropertyChangeSupport changeSupport = null;
 

@@ -5,8 +5,12 @@ import java.util.regex.Pattern;
 import javax.persistence.*;
 import javax.validation.constraints.Null;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 
+@XStreamAlias("adresses")
 @Entity
 @Table(name = "ADRESSE")
 public class Adresse {
@@ -17,6 +21,7 @@ public class Adresse {
 	 *         La class gere les adresses<br/>
 	 */
 
+	@XStreamOmitField
 	@Id
 	@GeneratedValue
 	@Column(name = "ADADID")

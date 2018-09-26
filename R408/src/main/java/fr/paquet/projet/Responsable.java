@@ -4,6 +4,10 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+@XStreamAlias("responsable")
 @Entity
 @Table(name = "RESPONSABLE")
 @AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "REREID")),
@@ -15,6 +19,7 @@ public class Responsable extends Personne {
 	 * 
 	 */
 
+	@XStreamOmitField
 	@Transient
 	private List<Projet> projets = null;
 

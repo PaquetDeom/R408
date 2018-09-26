@@ -37,37 +37,37 @@ public class DonneesTest {
 
 	public ElementEchaf getEl1ec1() throws Exception {
 		return new ElementEchaf(getConstructeurUlma(), TypeElement.equereGardeCoprs70.getName(), "001", TypeEchaf.TYPE1,
-				1, 0, 1, TypeElement.equereGardeCoprs70);
+				 0, 1, TypeElement.equereGardeCoprs70);
 	}
 
 	public ElementEchaf getEl2ec1() throws Exception {
-		return new ElementEchaf(getConstructeurUlma(), TypeElement.amarrageBaie.getName(), "002", TypeEchaf.TYPE1, 2, 0,
+		return new ElementEchaf(getConstructeurUlma(), TypeElement.amarrageBaie.getName(), "002", TypeEchaf.TYPE1, 0,
 				1, TypeElement.amarrageBaie);
 	}
 
 	public ElementEchaf getEl3ec1() throws Exception {
-		return new ElementEchaf(getConstructeurLayer(), TypeElement.gardeCorps70.getName(), "003", TypeEchaf.TYPE1, 5,
+		return new ElementEchaf(getConstructeurLayer(), TypeElement.gardeCorps70.getName(), "003", TypeEchaf.TYPE1, 
 				0, 1, TypeElement.gardeCorps70);
 	}
 
 	public ElementEchaf getEl1ec2() throws Exception {
-		return new ElementEchaf(getConstructeurLayer(), TypeElement.embasePoteaux.getName(), "004", TypeEchaf.TYPE2, 3,
+		return new ElementEchaf(getConstructeurLayer(), TypeElement.embasePoteaux.getName(), "004", TypeEchaf.TYPE2, 
 				0, 0, TypeElement.embasePoteaux);
 	}
 
 	public ElementEchaf getEl2ec2() throws Exception {
-		return new ElementEchaf(getConstructeurLayer(), TypeElement.plateau3.getName(), "005", TypeEchaf.TYPE2, 4, 10,
+		return new ElementEchaf(getConstructeurLayer(), TypeElement.plateau3.getName(), "005", TypeEchaf.TYPE2, 10,
 				1, TypeElement.plateau3);
 	}
 
 	public ElementEchaf getEl3ec2() throws Exception {
-		return new ElementEchaf(getConstructeurLayer(), TypeElement.plateau3.getName(), "005", TypeEchaf.TYPE2, 4, 10,
+		return new ElementEchaf(getConstructeurLayer(), TypeElement.plateau3.getName(), "005", TypeEchaf.TYPE2, 10,
 				2, TypeElement.plateau3);
 	}
 
 	public ElementEchaf getEl4ec2() throws Exception {
 		return new ElementEchaf(getConstructeurLayer(), TypeElement.equereGardeCoprs70.getName(), "006",
-				TypeEchaf.TYPE2, 5, 0, 1, TypeElement.equereGardeCoprs70);
+				TypeEchaf.TYPE2, 0, 1, TypeElement.equereGardeCoprs70);
 	}
 
 	public Echafaudage getEchaf1() throws Exception {

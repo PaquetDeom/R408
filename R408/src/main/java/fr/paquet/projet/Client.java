@@ -7,6 +7,10 @@ import javax.persistence.*;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+@XStreamAlias("client")
 @Entity
 @Table(name = "CLIENT")
 @AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "CLCLID")),
@@ -20,6 +24,7 @@ public class Client extends Personne implements Aadresse {
 	 *         Class qui gere les clients<br/>
 	 */
 
+	@XStreamOmitField
 	@Transient
 	private List<Projet> projets = null;
 

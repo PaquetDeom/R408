@@ -4,12 +4,19 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
+
 import java.util.List;
 
 import javax.persistence.*;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+@XStreamAlias("echafaudage")
 @Entity
 @Table(name = "ECHAFAUDAGE")
 public class Echafaudage {
@@ -20,29 +27,85 @@ public class Echafaudage {
 	 *         Class qui gere un echafaudage<br/>
 	 */
 
+	@XStreamOmitField
 	@Id
 	@Column(name = "ECECID")
 	@GeneratedValue
 	private long id = 0;
 
-	@OneToMany(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.DETACH)
+	@OrderBy("name")
 	private List<ElementEchaf> elements = null;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Constructeur constructeur = null;
 
+	@XStreamAsAttribute
 	@Enumerated(EnumType.STRING)
 	private TypeEchaf type = null;
 
+	@XStreamAsAttribute
 	@Enumerated(EnumType.STRING)
 	private ClasseEchaf classe = null;
 
+	@XStreamAsAttribute
 	@Enumerated(EnumType.STRING)
 	private TypeSol typeSol = null;
 
+	@XStreamOmitField
 	@Transient
-	Hashtable<TypeElement, Integer> elementEchafs = null;
+	private Hashtable<TypeElement, Integer> elementEchafs = null;
 
+	//TODO JPa et HashTable
+	@XStreamAsAttribute
+	@CollectionTable(name = "ECECPO", joinColumns = @JoinColumn(name = "ELELID"))
+	private Hashtable<ElementEchaf, Integer> positionDesElements = null;
+
+	@XStreamOmitField
+	@Transient
+	private PropertyChangeSupport changeSupport = null;
+
+	/**
+	 * 
+	 * @return la position dans l'échafaudage d'un élément<br/>
+	 */
+	public Hashtable<ElementEchaf, Integer> getPositionDesElements() {
+		if (positionDesElements == null)
+			positionDesElements = new Hashtable<ElementEchaf, Integer>();
+		return positionDesElements;
+	}
+
+	/**
+	 * 
+	 * @param el
+	 *            de type ElementEchaf <br/>
+	 * @param p
+	 *            de type Integer <br/>
+	 */
+	public void setPositionDesElements(ElementEchaf el, int p) {
+		getPositionDesElements().put(el, p);
+	}
+
+	/**
+	 * 
+	 * @return la plus haute position d'un échafaudage<br/>
+	 */
+	private int getNumDuDernierEtage() {
+
+		int a = 0;
+
+		for (int i = 0; i < getElementEchafs().size(); i++) {
+			ElementEchaf el = getElements().get(i);
+
+			if (getPositionDesElements().get(el) > a)
+				a = getPositionDesElements().get(el);
+		}
+		return a;
+	}
+
+	/**
+	 * Compte le nombre de TypeElement<br/>
+	 */
 	private void initHashtable() {
 		elementEchafs = new Hashtable<TypeElement, Integer>();
 		for (ElementEchaf el : getElements()) {
@@ -53,6 +116,10 @@ public class Echafaudage {
 		}
 	}
 
+	/**
+	 * 
+	 * @return le nombre d'élément par TypeElement<br/>
+	 */
 	private Hashtable<TypeElement, Integer> getElementEchafs() {
 		if (elementEchafs == null) {
 			initHashtable();
@@ -60,14 +127,22 @@ public class Echafaudage {
 		return elementEchafs;
 	}
 
-	@Transient
-	PropertyChangeSupport changeSupport = null;
-
+	/**
+	 * Constructeur vide<br/>
+	 */
 	public Echafaudage() {
 		super();
 		changeSupport = new PropertyChangeSupport(this);
 	}
 
+	/**
+	 * Constructeur de la Class<br/>
+	 * 
+	 * @param constructeur
+	 * @param type
+	 * @param classe
+	 * @param elements
+	 */
 	public Echafaudage(Constructeur constructeur, TypeEchaf type, ClasseEchaf classe, List<ElementEchaf> elements) {
 		this(constructeur, type, classe);
 		setListElementEchaf(elements);
@@ -182,13 +257,12 @@ public class Echafaudage {
 		double surface = 0;
 
 		for (ElementEchaf el : getPlateformes()) {
-			if (el.getPosition() == 2) {
-				surface = surface + el.getSurface() / 2;
-			} else {
-				surface = surface + el.getSurface();
-			}
-		}
 
+			if (getPositionDesElements().get(el) == getNumDuDernierEtage())
+				surface = surface + el.getSurface();
+			if (getPositionDesElements().get(el) == getNumDuDernierEtage() - 1)
+				surface = surface + el.getSurface() / 2;
+		}
 		return surface;
 	}
 
@@ -213,7 +287,8 @@ public class Echafaudage {
 	/**
 	 * 
 	 * @return Le nombre de pieds d'echafaudage<br/>
-	 * @throws Exception l'echafaudage n'a pas de pieds<br/>
+	 * @throws Exception
+	 *             l'echafaudage n'a pas de pieds<br/>
 	 */
 	public int getNbDePieds() throws Exception {
 
@@ -223,8 +298,8 @@ public class Echafaudage {
 			if (el.getTypeElement().isPied())
 				elEchafs.add(el);
 		}
-		
-		if(elEchafs.size() == 0)
+
+		if (elEchafs.size() == 0)
 			throw new Exception("L'echafaudage doit contenir des pieds");
 
 		return elEchafs.size();
@@ -270,7 +345,7 @@ public class Echafaudage {
 
 		double dim = 0.0;
 		dim = Math.sqrt(getSurfaceCale());
-		
+
 		if (dim < 20)
 			return 20;
 

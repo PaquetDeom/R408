@@ -32,7 +32,19 @@ public class FileChooser extends JFileChooser {
 	public FileChooser(File file) {
 
 		super();
-		showSaveDialog(null);
+
+		FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter("xml files (*.xml)", "xml");
+		// add filters
+		addChoosableFileFilter(xmlFilter);
+		setFileFilter(xmlFilter);
+
+		int returnValue = showSaveDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+			setFile(getSelectedFile());
+
+		}
 
 	}
 

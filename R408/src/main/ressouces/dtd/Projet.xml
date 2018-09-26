@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE projet SYSTEM "Projet.dtd" >
+<projet>
+  <titre>titre</titre>
+  <url>url</url>
+  <responsable>
+    <nomResp>nomResp</nomResp>
+    <prenomResp>prenomResp</prenomResp>
+  </responsable>
+  <client>
+    <nomClient>nomClient</nomClient>
+    <prenomClient>prenomClient</prenomClient>
+    <adresseIdClient>adresseIdClient</adresseIdClient>
+  </client>
+  <chantier>
+    <adresseIdChantier>adresseIdChantier</adresseIdChantier>
+    <echafaudage classe="CL1" sol="sableFin" type="cadre">
+      <constructeur>constructeur</constructeur>
+      <elements>
+        <element>
+          <constructeurElement>constructeurElement</constructeurElement>
+          <nom>nom</nom>
+          <reference>reference</reference>
+          <poids>poids</poids>
+          <surface>surface</surface>
+          <nombre>nombre</nombre>
+          <position niveau="0"/>
+        </element>
+      </elements>
+    </echafaudage>
+  </chantier>
+  <adresses>
+    <adresse id="">
+      <adresse1>adresse1</adresse1>
+      <adresse2>adresse2</adresse2>
+      <adresse3>adresse3</adresse3>
+      <adresse4>adresse4</adresse4>
+      <commune codeCommune="">
+        <communeName>communeName</communeName>
+      </commune>
+      <mail>mail</mail>
+      <telephone>telephone</telephone>
+    </adresse>
+  </adresses>
+</projet>

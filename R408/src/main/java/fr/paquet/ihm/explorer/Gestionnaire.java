@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLEncoder;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -25,6 +24,7 @@ import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.FileChooser;
+import fr.paquet.io.xml.exportxml.ExportXml;
 import fr.paquet.io.xml.importxml.ProjetIntegration;
 import fr.paquet.projet.Projet;
 import fr.paquet.projet.ProjetFactory;
@@ -42,17 +42,51 @@ public class Gestionnaire extends JFrame implements AlertListener {
 	private JButton buttonExport = null;
 	private JButton buttonOuvrir = null;
 	private JButton buttonDelete = null;
+	private GestionnaireModel model = null;
 
+	/**
+	 * 
+	 * @return la liste des projets</br>
+	 * @throws Exception
+	 */
 	private List<Projet> getProjets() throws Exception {
 		projets = new ProjetFactory().findAllProjets();
 		return projets;
 	}
 
+	/**
+	 * 
+	 * @return le model de JTable</br>
+	 */
+	private GestionnaireModel getGModel() {
+		return model;
+	}
+
+	/**
+	 * mutte la variable model de type GestionnaireModel<br/>
+	 * 
+	 * @param model
+	 */
+	private void setGModel(GestionnaireModel model) {
+		this.model = model;
+	}
+
+	/**
+	 * mutte la variable tableProjets de type Jtable<br/>
+	 * 
+	 * @param table
+	 * @throws Exception
+	 */
 	private void setTableProjets(JTable table) throws Exception {
 
-		table.setModel(new GestionnaireModel(getProjets()));
+		// ajout du model à la Jtable
+		table.setModel(getGModel());
+
+		// donne le type de sélection dans la JTable
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel rowSM = table.getSelectionModel();
+
+		// ajout d'un listener
 		rowSM.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -64,6 +98,7 @@ public class Gestionnaire extends JFrame implements AlertListener {
 				try {
 
 					setProjetSelected(getProjets().get(i));
+
 				} catch (Exception e1) {
 
 					e1.printStackTrace();
@@ -93,6 +128,8 @@ public class Gestionnaire extends JFrame implements AlertListener {
 		super("Gestionnaire de projets");
 
 		try {
+			// creation du model de JTable
+			setGModel(new GestionnaireModel(getProjets()));
 
 			// creation de la fenêtre
 			setAlwaysOnTop(false);
@@ -128,7 +165,6 @@ public class Gestionnaire extends JFrame implements AlertListener {
 			getContentPane().add(getButtonImport(), gbc_btnImport);
 
 			// ajout du button export
-			getButtonExport().setEnabled(false);
 			GridBagConstraints gbc_btnExport = new GridBagConstraints();
 			gbc_btnExport.insets = new Insets(0, 0, 5, 0);
 			gbc_btnExport.gridx = 12;
@@ -220,18 +256,13 @@ public class Gestionnaire extends JFrame implements AlertListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				try {
-					XMLEncoder encoder = new XMLEncoder(new FileOutputStream("toto.xml"));
-					try {
-						// serialisation de l'objet
-						encoder.writeObject(getProjetSelected());
-						encoder.flush();
-					} finally {
-						// fermeture de l'encodeur
-						encoder.close();
-					}
-				} catch (Exception e2) {
-					e2.printStackTrace();
+					new ExportXml(getProjetSelected());
+
+				} catch (Exception e1) {
+					new AlertWindow(AlertType.ERREUR, "Le fichier n'a pas été créé");
+					e1.printStackTrace(System.out);
 				}
 			}
 		});
@@ -258,18 +289,8 @@ public class Gestionnaire extends JFrame implements AlertListener {
 	@Override
 	public void buttonClick(String button) {
 		if (button.equals("Oui")) {
-			new ProjetFactory().removeProjet(getProjetSelected());
-			setProjetSelected(null);
+			new ProjetFactory(getProjetSelected()).removeProjet();
 			Gestionnaire.this.dispose();
-			try {
-				new Gestionnaire();
-				setVisible(true);
-
-			} catch (Exception e) {
-				e.printStackTrace(System.out);
-				new AlertWindow(AlertType.ERREUR, e.getMessage());
-			}
-			Gestionnaire.this.repaint();
 		}
 
 	}
