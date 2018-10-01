@@ -3,9 +3,10 @@ package fr.paquet.io.csv;
 import java.util.*;
 
 import fr.paquet.echafaudage.Constructeur;
-import fr.paquet.echafaudage.ElementEchaf;
 import fr.paquet.echafaudage.TypeEchaf;
-import fr.paquet.echafaudage.TypeElement;
+import fr.paquet.echafaudage.element.Element;
+import fr.paquet.echafaudage.element.EltByNameFactory;
+import fr.paquet.echafaudage.element.InstanciationElement;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.io.csv.CsvElementEchafReader;
@@ -13,7 +14,7 @@ import fr.paquet.io.csv.CsvElementEchafReader;
 public class ElementIntegrator {
 
 	private CsvElementEchafReader elRe = null;
-	private List<ElementEchaf> elements = null;
+	private List<Element> elements = null;
 
 	public ElementIntegrator(CsvElementEchafReader csvElementEchafReader) {
 		setElRe(csvElementEchafReader);
@@ -38,26 +39,26 @@ public class ElementIntegrator {
 
 		for (String[] args : getElRe().getData()) {
 
+			// TODO
+			InstanciationElement instanciation = null;
+			EltByNameFactory eltFac = new EltByNameFactory();
+
+			String name = args[0];
+			instanciation = eltFac.findEltByNameByName(name).getIntanc();
+
+			String reference = args[2];
+			TypeEchaf type = null;
+			double poids = 0.0;
+			double surface = 0.0;
+			double longueur = 0.0;
+			int position = 0;
+
 			Constructeur constructeur = new Constructeur(args[1]);
 
 			if (getElRe().getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
 					.getConstructeur() == null)
 				getElRe().getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
 						.setConstructeur(constructeur);
-			String name = args[0];
-
-			TypeElement tElement = null;
-			for (TypeElement tE : EnumSet.allOf(TypeElement.class)) {
-				String string = tE.getName();
-				if (name.equals(string))
-					tElement = tE;
-			}
-
-			String reference = args[2];
-			TypeEchaf type = null;
-			double poids = 0.0;
-			double surface = 0.0;
-			int position = 0;
 
 			String[] a = args[3].split(" ");
 
@@ -85,21 +86,24 @@ public class ElementIntegrator {
 				surface = Double.parseDouble(String.valueOf(tab1));
 			}
 
-			ElementEchaf el = new ElementEchaf(constructeur, name, reference, type, poids, surface, tElement);
-			getElRe().getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage()
-					.setPositionDesElements(el, position);
+			Element el = new Element(
+					getElRe().getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier()
+							.getEchafaudage(),
+					instanciation.instanciationElt(name, reference, constructeur, poids, type, surface, longueur),
+					instanciation, position);
+
 			addElement(el);
 		}
 
 	}
 
-	private void addElement(ElementEchaf element) {
+	private void addElement(Element element) {
 		getElements().add(element);
 	}
 
-	public List<ElementEchaf> getElements() {
+	public List<Element> getElements() {
 		if (elements == null)
-			elements = new ArrayList<ElementEchaf>();
+			elements = new ArrayList<Element>();
 		return elements;
 	}
 

@@ -8,7 +8,21 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>fr.paquet.echafaudage.Constructeur</class>
 		<class>fr.paquet.echafaudage.Echafaudage</class>
-		<class>fr.paquet.echafaudage.ElementEchaf</class>
+		<class>fr.paquet.echafaudage.element.AmarrageBaie</class>
+		<class>fr.paquet.echafaudage.element.EltByName</class>
+		<class>fr.paquet.echafaudage.element.EmbasePoteaux</class>
+		<class>fr.paquet.echafaudage.element.EquerreGardesCorps</class>
+		<class>fr.paquet.echafaudage.element.GardesCorps</class>
+		<class>fr.paquet.echafaudage.element.JambeDeForce</class>
+		<class>fr.paquet.echafaudage.element.Lisse</class>
+		<class>fr.paquet.echafaudage.element.PlancherTrappe</class>
+		<class>fr.paquet.echafaudage.element.Plateau</class>
+		<class>fr.paquet.echafaudage.element.Plinthe</class>
+		<class>fr.paquet.echafaudage.element.Poteaux</class>
+		<class>fr.paquet.echafaudage.element.SocleReglable</class>
+		<class>fr.paquet.echafaudage.element.TypeElement</class>
+		<class>fr.paquet.echafaudage.element.VerinButtee</class>
+		<class>fr.paquet.echafaudage.element.Element</class>
 		<class>fr.paquet.projet.Adresse</class>
 		<class>fr.paquet.projet.Chantier</class>
 		<class>fr.paquet.projet.Client</class>
@@ -16,6 +30,8 @@
 		<class>fr.paquet.projet.Personne</class>
 		<class>fr.paquet.projet.Projet</class>
 		<class>fr.paquet.projet.Responsable</class>
+		
+		
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver"

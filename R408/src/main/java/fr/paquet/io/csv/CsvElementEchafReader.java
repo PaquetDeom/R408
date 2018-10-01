@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-import fr.paquet.echafaudage.*;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.PanelEchafaudage;
@@ -70,23 +69,15 @@ public class CsvElementEchafReader {
 					ligneVide = 0;
 
 					String debut = nextLine[0].trim();
-					// si le 1ier element de la ligne ne commence par par <<vide>> ou par :
+					// si le début de la ligne ne commence par par <<vide>> ou par :
 					if (!debut.equals("") && !debut.equals(":"))
-						// pour chaque element de Echafaudage
-						for (TypeElement elt : EnumSet.allOf(TypeElement.class)) {
-							// si le 1ier élement de la ligne egale le nom de l'element de l'échafaudage
-							if (nextLine[0].equals(elt.getName()))
-								// jajoute le tableau de string à data
-								getData().add(nextLine);
-						}
-
+						// ajoute nextline à data
+						getData().add(nextLine);
 				}
 
 			}
 
-		} catch (
-
-		IOException e) {
+		} catch (IOException e) {
 			new AlertWindow(AlertType.ERREUR, e.getMessage());
 			e.printStackTrace(System.out);
 		}

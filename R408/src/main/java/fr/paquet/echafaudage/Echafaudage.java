@@ -16,6 +16,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+import fr.paquet.echafaudage.element.Element;
+import fr.paquet.echafaudage.element.EltByName;
+import fr.paquet.echafaudage.element.EltByNameFactory;
+import fr.paquet.echafaudage.element.InstanciationElement;
+import fr.paquet.echafaudage.element.Plateau;
+
 @XStreamAlias("echafaudage")
 @Entity
 @Table(name = "ECHAFAUDAGE")
@@ -33,11 +39,11 @@ public class Echafaudage {
 	@GeneratedValue
 	private long id = 0;
 
-	@OneToMany(cascade = CascadeType.DETACH)
-	@OrderBy("name")
-	private List<ElementEchaf> elements = null;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Element> elements = null;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@XStreamAsAttribute
 	private Constructeur constructeur = null;
 
 	@XStreamAsAttribute
@@ -54,73 +60,67 @@ public class Echafaudage {
 
 	@XStreamOmitField
 	@Transient
-	private Hashtable<TypeElement, Integer> elementEchafs = null;
-
-	//TODO JPa et HashTable
-	@XStreamAsAttribute
-	@CollectionTable(name = "ECECPO", joinColumns = @JoinColumn(name = "ELELID"))
-	private Hashtable<ElementEchaf, Integer> positionDesElements = null;
+	private PropertyChangeSupport changeSupport = null;
 
 	@XStreamOmitField
 	@Transient
-	private PropertyChangeSupport changeSupport = null;
+	private Hashtable<InstanciationElement, Integer> elementEchafs = null;
 
 	/**
 	 * 
-	 * @return la position dans l'échafaudage d'un élément<br/>
-	 */
-	public Hashtable<ElementEchaf, Integer> getPositionDesElements() {
-		if (positionDesElements == null)
-			positionDesElements = new Hashtable<ElementEchaf, Integer>();
-		return positionDesElements;
-	}
-
-	/**
-	 * 
-	 * @param el
-	 *            de type ElementEchaf <br/>
-	 * @param p
-	 *            de type Integer <br/>
-	 */
-	public void setPositionDesElements(ElementEchaf el, int p) {
-		getPositionDesElements().put(el, p);
-	}
-
-	/**
-	 * 
-	 * @return la plus haute position d'un échafaudage<br/>
+	 * @return le numéros du dernier étage d'un échafaudage<br/>
 	 */
 	private int getNumDuDernierEtage() {
 
 		int a = 0;
 
-		for (int i = 0; i < getElementEchafs().size(); i++) {
-			ElementEchaf el = getElements().get(i);
-
-			if (getPositionDesElements().get(el) > a)
-				a = getPositionDesElements().get(el);
+		for (int i = 0; i < getElements().size(); i++) {
+			Element el = getElements().get(i);
+			if (el.getPosition() > a)
+				a = el.getPosition();
 		}
 		return a;
 	}
 
 	/**
-	 * Compte le nombre de TypeElement<br/>
+	 * Compte le nombre de type d'élément selon son origine d'instanciation<br/>
 	 */
 	private void initHashtable() {
-		elementEchafs = new Hashtable<TypeElement, Integer>();
-		for (ElementEchaf el : getElements()) {
-			if (elementEchafs.get(el.getTypeElement()) == null)
-				elementEchafs.put(el.getTypeElement(), 1);
+		elementEchafs = new Hashtable<InstanciationElement, Integer>();
+
+		for (Element el : getElements()) {
+
+			if (elementEchafs.get(el.getInst()) == null)
+				elementEchafs.put(el.getInst(), 1);
 			else
-				elementEchafs.put(el.getTypeElement(), elementEchafs.get(el.getTypeElement()) + 1);
+				elementEchafs.put(el.getInst(), elementEchafs.get(el.getInst()) + 1);
 		}
+	}
+
+	/**
+	 * 
+	 * @return L'énumération des clés de la hashtable getElementEchafs()<br/>
+	 */
+	public Enumeration<InstanciationElement> getDistinctElements() {
+		return getElementEchafs().keys();
+	}
+
+	/**
+	 * 
+	 * @param inst
+	 *            de type InstanciationElement
+	 * @return les valeurs de la hashtable getElemntEchafs() en fonction de leurs
+	 *         clés<br/>
+	 */
+	public int getElementCount(InstanciationElement inst) {
+		return getElementEchafs().get(inst);
 	}
 
 	/**
 	 * 
 	 * @return le nombre d'élément par TypeElement<br/>
 	 */
-	private Hashtable<TypeElement, Integer> getElementEchafs() {
+	private Hashtable<InstanciationElement, Integer> getElementEchafs() {
 		if (elementEchafs == null) {
 			initHashtable();
 		}
@@ -143,7 +143,7 @@ public class Echafaudage {
 	 * @param classe
 	 * @param elements
 	 */
-	public Echafaudage(Constructeur constructeur, TypeEchaf type, ClasseEchaf classe, List<ElementEchaf> elements) {
+	public Echafaudage(Constructeur constructeur, TypeEchaf type, ClasseEchaf classe, List<Element> elements) {
 		this(constructeur, type, classe);
 		setListElementEchaf(elements);
 	}
@@ -153,7 +153,7 @@ public class Echafaudage {
 		setConstructeur(constructeur);
 		setTypeEchaf(type);
 		setClasseEchaf(classe);
-		setListElementEchaf(new ArrayList<ElementEchaf>());
+		setListElementEchaf(new ArrayList<Element>());
 	}
 
 	public void setChangeSupport(PropertyChangeSupport pCS) {
@@ -164,12 +164,13 @@ public class Echafaudage {
 		return changeSupport;
 	}
 
-	private void setListElementEchaf(List<ElementEchaf> elements) {
+	private void setListElementEchaf(List<Element> elements) {
 		this.elements = elements;
 	}
 
-	public void addElement(ElementEchaf element) throws Exception {
-		if (element.getConstructeur() == getConstructeur() && element.getTypeEchaf() == getTypeEchaf()) {
+	public void addElement(Element element) throws Exception {
+		if (element.getType().getConstructeur() == getConstructeur()
+				&& element.getType().getTypeEchaf() == getTypeEchaf()) {
 			getElements().add(element);
 		} else
 			throw new Exception("L'élément n'est pas compatible avec ce type d'echafaudage");
@@ -191,16 +192,8 @@ public class Echafaudage {
 	 * 
 	 * @return la list des elements d'echafaudage<br/>
 	 */
-	public List<ElementEchaf> getElements() {
+	public List<Element> getElements() {
 		return elements;
-	}
-
-	public Enumeration<TypeElement> getDistinctElements() {
-		return getElementEchafs().keys();
-	}
-
-	public int getElementCount(TypeElement element) {
-		return getElementEchafs().get(element);
 	}
 
 	public synchronized void setClasseEchaf(ClasseEchaf classe) {
@@ -228,8 +221,8 @@ public class Echafaudage {
 
 		double poids = 0;
 
-		for (ElementEchaf elEchaf : getElements()) {
-			poids = poids + elEchaf.getPoids();
+		for (Element elEchaf : getElements()) {
+			poids = poids + elEchaf.getType().getPoids();
 		}
 
 		BigDecimal bd = new BigDecimal(poids);
@@ -254,34 +247,51 @@ public class Echafaudage {
 	 */
 	public double getSurfaceExploitation() {
 
+		// crée la variable de méthode surface de type double
 		double surface = 0;
 
-		for (ElementEchaf el : getPlateformes()) {
+		// pour un element de la liste des Element getPlateau
+		for (Element el : getPlateau()) {
 
-			if (getPositionDesElements().get(el) == getNumDuDernierEtage())
-				surface = surface + el.getSurface();
-			if (getPositionDesElements().get(el) == getNumDuDernierEtage() - 1)
-				surface = surface + el.getSurface() / 2;
+			// L'obj pl est elt de type Type element transformer en type Plateau
+			Plateau pl = (Plateau) el.getType();
+
+			// si la position de elt est égale au numéros du dernier étage
+			if (el.getPosition() == getNumDuDernierEtage())
+				// surface = surface + la surface du plateau
+				surface = surface + pl.getSurface();
+			// si la position de elt est égale au numéros du dernier étage -1
+			if (el.getPosition() == getNumDuDernierEtage() - 1)
+				// surface = surface + la surface du plateau/2
+				surface = surface + (pl.getSurface() / 2);
 		}
 		return surface;
 	}
 
 	/**
 	 * 
-	 * @return la liste de plateforme d'echafaudage<br/>
+	 * @return la liste des plateaux d'echafaudage<br/>
 	 */
-	private List<ElementEchaf> getPlateformes() {
+	private List<Element> getPlateau() {
 
-		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
+		// crée une liste d'Element
+		List<Element> lElt = new ArrayList<Element>();
+		// crée un EltByNameFactory
+		EltByNameFactory elt = new EltByNameFactory();
 
-		for (ElementEchaf el : getElements()) {
-			if (el.getSurface() != 0) {
-				elEchafs.add(el);
-			}
+		// pour un element el de la liste getElements()
+		for (Element el : getElements()) {
+
+			// cherche un EltByName par le nom de l'element
+			EltByName eltType = elt.findEltByNameByName(el.getType().getName());
+			// si eltType est de type plateau
+			if (eltType.getIntanc().equals(InstanciationElement.plateau))
+				// add la liste lElt
+				lElt.add(el);
+
 		}
 
-		return elEchafs;
-
+		return lElt;
 	}
 
 	/**
@@ -292,17 +302,17 @@ public class Echafaudage {
 	 */
 	public int getNbDePieds() throws Exception {
 
-		List<ElementEchaf> elEchafs = new ArrayList<ElementEchaf>();
+		int nbDePieds = 0;
 
-		for (ElementEchaf el : getElements()) {
-			if (el.getTypeElement().isPied())
-				elEchafs.add(el);
+		for (Element el : getElements()) {
+			if (el.getType().isPied() == true)
+				nbDePieds = nbDePieds + 1;
 		}
 
-		if (elEchafs.size() == 0)
+		if (nbDePieds == 0)
 			throw new Exception("L'echafaudage doit contenir des pieds");
 
-		return elEchafs.size();
+		return nbDePieds;
 
 	}
 
@@ -331,7 +341,7 @@ public class Echafaudage {
 
 	}
 
-	public void setListElements(List<ElementEchaf> elements) {
+	public void setListElements(List<Element> elements) {
 		this.elements = elements;
 
 	}

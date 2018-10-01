@@ -10,5 +10,5 @@ import javax.persistence.metamodel.StaticMetamodel;
 public class Constructeur_ {
 	public static volatile SingularAttribute<Constructeur, Integer> id;
 	public static volatile SingularAttribute<Constructeur, String> name;
-	public static volatile ListAttribute<Constructeur, ElementEchaf> elements;
+	
 }

@@ -10,9 +10,11 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
+import fr.paquet.echafaudage.element.EltByNameFactory;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.ihm.eltByName.ChoixDuType;
 import fr.paquet.ihm.main.MainFrame;
 
 public class Main {
@@ -24,9 +26,9 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
+		//new ChoixDuType(null, "essai");
 		try {
 
-			// création de la base de donnees
 			HsqlProperties p = new HsqlProperties();
 			p.setProperty("server.database.0", "file:/home/paquet/hsqlDB/DataR408;user=r408;password=Login5340");
 			p.setProperty("server.dbname.0", "R408");

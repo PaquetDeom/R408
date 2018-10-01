@@ -2,12 +2,14 @@ package fr.paquet.ihm.echaf;
 
 import java.util.Collections;
 
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import fr.paquet.echafaudage.Echafaudage;
-import fr.paquet.echafaudage.ElementEchaf;
-import fr.paquet.echafaudage.TypeElement;
+import fr.paquet.echafaudage.element.Element;
+import fr.paquet.echafaudage.element.InstanciationElement;
+import fr.paquet.echafaudage.element.TypeElement;
 
 public class NomenclatureModel implements TableModel {
 
@@ -39,7 +41,7 @@ public class NomenclatureModel implements TableModel {
 	@Override
 	public Class<?> getColumnClass(int column) {
 		if (column == 0)
-			return ElementEchaf.class;
+			return Element.class;
 
 		else
 			return Integer.class;
@@ -60,13 +62,13 @@ public class NomenclatureModel implements TableModel {
 
 	@Override
 	public Object getValueAt(int line, int column) {
-
-		TypeElement element = Collections.list(getEchaf().getDistinctElements()).get(line);
+	
+		InstanciationElement inst = Collections.list(getEchaf().getDistinctElements()).get(line);
 		if (column == 0)
-			return element;
+			return inst.toString();
 
 		else
-			return getEchaf().getElementCount(element);
+			return getEchaf().getElementCount(inst);
 	}
 
 	@Override
