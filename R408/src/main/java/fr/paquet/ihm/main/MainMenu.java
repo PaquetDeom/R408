@@ -22,6 +22,7 @@ public class MainMenu extends JMenuBar {
 		addAction(new ActionGestionnaire());
 		addAction(new ActionQuitter());
 		addAction(new Action3D());
+		addAction(new ActionMotCle());
 		addAction(aN.getActionSave());
 	}
 

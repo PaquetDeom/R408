@@ -11,37 +11,25 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import fr.paquet.echafaudage.Constructeur;
 import fr.paquet.echafaudage.TypeEchaf;
 
-@XStreamAlias("equerre de gardes corps")
+@XStreamAlias("diagonale")
 @Entity
-@Table(name = "EQGDC")
+@Table(name = "DIAGONALE")
 @AttributeOverrides({ @AttributeOverride(name = "ref", column = @Column(name = "TYTYID")),
 		@AttributeOverride(name = "name", column = @Column(name = "TYTYNA")),
 		@AttributeOverride(name = "poids", column = @Column(name = "TYTYPO")) })
-public class EquerreGardesCorps extends TypeElement{
-	
-	@Column(name = "EQEQLO")
-	private double longueur = 0.0;
-	
-	public EquerreGardesCorps() {
+public class Diagonale extends TypeElement {
+
+	public Diagonale() {
 		super();
 	}
-
-	public EquerreGardesCorps(String name, String ref, Constructeur cons, double poids, TypeEchaf tE, double longueur) {
+	
+	public Diagonale(String name, String ref, Constructeur cons, double poids, TypeEchaf tE) {
 		super(name, ref, cons, poids, tE);
-		setLongueur(longueur);
-	}
-
-	public double getLongueur() {
-		return longueur;
-	}
-
-	private void setLongueur(double longueur) {
-		this.longueur = longueur;
 	}
 
 	@Override
 	public String getReference() {
-		
+	
 		return ref;
 	}
 

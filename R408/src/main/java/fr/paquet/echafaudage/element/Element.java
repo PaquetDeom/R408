@@ -62,10 +62,12 @@ public class Element {
 	}
 
 	private void setType(TypeElement type) throws Exception {
-		if (!getEchafaudage().getConstructeur().getName().equals(getType().getConstructeur().getName()))
-			throw new Exception("Le constructeur de l'élément doit être le même que l'échafaudage");
-		else
-			this.type = type;
+		// if
+		// (!getEchafaudage().getConstructeur().getName().equals(getType().getConstructeur().getName()))
+		// throw new Exception("Le constructeur de l'élément doit être le même que
+		// l'échafaudage");
+		// else
+		this.type = type;
 	}
 
 	private void setEchafaudage(Echafaudage echafaudage) {

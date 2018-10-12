@@ -136,7 +136,6 @@ public class Gestionnaire extends JFrame implements AlertListener {
 			setSize(900, 600);
 
 			// creation du layout
-
 			GridBagLayout gridBagLayout = new GridBagLayout();
 			gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

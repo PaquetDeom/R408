@@ -14,7 +14,7 @@ public class EltByName {
 	private long id = 0;
 
 	@XStreamOmitField
-	@Column(name = "ELELNA", length = 50)
+	@Column(name = "ELELNA", length = 80)
 	private String name = null;
 
 	@XStreamOmitField
@@ -40,8 +40,8 @@ public class EltByName {
 		this.intanc = intanc;
 	}
 
-	@SuppressWarnings("unused")
-	private String getName() {
+
+	public String getName() {
 		return name;
 	}
 

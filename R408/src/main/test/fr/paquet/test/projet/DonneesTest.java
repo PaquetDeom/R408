@@ -8,7 +8,7 @@ import fr.paquet.projet.*;
 
 public class DonneesTest {
 
-	public Adresse getAdresseClient() throws Exception {
+	/**public Adresse getAdresseClient() throws Exception {
 		Adresse adresseClient = new Adresse("        le grès  ", "   659      ", "      rue du Pastel       ", "",
 				getCommune());
 		return adresseClient;
@@ -126,6 +126,6 @@ public class DonneesTest {
 		elements2.add(getEl3ec2());
 		elements2.add(getEl4ec2());
 		return elements2;
-	}
+	}*/
 
 }

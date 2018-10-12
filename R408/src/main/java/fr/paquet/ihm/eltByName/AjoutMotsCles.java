@@ -5,65 +5,55 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.EnumSet;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import fr.paquet.echafaudage.element.EltByName;
 import fr.paquet.echafaudage.element.EltByNameFactory;
 import fr.paquet.echafaudage.element.InstanciationElement;
-
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-public class ChoixDuType extends JDialog {
+public class AjoutMotsCles extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private EltByNameFactory elt = null;
-	private EltByName eltN = null;
-	private String nom = null;
 	private JPanel panelEntete = null;
 	private JPanel panelList = null;
 	private JPanel panelButton = null;
-	private JLabel label = null;
+	private JTextField textField = null;
 	private JList<InstanciationElement> list = null;
+	private InstanciationElement inst = null;
 	private JButton bOk = null;
 	private JButton bAnnul = null;
 
-	public ChoixDuType(EltByNameFactory elt, String name) {
+	public AjoutMotsCles() {
 		super();
 
-		setElt(elt);
-		setNom(name);
-
 		// construction de la fenetre
-		setTitle("Choix du type d'element de " + getNom());
-		setSize(350, 400);
+		setTitle("Ajout d'un mot cle dans la base");
+		setSize(300, 400);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(false);
-		setModal(true);
+		setVisible(true);
 
 		// creation des layout
 		GridBagLayout gridBagLayoutPrincipal = new GridBagLayout();
@@ -72,13 +62,13 @@ public class ChoixDuType extends JDialog {
 		// creation des layouts au layout principal
 		setPanelEntete(new JPanel());
 		setPanelList(new JPanel());
-		getPanelList().setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
-				"List de type d'élément"));
 		setPanelButton(new JPanel());
 
 		// set des élments de la fenêtre
-		setLabel(new JLabel(getNom()));
-		getPanelEntete().add(getLabel(), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
+		setTextField(new JTextField(8));
+		getPanelEntete().add(new JLabel("mots"), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 5, 5));
+		getPanelEntete().add(getTextField(), new GridBagConstraints(0, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 5, 5));
 
 		// creation de la liste
@@ -88,6 +78,7 @@ public class ChoixDuType extends JDialog {
 		}
 
 		setList(new JList<InstanciationElement>(listModel));
+		add(new JScrollPane(getList()));
 		getList().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		getPanelList().add(getList(), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
@@ -96,7 +87,7 @@ public class ChoixDuType extends JDialog {
 		setbAnnul(new JButton("Annuler"));
 		getPanelButton().add(getbAnnul(), new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 5, 5));
-		setbOk(new JButton("Ok"));
+		setbOk(new JButton("Ajouter"));
 		getPanelButton().add(getbOk(), new GridBagConstraints(2, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 5, 5));
 
@@ -108,30 +99,6 @@ public class ChoixDuType extends JDialog {
 		getContentPane().add(getPanelButton(), new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
-	}
-
-	public EltByName getEltN() {
-		return eltN;
-	}
-
-	private void setEltN(EltByName eltN) {
-		this.eltN = eltN;
-	}
-
-	private void setNom(String name) {
-		this.nom = name;
-	}
-
-	private String getNom() {
-		return nom;
-	}
-
-	private EltByNameFactory getElt() {
-		return elt;
-	}
-
-	private void setElt(EltByNameFactory elt) {
-		this.elt = elt;
 	}
 
 	private JPanel getPanelEntete() {
@@ -158,12 +125,12 @@ public class ChoixDuType extends JDialog {
 		this.panelButton = panelButton;
 	}
 
-	private JLabel getLabel() {
-		return label;
+	private JTextField getTextField() {
+		return textField;
 	}
 
-	private void setLabel(JLabel label) {
-		this.label = label;
+	private void setTextField(JTextField textField) {
+		this.textField = textField;
 	}
 
 	private JList<InstanciationElement> getList() {
@@ -180,7 +147,7 @@ public class ChoixDuType extends JDialog {
 
 				if (!adjust) {
 					final List<InstanciationElement> selectedValuesList = getList().getSelectedValuesList();
-					setEltN(new EltByName(getNom(), selectedValuesList.get(0)));
+					setInst(selectedValuesList.get(0));
 				}
 			}
 		};
@@ -200,9 +167,10 @@ public class ChoixDuType extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				getElt().saveEltByName(getEltN());
+				EltByNameFactory eltF = new EltByNameFactory();
+				eltF.saveEltByName(new EltByName(getTextField().getText(), getInst()));
 				new AlertWindow(AlertType.INFORMATION, "Le mot clé a bien été sauvegardé");
-				ChoixDuType.this.dispose();
+				AjoutMotsCles.this.dispose();
 
 			}
 		});
@@ -223,9 +191,7 @@ public class ChoixDuType extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				getElt().saveEltByName(new EltByName(getNom(), null));
-				getElt().setEltByName(null);
-				ChoixDuType.this.dispose();
+				AjoutMotsCles.this.dispose();
 
 			}
 		});
@@ -233,6 +199,14 @@ public class ChoixDuType extends JDialog {
 		// alignemnt du jbutton
 		bAnnul.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.bAnnul = bAnnul;
+	}
+
+	private InstanciationElement getInst() {
+		return inst;
+	}
+
+	private void setInst(InstanciationElement inst) {
+		this.inst = inst;
 	}
 
 }

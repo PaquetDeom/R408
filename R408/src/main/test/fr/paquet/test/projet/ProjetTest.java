@@ -8,7 +8,7 @@ import fr.paquet.projet.*;
 
 public class ProjetTest {
 
-	private Projet getProjet() throws Exception {
+	/**private Projet getProjet() throws Exception {
 		DonneesTest dN = new DonneesTest();
 		return dN.getProjet1();
 	}
@@ -55,6 +55,6 @@ public class ProjetTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 }

@@ -11,22 +11,22 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import fr.paquet.echafaudage.Constructeur;
 import fr.paquet.echafaudage.TypeEchaf;
 
-@XStreamAlias("equerre de gardes corps")
+@XStreamAlias("poutrePassageDeCamion")
 @Entity
-@Table(name = "EQGDC")
+@Table(name = "POUTREPASSAGEDECAMION")
 @AttributeOverrides({ @AttributeOverride(name = "ref", column = @Column(name = "TYTYID")),
 		@AttributeOverride(name = "name", column = @Column(name = "TYTYNA")),
 		@AttributeOverride(name = "poids", column = @Column(name = "TYTYPO")) })
-public class EquerreGardesCorps extends TypeElement{
-	
-	@Column(name = "EQEQLO")
+public class PoutrePassageDeCamion extends TypeElement {
+
 	private double longueur = 0.0;
 	
-	public EquerreGardesCorps() {
+	public PoutrePassageDeCamion() {
 		super();
 	}
-
-	public EquerreGardesCorps(String name, String ref, Constructeur cons, double poids, TypeEchaf tE, double longueur) {
+	
+	public PoutrePassageDeCamion(String name, String ref, Constructeur cons, double poids, TypeEchaf tE,
+			double longueur) {
 		super(name, ref, cons, poids, tE);
 		setLongueur(longueur);
 	}
@@ -41,37 +41,37 @@ public class EquerreGardesCorps extends TypeElement{
 
 	@Override
 	public String getReference() {
-		
-		return ref;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getName() {
-		
-		return name;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Constructeur getConstructeur() {
-		
-		return cons;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public double getPoids() {
-		
-		return poids;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public TypeEchaf getTypeEchaf() {
-		
-		return tE;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public boolean isPied() {
-		
+		// TODO Auto-generated method stub
 		return false;
 	}
 

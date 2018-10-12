@@ -8,7 +8,7 @@ import fr.paquet.projet.*;
 
 public class AdresseTest {
 
-	private Adresse getAdresse() throws Exception {
+	/**private Adresse getAdresse() throws Exception {
 		DonneesTest test = new DonneesTest();
 		Adresse adresse = test.getAdresseClient();
 		adresse.setMail("           nath@sfr.fr              ");
@@ -77,5 +77,5 @@ public class AdresseTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

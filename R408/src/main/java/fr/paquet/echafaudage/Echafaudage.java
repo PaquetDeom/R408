@@ -222,7 +222,9 @@ public class Echafaudage {
 		double poids = 0;
 
 		for (Element elEchaf : getElements()) {
-			poids = poids + elEchaf.getType().getPoids();
+
+			if (elEchaf.getType().getPoids() != 0.0)
+				poids = poids + elEchaf.getType().getPoids();
 		}
 
 		BigDecimal bd = new BigDecimal(poids);

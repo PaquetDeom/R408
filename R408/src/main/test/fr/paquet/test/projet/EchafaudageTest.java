@@ -6,7 +6,7 @@ import fr.paquet.echafaudage.*;
 
 public class EchafaudageTest {
 
-	private Echafaudage getEchaf1() throws Exception {
+	/**private Echafaudage getEchaf1() throws Exception {
 		DonneesTest test = new DonneesTest();
 		Echafaudage echaf = test.getEchaf1();
 
@@ -138,5 +138,5 @@ public class EchafaudageTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

@@ -1,5 +1,7 @@
 package fr.paquet.projet;
 
+import java.util.List;
+
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -83,6 +85,23 @@ public class ClientFactory extends Connect {
 			throw (e);
 		}
 
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return la liste des clients par rapport à leurs noms<br/>
+	 */
+	public List<Client> findClientsByName(String name) {
+
+		Query query = getEm().createQuery("SELECT client FROM Client client where client.nom=:name");
+
+		query.setParameter("name", name);
+
+		@SuppressWarnings("unchecked")
+		List<Client> l = query.getResultList();
+
+		return l;
 	}
 
 }

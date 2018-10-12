@@ -7,7 +7,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -61,7 +63,7 @@ public class PanelEchafaudage extends JPanel {
 		 */
 		private boolean isClickable() {
 
-			if (isFileCharged()) {
+			if (isFileCharged() && getClasse() != null && getTypeSol() != null && getTypeEchaf()!= null) {
 
 				clickable = true;
 
@@ -138,6 +140,16 @@ public class PanelEchafaudage extends JPanel {
 
 	}
 
+	private ElementIntegrator integrator = null;
+
+	private void setIntegrator(ElementIntegrator eltin) {
+		this.integrator = eltin;
+	}
+
+	private ElementIntegrator getIntegrator() {
+		return integrator;
+	}
+
 	private void setJbuttonChooser(JButton button) {
 
 		button.setText("Intégrer un echafaudage");
@@ -149,34 +161,38 @@ public class PanelEchafaudage extends JPanel {
 
 				FileChooser fc = new FileChooser();
 
+				Echafaudage echaf = new Echafaudage();
+				Chantier chantier = new Chantier(getPanelProjet().getOnglet().getProjet(), echaf);
+				getPanelProjet().getOnglet().getProjet().setChantier(chantier);
+
 				try {
 
-					Echafaudage echaf = new Echafaudage();
-					Chantier chantier = new Chantier(getPanelProjet().getOnglet().getProjet(), echaf);
-					getPanelProjet().getOnglet().getProjet().setChantier(chantier);
+					setIntegrator(
+							new ElementIntegrator(new CsvElementEchafReader(PanelEchafaudage.this, fc.getFile())));
 
-					CsvElementEchafReader reader = new CsvElementEchafReader(PanelEchafaudage.this, fc.getFile());
-					ElementIntegrator integrator = new ElementIntegrator(reader);
+				} catch (Exception e) {
 
-					if (fc.getFile() != null) {
+					new AlertWindow(AlertType.ERREUR, "Fichier non chargé");
+					e.printStackTrace(System.out);
 
-						chantier.getEchafaudage().setListElements(integrator.getElements());
-					}
-
-					new AlertWindow(AlertType.ATTENTION, "Le fichier " + fc.getFile().getName() + " est correctement chargé");
-					setFileCharged(true);
-					getJButtonCalcul().buttonEnabled();
-
-					addFichier(fc.getFile());
-
-					getPanelProjet().getpResul().revalidate();
-
-				} catch (Exception e1) {
-
-					new AlertWindow(AlertType.ERREUR, "Erreur lors du chargement du fichier");
-					e1.printStackTrace(System.out);
 				}
+
+				if (fc.getFile() != null) {
+
+					chantier.getEchafaudage().setListElements(integrator.getElements());
+				}
+
+				new AlertWindow(AlertType.ATTENTION,
+						"Le fichier " + fc.getFile().getName() + " est correctement chargé");
+				setFileCharged(true);
+				getJButtonCalcul().buttonEnabled();
+
+				addFichier(fc.getFile());
+
+				getPanelProjet().getpResul().revalidate();
+
 			}
+
 		});
 		this.JbuttonChooser = button;
 	}
@@ -333,7 +349,7 @@ public class PanelEchafaudage extends JPanel {
 					if (clE.getClasse().equals(box.getText()))
 						getJButtonCalcul().setClasse(clE);
 				}
-
+				getJButtonCalcul().buttonEnabled();
 			}
 		});
 
@@ -367,6 +383,8 @@ public class PanelEchafaudage extends JPanel {
 
 				}
 
+				getJButtonCalcul().buttonEnabled();
+
 			}
 		});
 
@@ -399,7 +417,7 @@ public class PanelEchafaudage extends JPanel {
 						getJButtonCalcul().setTypeEchaf(tE);
 
 				}
-
+				getJButtonCalcul().buttonEnabled();
 			}
 		});
 

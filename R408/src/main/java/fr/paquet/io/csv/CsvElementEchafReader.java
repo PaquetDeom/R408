@@ -3,8 +3,10 @@ package fr.paquet.io.csv;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import fr.paquet.ihm.alert.AlertType;
@@ -23,18 +25,24 @@ public class CsvElementEchafReader {
 	 * 
 	 * @param pEchaf
 	 * @param file
-	 * @throws Exception
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
 	 */
 	public CsvElementEchafReader(PanelEchafaudage pEchaf, File file) throws Exception {
 
 		super();
+
 		setFile(file);
+
 		setPanelEchafaudage(pEchaf);
 		// FileReader fr = new FileReader(getFile());
 		// TODO Récupérer l'encodage du fichier csv (UTF8, 16...)
-		BufferedReader buff = new BufferedReader(new InputStreamReader(new FileInputStream(getFile()), "UTF-16"));
+		BufferedReader buff;
+
+		buff = new BufferedReader(new InputStreamReader(new FileInputStream(getFile()), "UTF-16"));
 		addData(buff);
 		buff.close();
+
 	}
 
 	private void setPanelEchafaudage(PanelEchafaudage pEchaf) {

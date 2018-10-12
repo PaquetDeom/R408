@@ -30,15 +30,12 @@
 		<class>fr.paquet.projet.Personne</class>
 		<class>fr.paquet.projet.Projet</class>
 		<class>fr.paquet.projet.Responsable</class>
-		
-		
+
+
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver"
 				value="org.hsqldb.jdbcDriver" />
-
-			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:/home/paquet/hsqlDB/DataR408" 
-				/> -->
 
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:hsqldb:hsql://localhost:5434/r408" />
@@ -47,10 +44,10 @@
 			<property name="javax.persistence.jdbc.password"
 				value="Login5340" />
 
-			<property name="eclipselink.ddl-generation"
-				value="drop-and-create-tables" />
+			<!-- <property name="eclipselink.ddl-generation" value="none" 
+				/> -->
 
-			<!-- <property name="eclipselink.ddl-generation" value="none" /> -->
+			<property name="eclipselink.ddl-generation" value="none" />
 
 
 			<property name="eclipselink.ddl-generation.output-mode"

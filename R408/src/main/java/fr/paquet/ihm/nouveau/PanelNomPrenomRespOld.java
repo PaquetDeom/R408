@@ -1,4 +1,4 @@
-package fr.paquet.ihm.echaf;
+package fr.paquet.ihm.nouveau;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,10 +15,11 @@ import javax.swing.JTextField;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.ihm.echaf.AddLineJLabelJTextField;
 import fr.paquet.projet.RespFactory;
 import fr.paquet.projet.Responsable;
 
-public class PanelNomPrenomResp extends JPanel {
+public class PanelNomPrenomRespOld extends JPanel {
 
 	/**
 	 * @author paquet
@@ -27,8 +28,79 @@ public class PanelNomPrenomResp extends JPanel {
 	private PanelProj panelProj = null;
 	private JTextField jTextFieldNom = null;
 	private JTextField jTextFieldPrenom = null;
+	private JButtonTest buttonTest = null;
 
-	public PanelNomPrenomResp(PanelProj panelProj) {
+	public class JButtonTest extends JButton implements ActionListener, AlertListener {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public JButtonTest() {
+			super("Recherche le responsable dans la base");
+
+			addActionListener(this);
+			setEnabled(isEnable());
+		}
+
+		private boolean isEnable() {
+
+			if (getjTextFieldNom() != null && getjTextFieldPrenom() != null) {
+				if (!getjTextFieldNom().getText().equals("") && !getjTextFieldPrenom().getText().equals(""))
+					return true;
+				else
+					return false;
+			} else
+				return false;
+
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			Responsable resp = null;
+			// si le jTextFieldNom et jTextFiledprenom sont non null;
+			if (!getjTextFieldNom().getText().equals("") && !getjTextFieldPrenom().getText().equals("")) {
+
+				// Recherche par le nom et prenom si le responsable est dans la base de données.
+				resp = new RespFactory().findResponsableByNameAndFirstName(getjTextFieldNom().getText(),
+						getjTextFieldPrenom().getText());
+
+				// Si le resultat de la recherche est null
+				if (resp == null) {
+					// creation du nouveau responsable.
+					resp = new Responsable(getjTextFieldNom().getText(), getjTextFieldPrenom().getText());
+					getPanelProj().getjDialogNouveau().getProjet().setResp(resp);
+					// Alert est propose de l'enregistrer dans la base de données.
+					new AlertWindow(AlertType.QUESTION, "Ce responsable n'est pas dans la base. Voulez-vous l'ajouter?", this);
+
+				}
+			}
+
+		}
+
+		@Override
+		public void buttonClick(String button) {
+
+			// si le boutton cliqué est égale à "oui".
+			if (button.equals("Oui")) {
+				// Persit le cline dans la base de données.
+				RespFactory reF = new RespFactory();
+				try {
+					reF.saveResp(getPanelProj().getjDialogNouveau().getProjet().getResp());
+				} catch (Exception e) {
+
+					e.printStackTrace(System.out);
+					new AlertWindow(AlertType.ERREUR, e.getMessage());
+				}
+			}
+
+		}
+
+	}
+
+	public PanelNomPrenomRespOld(PanelProj panelProj) {
 		super();
 
 		setPanelProj(panelProj);
@@ -47,10 +119,19 @@ public class PanelNomPrenomResp extends JPanel {
 		add(panelButton, new GridBagConstraints(1, 2, 1, 1, 0, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
+		panelButton.add(getJButtonTest(), new GridBagConstraints(1, 1, 1, 1, 0, 0, GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
+
 		// mutation des variable jTextFieldNom et jTextFieldPrenom.
 		setjTextFieldNom(lcl1.getTextField());
 		setjTextFieldPrenom(lcl2.getTextField());
 
+	}
+
+	private JButtonTest getJButtonTest() {
+		if (buttonTest == null)
+			buttonTest = new JButtonTest();
+		return buttonTest;
 	}
 
 	private void selectAll(JTextField tF) {
@@ -76,7 +157,7 @@ public class PanelNomPrenomResp extends JPanel {
 				if (!nom.equals("") && nom != null)
 					// Affiche le nom sans espace à droite et à gauche et en majuscule.
 					jTextFieldNom.setText(nom.trim().toUpperCase());
-
+				getJButtonTest().setEnabled(getJButtonTest().isEnable());
 			}
 
 			@Override
@@ -112,6 +193,7 @@ public class PanelNomPrenomResp extends JPanel {
 					prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
 					jTextFieldPrenom.setText(prenom);
 				}
+				getJButtonTest().setEnabled(getJButtonTest().isEnable());
 
 			}
 

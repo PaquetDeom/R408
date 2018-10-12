@@ -11,22 +11,21 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import fr.paquet.echafaudage.Constructeur;
 import fr.paquet.echafaudage.TypeEchaf;
 
-@XStreamAlias("equerre de gardes corps")
+@XStreamAlias("lissePareGravois")
 @Entity
-@Table(name = "EQGDC")
+@Table(name = "LISSEPAREGRAVOIS")
 @AttributeOverrides({ @AttributeOverride(name = "ref", column = @Column(name = "TYTYID")),
 		@AttributeOverride(name = "name", column = @Column(name = "TYTYNA")),
 		@AttributeOverride(name = "poids", column = @Column(name = "TYTYPO")) })
-public class EquerreGardesCorps extends TypeElement{
-	
-	@Column(name = "EQEQLO")
+public class LissesPareGravois extends TypeElement {
+
 	private double longueur = 0.0;
 	
-	public EquerreGardesCorps() {
+	public LissesPareGravois() {
 		super();
 	}
-
-	public EquerreGardesCorps(String name, String ref, Constructeur cons, double poids, TypeEchaf tE, double longueur) {
+	
+	public LissesPareGravois(String name, String ref, Constructeur cons, double poids, TypeEchaf tE, double longueur) {
 		super(name, ref, cons, poids, tE);
 		setLongueur(longueur);
 	}

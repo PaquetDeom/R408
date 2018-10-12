@@ -1,5 +1,7 @@
 package fr.paquet.projet;
 
+import java.util.List;
+
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -34,6 +36,19 @@ public class RespFactory extends Connect {
 			return null;
 		}
 
+	}
+
+	public List<Responsable> findResponsablesByName(String name) {
+
+		Query query = getEm()
+				.createQuery("SELECT responsable FROM Responsable responsable where responsable.nom=:name");
+
+		query.setParameter("name", name);
+
+		@SuppressWarnings("unchecked")
+		List<Responsable> l = query.getResultList();
+
+		return l;
 	}
 
 	/**
