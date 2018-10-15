@@ -9,14 +9,22 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 
-import fr.paquet.projet.RespFactory;
+import fr.paquet.ihm.alert.AlertType;
+import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.projet.Responsable;
+import fr.paquet.projet.ResponsableFactory;
 
 public class PanelNomPrenomResp extends PanelNomPrenom {
 
@@ -25,13 +33,15 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Responsable> resps = null;
+	private Responsable responsable = null;
 
 	public PanelNomPrenomResp(JDialogNouveau jDN) {
 		super(jDN);
 
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED),
+				"Responsable du projet"));
+
 		// setteurs
-		setTableModel(new ResponsableModel());
-		setTable(new JTable(getTableModel()));
 		setjTextFieldNom(new JTextField(20));
 		setjTextFieldPrenom(new JTextField(20));
 		setButtonCreer(new JButton("Creer"));
@@ -51,14 +61,38 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 		getPanelButtonGauche().add(getButtonCreer(), BorderLayout.CENTER);
 		getPanelButtonGauche().add(getButtonCancel(), BorderLayout.EAST);
 
-		getPanelTable().add(getTable());
-
 		getPanelButtonDroite().add(getButtonOk(), BorderLayout.EAST);
 
 	}
 
 	@Override
 	public void setTable(JTable table) {
+
+		// donne le type de sélection
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel rowSM = table.getSelectionModel();
+
+		// ajout d'un listener
+		rowSM.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				DefaultListSelectionModel dLSM = (DefaultListSelectionModel) e.getSource();
+				int i = dLSM.getMinSelectionIndex();
+
+				try {
+					setResponsable(getResps().get(i));
+					getjTextFieldNom().setText(getResps().get(i).getNom());
+					getjTextFieldPrenom().setText(getResps().get(i).getPrenom());
+					frizeSaisi();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+			}
+		});
+
 		this.table = table;
 
 	}
@@ -70,11 +104,15 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				RespFactory rF = new RespFactory();
-				setResps(rF.findResponsablesByName(jTextFieldNom.getText()));
+				ResponsableFactory rF = new ResponsableFactory();
+				List<Responsable> resps = rF.findResponsablesByName(jTextFieldNom.getText());
 
-				ResponsableModel rM = (ResponsableModel) PanelNomPrenomResp.this.getTableModel();
-				rM.setResponsables(getResps());
+				if (resps != null && resps.isEmpty()) {
+					setResps(resps);
+					setTableModel(new ResponsableModel(getResps()));
+					setTable(new JTable(getTableModel()));
+					getPanelTable().add(getTable());
+				}
 			}
 
 			@Override
@@ -95,7 +133,6 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -123,8 +160,20 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 
+				setResponsable(
+						new Responsable(getjTextFieldNom().getText().toUpperCase(), getjTextFieldPrenom().getText()));
+
+				if (getResponsable() != null) {
+					frizeSaisi();
+					ResponsableFactory Rf = new ResponsableFactory();
+					try {
+						Rf.saveResponsable(getResponsable());
+					} catch (Exception e1) {
+						e1.printStackTrace(System.out);
+						new AlertWindow(AlertType.ERREUR, "Le responsable n'a pas été sauvé");
+					}
+				}
 			}
 		});
 
@@ -139,7 +188,13 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
+				if (getResponsable() != null) {
+					getjDialogNouveau().getProjet().setResp(getResponsable());
+					frizeSaisi();
+				} else {
+					new AlertWindow(AlertType.ERREUR, "Veuillez saisir un responsable");
+				}
 
 			}
 		});
@@ -148,14 +203,28 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 
 	}
 
+	private void frizeSaisi() {
+		getjTextFieldNom().setEnabled(false);
+		getjTextFieldPrenom().setEnabled(false);
+		getTable().setEnabled(false);
+	}
+
+	private void desFrizeSaisi() {
+		getjTextFieldNom().setEnabled(true);
+		getjTextFieldPrenom().setEnabled(true);
+		getTable().setEnabled(true);
+	}
+
 	@Override
 	public void setButtonCancel(JButton button) {
 		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				setResponsable(null);
+				getjDialogNouveau().getProjet().setResp(null);
+				desFrizeSaisi();
+				PanelNomPrenomResp.this.repaint();
 			}
 		});
 		this.buttonCancel = button;
@@ -167,6 +236,20 @@ public class PanelNomPrenomResp extends PanelNomPrenom {
 
 	private void setResps(List<Responsable> resps) {
 		this.resps = resps;
+	}
+
+	private Responsable getResponsable() {
+		return responsable;
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	private void setResponsable(Responsable responsable) {
+
+		if ((getjTextFieldNom() != null && !getjTextFieldNom().equals(""))
+				&& (getjTextFieldPrenom() != null && !getjTextFieldPrenom().equals("")))
+			this.responsable = responsable;
+		else
+			this.responsable = null;
 	}
 
 }

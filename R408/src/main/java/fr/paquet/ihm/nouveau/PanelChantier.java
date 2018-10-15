@@ -1,5 +1,6 @@
 package fr.paquet.ihm.nouveau;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,6 +19,7 @@ public class PanelChantier extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JDialogNouveau jDialogNouveau = null;
 	private PanelCoordonneesChantier pCC = null;
+	private JButton buttonAdresse = null;
 
 	/**
 	 * Constructeur de la class<br/>
@@ -29,45 +31,28 @@ public class PanelChantier extends JPanel {
 		super();
 
 		setjDialogNouveau(dN);
+		setButtonAdresse(new JButton("Adresse chantier = adresse client"));
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
-				"Données du chantier"));
+				"Adresse du chantier"));
 
 		setLayout(new GridBagLayout());
 
 		// creation de panels.
-		JPanel radioPanel = new JPanel();
 		setpCC(new PanelCoordonneesChantier(this));
+		JPanel panelButton = new JPanel();
+		
+		panelButton.setLayout(new BorderLayout());
+		
 
 		// ajout des panels ci-dessus a panel chantier
-		add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+		add(panelButton,new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+				new Insets(5, 5, 5, 5), 5, 5));
+		add(getpCC(), new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+				new Insets(5, 5, 5, 5), 5, 5));
+		
+		panelButton.add(getButtonAdresse(), BorderLayout.CENTER);
+		
 
-		// creation du radio button
-		JRadioButton radioButton = new JRadioButton("L'adresse du chantier est différente de l'adresse client");
-
-		// ajout du listener
-		radioButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				remove(getpCC());
-
-				if (radioButton.isSelected()) {
-					add(getpCC(), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER,
-							GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
-
-				}
-
-				SwingUtilities.updateComponentTreeUI(PanelChantier.this);
-				PanelChantier.this.repaint();
-
-			}
-		});
-
-		// ajout du radioButton au panel radioButtonPanel.
-		radioPanel.add(radioButton, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 	}
 
 	public PanelCoordonneesChantier getpCC() {
@@ -84,6 +69,23 @@ public class PanelChantier extends JPanel {
 
 	private void setjDialogNouveau(JDialogNouveau jDialogNouveau) {
 		this.jDialogNouveau = jDialogNouveau;
+	}
+
+	private JButton getButtonAdresse() {
+		return buttonAdresse;
+	}
+
+	private void setButtonAdresse(JButton buttonAdresse) {
+		
+		buttonAdresse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		this.buttonAdresse = buttonAdresse;
 	}
 
 }

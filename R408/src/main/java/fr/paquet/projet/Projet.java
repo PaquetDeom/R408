@@ -1,12 +1,9 @@
 package fr.paquet.projet;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 import javax.persistence.*;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("projet")
@@ -38,26 +35,11 @@ public class Projet {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Responsable resp = null;
 
-	@XStreamOmitField
-	@Transient
-	PropertyChangeSupport changeSupport = null;
-
 	/**
 	 * Constructeur vide pour la gestion de la DB<br/>
 	 */
 	public Projet() {
 		super();
-	}
-
-	/**
-	 * Constructeur de la class<br/>
-	 * 
-	 * @param listener
-	 *            de type ProjetListener<br/>
-	 */
-	public Projet(PropertyChangeListener listener) {
-		this();
-		addPropertyChangeListener(listener);
 	}
 
 	/**
@@ -75,20 +57,14 @@ public class Projet {
 	 *            de Type Reponsable<br/>
 	 * @throws Exception
 	 */
-	public Projet(PropertyChangeListener listener, String titre, Client client, Chantier chantier, Responsable resp) {
-		this(listener);
-		addPropertyChangeListener(listener);
+	public Projet(String titre, Client client, Chantier chantier, Responsable resp) {
+		this();
+
 		setTitre(titre);
 		setClient(client);
 		setChantier(chantier);
 		setResp(resp);
 
-	}
-
-	private PropertyChangeSupport getChangeSupport() {
-		if (changeSupport == null)
-			changeSupport = new PropertyChangeSupport(this);
-		return changeSupport;
 	}
 
 	public long getId() {
@@ -99,7 +75,7 @@ public class Projet {
 		this.id = id;
 	}
 
-	public synchronized String getTitre() {
+	public  String getTitre() {
 		return titre;
 	}
 
@@ -109,16 +85,10 @@ public class Projet {
 	 * @throws Exception
 	 *             pas de titre<br/>
 	 */
-	public synchronized void setTitre(String titre) {
+	public void setTitre(String titre) {
 
-		if (!titre.equals("") && titre != null) {
-			titre = titre.toLowerCase().trim();
-			titre = titre.substring(0, 1).toUpperCase() + titre.substring(1).toLowerCase();
-
-			String oldValeur = this.titre;
-			this.titre = titre;
-			getChangeSupport().firePropertyChange("titre", oldValeur, titre);
-		}
+		titre = titre.toLowerCase().trim();
+		titre = titre.substring(0, 1).toUpperCase() + titre.substring(1).toLowerCase();
 
 		this.titre = titre;
 
@@ -165,17 +135,6 @@ public class Projet {
 	private void removeRespProjet(Responsable resp, Projet projet) {
 		if (resp.getProjets().contains(projet))
 			resp.getProjets().remove(projet);
-	}
-
-	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-
-		getChangeSupport().addPropertyChangeListener(l);
-	}
-
-	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-
-		getChangeSupport().addPropertyChangeListener(l);
-
 	}
 
 	public String toString() {

@@ -15,7 +15,6 @@ public class PanelClient extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JDialogNouveau jDialogNouveau = null;
-	private PanelCoordonneesClient panelCoordonnesClient = null;
 	private PanelNomPrenomClient panelNomPrenomClient = null;
 
 	/**
@@ -37,26 +36,11 @@ public class PanelClient extends JPanel {
 
 		// creation des panels
 		setPanelNomPrenomClient(new PanelNomPrenomClient(this.getjDialogNouveau()));
-		setPanelCoordonnesClient(new PanelCoordonneesClient(this));
 
 		// ajout des Panel a PanelClient.
-		add(getPanelNomPrenomClient(), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
-		add(getPanelCoordonnesClient(), new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
+		add(getPanelNomPrenomClient(), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
 
-	}
-
-	/**
-	 * 
-	 * @return le Panel de coordonnes des clients<br/>
-	 */
-	private PanelCoordonneesClient getPanelCoordonnesClient() {
-		return panelCoordonnesClient;
-	}
-
-	private void setPanelCoordonnesClient(PanelCoordonneesClient panelCoordonnesClient) {
-		this.panelCoordonnesClient = panelCoordonnesClient;
 	}
 
 	/**

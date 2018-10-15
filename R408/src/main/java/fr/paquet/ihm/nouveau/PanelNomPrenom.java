@@ -67,9 +67,9 @@ public abstract class PanelNomPrenom extends JPanel {
 
 		// ajout des panels au panel pricipal
 		add(getPanelGauche(), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
-		add(getPanelDroite(), new GridBagConstraints(1, 0, 1, 1, 1, 1.0, GridBagConstraints.CENTER,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
+				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+		add(getPanelDroite(), new GridBagConstraints(1, 0, 1, 1, 2.0, 1.0, GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
 	}
 

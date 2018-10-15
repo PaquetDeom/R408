@@ -1,15 +1,12 @@
 package fr.paquet.ihm.echaf;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.JComponent;
 
 import fr.paquet.ihm.main.MainOnglet;
 
 import fr.paquet.projet.*;
 
-public class OngletProjet extends JComponent implements PropertyChangeListener {
+public class OngletProjet extends JComponent {
 
 	/**
 	 * 
@@ -48,11 +45,7 @@ public class OngletProjet extends JComponent implements PropertyChangeListener {
 	 */
 	private String getTitre(Projet projet) {
 
-		if (projet.getTitre() == null) {
-			int i = MainOnglet.getUniqInstance().getOnglets().size() + 1;
-			return "sansTitre" + " " + i;
-		} else
-			return projet.getTitre();
+		return projet.getTitre();
 
 	}
 
@@ -63,19 +56,6 @@ public class OngletProjet extends JComponent implements PropertyChangeListener {
 	private void setProjet(Projet projet) {
 
 		this.projet = projet;
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-
-		if (evt.getPropertyName().equals("titre")) {
-			String title = (String) evt.getNewValue();
-
-			getTitre(getProjet());
-			MainOnglet.getUniqInstance().setTitleAt(MainOnglet.getUniqInstance().getSelectedIndex(), title);
-
-		}
-
 	}
 
 }

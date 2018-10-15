@@ -7,23 +7,25 @@ import javax.swing.JTextField;
 
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.projet.Commune;
 
 public class PanelCoordonneesClient extends PanelCoordonnees {
 
 	/**
 	 * @author paquet
 	 */
-	private PanelClient panelClient = null;
-	private static final long serialVersionUID = 1L;
 
-	public PanelCoordonneesClient(PanelClient panelClient) {
+	private static final long serialVersionUID = 1L;
+	private JDialogClient jDialogClient = null;
+
+	public PanelCoordonneesClient(JDialogClient jDC) {
 		super();
 
 		// effacer tous les components
 		removeAll();
 
 		// mutte la variable panelChantier
-		setPanelClient(panelClient);
+		setjDialogClient(jDC);
 
 		// construit le panel de Coordonnes
 		buildPanel();
@@ -41,34 +43,41 @@ public class PanelCoordonneesClient extends PanelCoordonnees {
 					if (!textField.getText().equals("")) {
 
 						if (title.equals("ADRESSE1")) {
-							getPanelClient().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().setAdresse1(textField.getText());
+							getjDialogClient().getAdresse().setAdresse1(textField.getText());
 						}
 						if (title.equals("ADRESSE2")) {
-							getPanelClient().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().setAdresse2(textField.getText());
+							getjDialogClient().getAdresse().setAdresse2(textField.getText());
 						}
 						if (title.equals("ADRESSE3")) {
-							getPanelClient().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().setAdresse3(textField.getText());
+							getjDialogClient().getAdresse().setAdresse3(textField.getText());
 						}
 						if (title.equals("CODEPOSTAL")) {
 							try {
-								getPanelClient().getjDialogNouveau().getProjet().getClient()
-										.getAdresse().getCommune().setCodeCommune(textField.getText());
+								if (getjDialogClient().getAdresse().getCommune() == null)
+									getjDialogClient().getAdresse().setCommune(getCommune());
+
+								getjDialogClient().getAdresse().getCommune().setCodeCommune(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, e1.getMessage());
+								new AlertWindow(AlertType.ERREUR, "problème lors de l'enregistrement de la commune");
 							}
 						}
 						if (title.equals("COMMUNE")) {
-							getPanelClient().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().getCommune().setCommune(textField.getText());
+
+							try {
+								if (getjDialogClient().getAdresse().getCommune() == null)
+									getjDialogClient().getAdresse().setCommune(getCommune());
+
+								getjDialogClient().getAdresse().getCommune().setCommune(textField.getText());
+							} catch (Exception e2) {
+								e2.printStackTrace(System.out);
+								new AlertWindow(AlertType.ERREUR, "problème lors de l'enregistrement de la commune");
+							}
+
 						}
 						if (title.equals("MAIL")) {
 							try {
-								getPanelClient().getjDialogNouveau().getProjet().getClient()
-										.getAdresse().setMail(textField.getText());
+								getjDialogClient().getAdresse().setMail(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
 								new AlertWindow(AlertType.ERREUR, e1.getMessage());
@@ -76,8 +85,7 @@ public class PanelCoordonneesClient extends PanelCoordonnees {
 						}
 						if (title.equals("TEL")) {
 							try {
-								getPanelClient().getjDialogNouveau().getProjet().getClient()
-										.getAdresse().setTelephone(textField.getText());
+								getjDialogClient().getAdresse().setTelephone(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
 								new AlertWindow(AlertType.ERREUR, e1.getMessage());
@@ -91,7 +99,7 @@ public class PanelCoordonneesClient extends PanelCoordonnees {
 
 					// selectionne le tout le texte du texField
 					JTextField tF = (JTextField) e.getSource();
-					tF.selectAll();
+					tF.setText("");
 
 				}
 			});
@@ -100,16 +108,20 @@ public class PanelCoordonneesClient extends PanelCoordonnees {
 
 	}
 
-	private void setPanelClient(PanelClient panelClient) {
-		this.panelClient = panelClient;
+	private Commune commune = null;
+
+	private Commune getCommune() {
+		if (commune == null)
+			commune = new Commune();
+		return commune;
 	}
 
-	/**
-	 * 
-	 * @return le panelClient correspondant<br/>
-	 */
-	private PanelClient getPanelClient() {
-		return panelClient;
+	public JDialogClient getjDialogClient() {
+		return jDialogClient;
+	}
+
+	private void setjDialogClient(JDialogClient jDialogClient) {
+		this.jDialogClient = jDialogClient;
 	}
 
 }

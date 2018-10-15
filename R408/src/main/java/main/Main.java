@@ -10,11 +10,9 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
-import fr.paquet.echafaudage.element.EltByNameFactory;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
-import fr.paquet.ihm.eltByName.ChoixDuType;
 import fr.paquet.ihm.main.MainFrame;
 
 public class Main {
@@ -26,7 +24,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		//new ChoixDuType(null, "essai");
+		// new ChoixDuType(null, "essai");
 		try {
 
 			HsqlProperties p = new HsqlProperties();
@@ -36,8 +34,6 @@ public class Main {
 			server = new Server();
 			server.setProperties(p);
 			server.start();
-
-			
 
 		} catch (IOException | AclFormatException e1) {
 
@@ -64,15 +60,16 @@ public class Main {
 					WindowListener l = new WindowAdapter() {
 						public void windowClosing(WindowEvent e) {
 
-							new AlertWindow(AlertType.QUESTION, "Etes-vous sûre de vouloir quitter", new AlertListener() {
+							new AlertWindow(AlertType.QUESTION, "Etes-vous sûre de vouloir quitter",
+									new AlertListener() {
 
-								@Override
-								public void buttonClick(String button) {
-									if (button.equals("Oui"))
-										FermetureSansErreur();
+										@Override
+										public void buttonClick(String button) {
+											if (button.equals("Oui"))
+												FermetureSansErreur();
 
-								}
-							});
+										}
+									});
 
 						}
 					};

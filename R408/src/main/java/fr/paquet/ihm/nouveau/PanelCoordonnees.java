@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import fr.paquet.ihm.echaf.AddLineJLabelJTextField;
-
 public class PanelCoordonnees extends JPanel {
 
 	/**
@@ -47,7 +45,7 @@ public class PanelCoordonnees extends JPanel {
 				5, 1, 1, 0, 0, GridBagConstraints.NONE);
 		AddLineJLabelJTextField lc7 = new AddLineJLabelJTextField(PanelCoordonnees.this, "TEL", "N° de telephone", 20,
 				0, 6, 1, 1, 0, 0, GridBagConstraints.NONE);
-		
+
 		addCoordonneesField(lc1.getTextField());
 		addCoordonneesField(lc2.getTextField());
 		addCoordonneesField(lc3.getTextField());
@@ -57,17 +55,17 @@ public class PanelCoordonnees extends JPanel {
 		addCoordonneesField(lc7.getTextField());
 
 	}
-	
+
 	private void addCoordonneesField(JTextField tF) {
 		getCoordonnesField().add(tF);
 	}
-	
+
 	/**
 	 * 
 	 * @return La liste des cordonneesField qui forment une adresse<br/>
 	 */
-	protected List<JTextField> getCoordonnesField(){
-		if(coordonneesField == null)
+	protected List<JTextField> getCoordonnesField() {
+		if (coordonneesField == null)
 			coordonneesField = new ArrayList<JTextField>();
 		return coordonneesField;
 	}

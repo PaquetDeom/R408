@@ -1,4 +1,4 @@
-package fr.paquet.ihm.echaf;
+package fr.paquet.ihm.nouveau;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

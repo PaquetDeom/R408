@@ -11,8 +11,9 @@ public class ClientModel implements TableModel {
 
 	private List<Client> clients = null;
 
-	public ClientModel() {
+	public ClientModel(List<Client> clients) {
 		super();
+		setClients(clients);
 	}
 
 	@Override

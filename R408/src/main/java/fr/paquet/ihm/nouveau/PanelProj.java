@@ -40,7 +40,7 @@ public class PanelProj extends JPanel {
 		add(getPanelTitre(), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
 		add(getPanelNomPrenomResp(), new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+				GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
 		add(new JPanel(), new GridBagConstraints(0, 3, 1, 1, 1, 1, GridBagConstraints.LAST_LINE_START,
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 

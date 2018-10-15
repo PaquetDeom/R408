@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.projet.Commune;
 
 public class PanelCoordonneesChantier extends PanelCoordonnees {
 
@@ -41,34 +42,53 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 					if (!textField.getText().equals("")) {
 
 						if (title.equals("ADRESSE1")) {
-							getPanelChantier().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().setAdresse1(textField.getText());
+							getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+									.setAdresse1(textField.getText());
 						}
 						if (title.equals("ADRESSE2")) {
-							getPanelChantier().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().setAdresse2(textField.getText());
+							getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+									.setAdresse2(textField.getText());
 						}
 						if (title.equals("ADRESSE3")) {
-							getPanelChantier().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().setAdresse3(textField.getText());
+							getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+									.setAdresse3(textField.getText());
 						}
 						if (title.equals("CODEPOSTAL")) {
 							try {
-								getPanelChantier().getjDialogNouveau().getProjet().getClient()
-										.getAdresse().getCommune().setCodeCommune(textField.getText());
+								if (getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+										.getCommune() == null)
+									getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+											.setCommune(getCommune());
+
+								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+										.getCommune().setCodeCommune(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, e1.getMessage());
+								new AlertWindow(AlertType.ERREUR, "La commune n'a pas été enregistrée");
 							}
 						}
+
 						if (title.equals("COMMUNE")) {
-							getPanelChantier().getjDialogNouveau().getProjet().getClient()
-									.getAdresse().getCommune().setCommune(textField.getText());
+
+							try {
+								if (getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+										.getCommune() == null)
+									getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+											.setCommune(getCommune());
+
+								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+										.getCommune().setCommune(textField.getText());
+
+							} catch (Exception e2) {
+								e2.printStackTrace(System.out);
+								new AlertWindow(AlertType.ERREUR, "La commune n'a pas été enregistrée");
+							}
+
 						}
 						if (title.equals("MAIL")) {
 							try {
-								getPanelChantier().getjDialogNouveau().getProjet().getClient()
-										.getAdresse().setMail(textField.getText());
+								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+										.setMail(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
 								new AlertWindow(AlertType.ERREUR, e1.getMessage());
@@ -76,8 +96,8 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 						}
 						if (title.equals("TEL")) {
 							try {
-								getPanelChantier().getjDialogNouveau().getProjet().getClient()
-										.getAdresse().setTelephone(textField.getText());
+								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+										.setTelephone(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
 								new AlertWindow(AlertType.ERREUR, e1.getMessage());
@@ -91,13 +111,21 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 
 					// selectionne le tout le texte du texField
 					JTextField tF = (JTextField) e.getSource();
-					tF.selectAll();
+					tF.setText("");
 
 				}
 			});
 
 		}
 
+	}
+
+	private Commune commune = null;
+
+	private Commune getCommune() {
+		if (commune == null)
+			commune = new Commune();
+		return commune;
 	}
 
 	private void setPanelChantier(PanelChantier panelChantier) {

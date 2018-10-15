@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.OngletProjet;
+import fr.paquet.projet.Chantier;
 import fr.paquet.projet.Client;
 import fr.paquet.projet.Projet;
 import fr.paquet.projet.Responsable;
@@ -35,6 +36,7 @@ public class JDialogNouveau extends JDialog {
 
 		super();
 		setProjet(projet);
+		getProjet().setChantier(new Chantier());
 		setjButtonCreer(new JButton("Creer le projet"));
 		setPanelProj(new PanelProj(this));
 		setPanelClient(new PanelClient(this));
@@ -42,12 +44,11 @@ public class JDialogNouveau extends JDialog {
 
 		// construction de la fenetre
 		setTitle("Création d'un nouveau projet");
-		setSize(900, 700);
+		setSize(900, 600);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(false);
-		// setModal(true);
-		// setVisible(true);
 
 		// layout
 		GridBagLayout layout = new GridBagLayout();
@@ -63,7 +64,7 @@ public class JDialogNouveau extends JDialog {
 
 		JPanel buttonPanel = new JPanel();
 		add(buttonPanel, new GridBagConstraints(0, 3, 3, 1, 1, 0, GridBagConstraints.FIRST_LINE_START,
-				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0));
+				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
 		buttonPanel.setLayout(new BorderLayout());
 		JPanel panelButton2 = new JPanel();
@@ -132,6 +133,10 @@ public class JDialogNouveau extends JDialog {
 		this.jButtonCreer = jButtonCreer;
 	}
 
+	/**
+	 * 
+	 * @return true si le projet a un titre, un client et un responsable<br/>
+	 */
 	private boolean projetEnable() {
 
 		Responsable resp = getProjet().getResp();

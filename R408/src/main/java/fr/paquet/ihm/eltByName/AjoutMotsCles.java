@@ -78,7 +78,7 @@ public class AjoutMotsCles extends JFrame {
 		}
 
 		setList(new JList<InstanciationElement>(listModel));
-		add(new JScrollPane(getList()));
+		//add(new JScrollPane(getList()));
 		getList().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		getPanelList().add(getList(), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
@@ -94,7 +94,7 @@ public class AjoutMotsCles extends JFrame {
 		// ajout des panels au panel principal
 		getContentPane().add(getPanelEntete(), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
-		getContentPane().add(getPanelList(), new GridBagConstraints(0, 1, 1, 1, 1, 1.0, GridBagConstraints.CENTER,
+		getContentPane().add(getPanelList(), new GridBagConstraints(0, 1, 1, 1, 1, 2.0, GridBagConstraints.CENTER,
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 5, 5));
 		getContentPane().add(getPanelButton(), new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));

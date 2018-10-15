@@ -1,15 +1,8 @@
 package fr.paquet.projet;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 import javax.persistence.*;
 
-import org.w3c.dom.Element;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -31,16 +24,6 @@ public class Personne {
 	@Column(name = "PEPEPR", length = 20)
 	private String prenom = null;
 
-	@XStreamOmitField
-	@Transient
-	private PropertyChangeSupport changeSupport = null;
-
-	protected PropertyChangeSupport getChangeSupport() {
-		if (changeSupport == null)
-			changeSupport = new PropertyChangeSupport(this);
-		return changeSupport;
-	}
-
 	public Personne() {
 		super();
 	}
@@ -55,18 +38,14 @@ public class Personne {
 	 * 
 	 * @return le nom sans espace à droite et à gauche et en majuscule<br/>
 	 */
-	public synchronized String getNom() {
+	public String getNom() {
 		return nom;
 	}
 
-	public synchronized void setNom(String nom) {
+	public void setNom(String nom) {
 
-		if (!nom.equals("") && nom != null) {
-			nom = nom.trim().toUpperCase();
-			String oldValue = this.nom;
-			this.nom = nom;
-			getChangeSupport().firePropertyChange("nom", oldValue, nom);
-		}
+		nom = nom.trim().toUpperCase();
+
 		this.nom = nom;
 
 	}
@@ -89,29 +68,12 @@ public class Personne {
 		return prenom;
 	}
 
-	public synchronized void setPrenom(String prenom) {
-		if (!prenom.trim().equals("")) {
-			prenom = prenom.trim().toLowerCase();
-			prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
-		}
+	public void setPrenom(String prenom) {
 
-		if (!prenom.equals("") || prenom != null) {
-			String oldValue = this.prenom;
-			this.prenom = prenom;
-			getChangeSupport().firePropertyChange("prenom", oldValue, prenom);
-		}
+		prenom = prenom.trim().toLowerCase();
+		prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
 
 		this.prenom = prenom;
 	}
 
-	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-
-		getChangeSupport().addPropertyChangeListener(l);
-	}
-
-	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-
-		getChangeSupport().addPropertyChangeListener(l);
-
-	}
 }

@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Null;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 

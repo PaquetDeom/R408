@@ -11,44 +11,59 @@ public class ResponsableModel implements TableModel {
 
 	private List<Responsable> responsables = null;
 
-	public ResponsableModel() {
+	public ResponsableModel(List<Responsable> responsables) {
 		super();
+		setResponsables(responsables);
 	}
 
 	@Override
 	public void addTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
+		// TODO
 
 	}
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		if (columnIndex == 0)
+			return Responsable.class;
+		if (columnIndex == 1)
+			return Responsable.class;
+		else
+			return null;
 	}
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return 2;
 	}
 
 	@Override
 	public String getColumnName(int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		if (columnIndex == 0)
+			return "Nom du responsable";
+		if (columnIndex == 1)
+			return "Prenom du responsable";
+		else
+			return null;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getResponsables().size();
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object getValueAt(int line, int column) {
+
+		Responsable resp = getResponsables().get(line);
+
+		if (column == 0)
+			return resp.getNom();
+		if (column == 1)
+			return resp.getPrenom();
+		else
+			return null;
 	}
 
 	@Override

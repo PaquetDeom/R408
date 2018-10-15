@@ -9,12 +9,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
@@ -23,6 +25,10 @@ import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.projet.Client;
 import fr.paquet.projet.ClientFactory;
+import fr.paquet.projet.Responsable;
+import fr.paquet.projet.ResponsableFactory;
+
+import javax.swing.SwingConstants;
 
 public class PanelNomPrenomClient extends PanelNomPrenom {
 
@@ -36,9 +42,10 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 	public PanelNomPrenomClient(JDialogNouveau jDN) {
 		super(jDN);
 
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED),
+				"Client du projet"));
+
 		// setteurs
-		setTableModel(new ClientModel());
-		setTable(new JTable(getTableModel()));
 		setjTextFieldNom(new JTextField(20));
 		setjTextFieldPrenom(new JTextField(20));
 		setButtonCreer(new JButton("Creer"));
@@ -59,8 +66,6 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 		getPanelButtonGauche().add(getButtonCreer(), BorderLayout.CENTER);
 		getPanelButtonGauche().add(getButtonCancel(), BorderLayout.EAST);
 
-		getPanelTable().add(getTable());
-
 		getPanelButtonDroite().add(getButtonOk(), BorderLayout.EAST);
 
 	}
@@ -80,6 +85,9 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 
 				DefaultListSelectionModel dLSM = (DefaultListSelectionModel) e.getSource();
 				int i = dLSM.getMinSelectionIndex();
+				getjTextFieldNom().setText(getClients().get(i).getNom());
+				getjTextFieldPrenom().setText(getClients().get(i).getPrenom());
+				frizeSaisi();
 
 				try {
 					setClient(getClients().get(i));
@@ -102,9 +110,14 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				ClientFactory cF = new ClientFactory();
-				setClients(cF.findClientsByName(jTextFieldNom.getText()));
-				ClientModel cM = (ClientModel) PanelNomPrenomClient.this.getTableModel();
-				cM.setClients(getClients());
+				List<Client> clients = cF.findClientsByName(jTextFieldNom.getText());
+
+				if (clients != null && clients.isEmpty()) {
+					setClients(clients);
+					setTableModel(new ClientModel(getClients()));
+					setTable(new JTable(getTableModel()));
+					getPanelTable().add(getTable());
+				}
 
 			}
 
@@ -152,7 +165,18 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
+				if ((!getjTextFieldNom().getText().equals("") && getjTextFieldNom().getText() != null)
+						&& (!getjTextFieldPrenom().getText().equals("") && getjTextFieldPrenom().getText() != null))
+					setClient(new Client(getjTextFieldNom().getText().toUpperCase(), getjTextFieldPrenom().getText()));
+
+				if (getClient() != null) {
+					frizeSaisi();
+					new JDialogClient(getClient(), PanelNomPrenomClient.this);
+
+				} else {
+					new AlertWindow(AlertType.ERREUR, "Veuillez saisir le nom et le prenom du client");
+				}
 
 			}
 		});
@@ -170,9 +194,7 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 
 				if (getClient() != null) {
 					getjDialogNouveau().getProjet().setClient(getClient());
-					getjTextFieldNom().setEnabled(false);
-					getjTextFieldPrenom().setEnabled(false);
-					getTable().setEnabled(false);
+					frizeSaisi();
 				} else {
 					new AlertWindow(AlertType.ERREUR, "Veuillez saisir un client");
 				}
@@ -193,21 +215,24 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 			public void actionPerformed(ActionEvent e) {
 				setClient(null);
 				getjDialogNouveau().getProjet().setClient(null);
-				getjTextFieldNom().setEnabled(true);
-				getjTextFieldPrenom().setEnabled(true);
-				getTable().setEnabled(true);
-
+				desFrizeSaisi();
+				PanelNomPrenomClient.this.repaint();
 			}
 		});
 		this.buttonCancel = button;
 	}
 
-	private Client getClient() {
+	public Client getClient() {
 		return client;
 	}
 
 	private void setClient(Client client) {
-		this.client = client;
+
+		if ((getjTextFieldNom() != null && !getjTextFieldNom().equals(""))
+				&& (getjTextFieldPrenom() != null && !getjTextFieldPrenom().equals("")))
+			this.client = client;
+		else
+			this.client = null;
 	}
 
 	private List<Client> getClients() {
@@ -216,6 +241,19 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 
 	private void setClients(List<Client> clients) {
 		this.clients = clients;
+	}
+
+	private void frizeSaisi() {
+		getjTextFieldNom().setEnabled(false);
+		getjTextFieldPrenom().setEnabled(false);
+		if (getTable() != null)
+			getTable().setEnabled(false);
+	}
+
+	private void desFrizeSaisi() {
+		getjTextFieldNom().setEnabled(true);
+		getjTextFieldPrenom().setEnabled(true);
+		getTable().setEnabled(true);
 	}
 
 }
