@@ -6,8 +6,11 @@
 	<persistence-unit name="R408"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+
 		<class>fr.paquet.echafaudage.Constructeur</class>
 		<class>fr.paquet.echafaudage.Echafaudage</class>
+		<class>fr.paquet.echafaudage.element.Element</class>
 		<class>fr.paquet.echafaudage.element.AmarrageBaie</class>
 		<class>fr.paquet.echafaudage.element.EltByName</class>
 		<class>fr.paquet.echafaudage.element.EmbasePoteaux</class>
@@ -22,7 +25,14 @@
 		<class>fr.paquet.echafaudage.element.SocleReglable</class>
 		<class>fr.paquet.echafaudage.element.TypeElement</class>
 		<class>fr.paquet.echafaudage.element.VerinButtee</class>
-		<class>fr.paquet.echafaudage.element.Element</class>
+		<class>fr.paquet.echafaudage.element.BrasDeDeport</class>
+		<class>fr.paquet.echafaudage.element.Console</class>
+		<class>fr.paquet.echafaudage.element.ConsolePareGravois</class>
+		<class>fr.paquet.echafaudage.element.Diagonale</class>
+		<class>fr.paquet.echafaudage.element.LAncrage</class>
+		<class>fr.paquet.echafaudage.element.LissesPareGravois</class>
+		<class>fr.paquet.echafaudage.element.PoutrePassageDeCamion</class>
+		<class>fr.paquet.echafaudage.element.Tole</class>
 		<class>fr.paquet.projet.Adresse</class>
 		<class>fr.paquet.projet.Chantier</class>
 		<class>fr.paquet.projet.Client</class>

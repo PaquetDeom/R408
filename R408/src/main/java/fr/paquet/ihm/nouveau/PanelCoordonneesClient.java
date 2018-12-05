@@ -53,27 +53,14 @@ public class PanelCoordonneesClient extends PanelCoordonnees {
 						}
 						if (title.equals("CODEPOSTAL")) {
 							try {
-								if (getjDialogClient().getAdresse().getCommune() == null)
-									getjDialogClient().getAdresse().setCommune(getCommune());
-
-								getjDialogClient().getAdresse().getCommune().setCodeCommune(textField.getText());
+								getjDialogClient().getAdresse().setCodeCommune(textField.getText());
 							} catch (Exception e1) {
-								e1.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, "problème lors de l'enregistrement de la commune");
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
 							}
 						}
 						if (title.equals("COMMUNE")) {
-
-							try {
-								if (getjDialogClient().getAdresse().getCommune() == null)
-									getjDialogClient().getAdresse().setCommune(getCommune());
-
-								getjDialogClient().getAdresse().getCommune().setCommune(textField.getText());
-							} catch (Exception e2) {
-								e2.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, "problème lors de l'enregistrement de la commune");
-							}
-
+							getjDialogClient().getAdresse().setCom(textField.getText());
 						}
 						if (title.equals("MAIL")) {
 							try {

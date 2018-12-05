@@ -32,7 +32,7 @@ public class ResponsableFactory extends Connect {
 			return (Responsable) query.getSingleResult();
 
 		} catch (NoResultException e) {
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			return null;
 		}
 
@@ -46,23 +46,17 @@ public class ResponsableFactory extends Connect {
 	 */
 	public void saveResponsable(Responsable resp) throws Exception {
 
-		if (findResponsableByNameAndFirstName(resp.getNom(), resp.getPrenom()) != null) {
-			throw new Exception("ce responsable existe deja");
-		} else {
+		EntityTransaction t = getEm().getTransaction();
+		try {
 
-			EntityTransaction t = getEm().getTransaction();
-			try {
+			t.begin();
+			getEm().persist(resp);
+			t.commit();
 
-				t.begin();
-				getEm().persist(resp);
-				t.commit();
-
-			} catch (Exception e) {
-				t.rollback();
-				throw (e);
-			}
+		} catch (Exception e) {
+			t.rollback();
+			throw (e);
 		}
-
 	}
 
 	/**
@@ -86,12 +80,11 @@ public class ResponsableFactory extends Connect {
 
 	}
 
-	public List<Responsable> findResponsablesByName(String name) {
+	public List<Responsable> findResponsablesByName(String nom) {
 
-		Query query = getEm()
-				.createQuery("SELECT responsable FROM Responsable responsable where responsable.nom=:name");
+		Query query = getEm().createQuery("SELECT Responsable FROM Responsable responsable where responsable.nom=:nom");
 
-		query.setParameter("name", name);
+		query.setParameter("nom", nom);
 
 		@SuppressWarnings("unchecked")
 		List<Responsable> l = query.getResultList();

@@ -1,12 +1,9 @@
 package fr.paquet.ihm.echaf;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 import javax.swing.*;
-
-import fr.paquet.ihm.alert.AlertType;
-import fr.paquet.ihm.alert.AlertWindow;
 
 public class PanelCoordonneesChantier extends PanelCoordonnees {
 
@@ -25,79 +22,35 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 		// mutte la variable panelChantier
 		setPanelChantier(panelChantier);
 
-		// construit le panel de Coordonnes
-		buildPanel();
-
-		// listener des textFields
-		for (JTextField textField : getCoordonnesField()) {
-			textField.addFocusListener(new FocusListener() {
-
-				@Override
-				public void focusLost(FocusEvent e) {
-
-					JTextField textField = (JTextField) e.getSource();
-					String title = textField.getName();
-
-					if (!textField.getText().equals("")) {
-
-						if (title.equals("ADRESSE1")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
-									.getAdresse().setAdresse1(textField.getText());
-						}
-						if (title.equals("ADRESSE2")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
-									.getAdresse().setAdresse2(textField.getText());
-						}
-						if (title.equals("ADRESSE3")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
-									.getAdresse().setAdresse3(textField.getText());
-						}
-						if (title.equals("CODEPOSTAL")) {
-							try {
-								getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
-										.getAdresse().getCommune().setCodeCommune(textField.getText());
-							} catch (Exception e1) {
-								e1.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, e1.getMessage());
-							}
-						}
-						if (title.equals("COMMUNE")) {
-							getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
-									.getAdresse().getCommune().setCommune(textField.getText());
-						}
-						if (title.equals("MAIL")) {
-							try {
-								getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
-										.getAdresse().setMail(textField.getText());
-							} catch (Exception e1) {
-								e1.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, e1.getMessage());
-							}
-						}
-						if (title.equals("TEL")) {
-							try {
-								getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getClient()
-										.getAdresse().setTelephone(textField.getText());
-							} catch (Exception e1) {
-								e1.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, e1.getMessage());
-							}
-						}
-					}
-				}
-
-				@Override
-				public void focusGained(FocusEvent e) {
-
-					// selectionne le tout le texte du texField
-					JTextField tF = (JTextField) e.getSource();
-					tF.selectAll();
-
-				}
-			});
-
-		}
-
+		// listener des labels
+		add(new JLabel(getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getAdresse().getAdresse1()),
+				new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE,
+						new Insets(0, 0, 0, 0), 0, 0));
+		add(new JLabel(getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getAdresse().getAdresse2()),
+				new GridBagConstraints(1, 1, 1, 1, 1, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE,
+						new Insets(0, 0, 0, 0), 0, 0));
+		add(new JLabel(getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getAdresse().getAdresse3()),
+				new GridBagConstraints(1, 2, 1, 1, 1, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE,
+						new Insets(0, 0, 0, 0), 0, 0));
+		add(new JLabel(getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getAdresse().getCodeCommune()),
+				new GridBagConstraints(1, 3, 1, 1, 1, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE,
+						new Insets(0, 0, 0, 0), 0, 0));
+		add(new JLabel(getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getAdresse().getCom()),
+				new GridBagConstraints(1, 4, 1, 1, 1, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE,
+						new Insets(0, 0, 0, 0), 0, 0));
+		add(new JLabel(getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getAdresse().getMail()),
+				new GridBagConstraints(1, 5, 1, 1, 1, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE,
+						new Insets(0, 0, 0, 0), 0, 0));
+		add(new JLabel(getPanelChantier().getPanelEntete().getPanelProjet().getOnglet().getProjet().getChantier()
+				.getAdresse().getTel()),
+				new GridBagConstraints(1, 6, 1, 1, 1, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE,
+						new Insets(0, 0, 0, 0), 0, 0));
 	}
 
 	private void setPanelChantier(PanelChantier panelChantier) {

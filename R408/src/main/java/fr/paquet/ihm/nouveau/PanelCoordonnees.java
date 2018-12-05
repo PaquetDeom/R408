@@ -31,19 +31,19 @@ public class PanelCoordonnees extends JPanel {
 		setLayout(new GridBagLayout());
 
 		// ajout des Component au panel cordonneesPanel.
-		AddLineJLabelJTextField lc1 = new AddLineJLabelJTextField(PanelCoordonnees.this, "ADRESSE1", "Lieu dit", 20, 0,
+		JLabelJTextField lc1 = new JLabelJTextField(PanelCoordonnees.this, "ADRESSE1", "Lieu dit", 20, 0,
 				0, 1, 1, 0, 0, GridBagConstraints.NONE);
-		AddLineJLabelJTextField lc2 = new AddLineJLabelJTextField(PanelCoordonnees.this, "ADRESSE2", "N°", 5, 0, 1, 1,
+		JLabelJTextField lc2 = new JLabelJTextField(PanelCoordonnees.this, "ADRESSE2", "N°", 5, 0, 1, 1,
 				1, 0, 0, GridBagConstraints.NONE);
-		AddLineJLabelJTextField lc3 = new AddLineJLabelJTextField(PanelCoordonnees.this, "ADRESSE3", "Nom de la rue",
+		JLabelJTextField lc3 = new JLabelJTextField(PanelCoordonnees.this, "ADRESSE3", "Nom de la rue",
 				20, 0, 2, 1, 1, 0, 0, GridBagConstraints.NONE);
-		AddLineJLabelJTextField lc4 = new AddLineJLabelJTextField(PanelCoordonnees.this, "CODEPOSTAL", "Code Postal", 8,
+		JLabelJTextField lc4 = new JLabelJTextField(PanelCoordonnees.this, "CODEPOSTAL", "Code Postal", 8,
 				0, 3, 1, 1, 0, 0, GridBagConstraints.NONE);
-		AddLineJLabelJTextField lc5 = new AddLineJLabelJTextField(PanelCoordonnees.this, "COMMUNE", "Ville", 20, 0, 4,
+		JLabelJTextField lc5 = new JLabelJTextField(PanelCoordonnees.this, "COMMUNE", "Ville", 20, 0, 4,
 				1, 1, 0, 0, GridBagConstraints.NONE);
-		AddLineJLabelJTextField lc6 = new AddLineJLabelJTextField(PanelCoordonnees.this, "MAIL", "Adresse mail", 20, 0,
+		JLabelJTextField lc6 = new JLabelJTextField(PanelCoordonnees.this, "MAIL", "Adresse mail", 20, 0,
 				5, 1, 1, 0, 0, GridBagConstraints.NONE);
-		AddLineJLabelJTextField lc7 = new AddLineJLabelJTextField(PanelCoordonnees.this, "TEL", "N° de telephone", 20,
+		JLabelJTextField lc7 = new JLabelJTextField(PanelCoordonnees.this, "TEL", "N° de telephone", 20,
 				0, 6, 1, 1, 0, 0, GridBagConstraints.NONE);
 
 		addCoordonneesField(lc1.getTextField());

@@ -1,18 +1,15 @@
 package fr.paquet.ihm.explorer;
 
-import javax.swing.JFrame;
-
 import java.awt.GridBagLayout;
 
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.XMLEncoder;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -24,12 +21,14 @@ import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.FileChooser;
+import fr.paquet.ihm.echaf.OngletProjet;
+import fr.paquet.ihm.main.MainMenu;
 import fr.paquet.io.xml.exportxml.ExportXml;
 import fr.paquet.io.xml.importxml.ProjetIntegration;
 import fr.paquet.projet.Projet;
 import fr.paquet.projet.ProjetFactory;
 
-public class Gestionnaire extends JFrame implements AlertListener {
+public class Gestionnaire extends JDialog implements AlertListener {
 
 	/**
 	 * 
@@ -125,15 +124,20 @@ public class Gestionnaire extends JFrame implements AlertListener {
 
 	public Gestionnaire() {
 
-		super("Gestionnaire de projets");
+		super();
 
 		try {
 			// creation du model de JTable
 			setGModel(new GestionnaireModel(getProjets()));
 
 			// creation de la fenêtre
-			setAlwaysOnTop(false);
+			setTitle("Gestionnaire de projets");
 			setSize(900, 600);
+			setResizable(false);
+			setLocationRelativeTo(null);
+			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			setAlwaysOnTop(false);
+			setVisible(true);
 
 			// creation du layout
 			GridBagLayout gridBagLayout = new GridBagLayout();
@@ -277,7 +281,11 @@ public class Gestionnaire extends JFrame implements AlertListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+
+				OngletProjet c = new OngletProjet(getProjetSelected());
+				MainMenu.getUniqInstance().getActionSave().setProjet(getProjetSelected());
+				Gestionnaire.this.dispose();
+				c.setVisible(true);
 
 			}
 		});
@@ -288,7 +296,7 @@ public class Gestionnaire extends JFrame implements AlertListener {
 	@Override
 	public void buttonClick(String button) {
 		if (button.equals("Oui")) {
-			new ProjetFactory(getProjetSelected()).removeProjet();
+			new ProjetFactory().removeProjet(getProjetSelected());
 			Gestionnaire.this.dispose();
 		}
 

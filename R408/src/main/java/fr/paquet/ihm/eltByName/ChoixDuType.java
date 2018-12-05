@@ -1,5 +1,6 @@
 package fr.paquet.ihm.eltByName;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,14 +12,14 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.DefaultListSelectionModel;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
 import javax.swing.ListSelectionModel;
 
 import fr.paquet.echafaudage.element.EltByName;
@@ -105,7 +106,12 @@ public class ChoixDuType extends JDialog {
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 		getContentPane().add(getPanelList(), new GridBagConstraints(0, 1, 1, 1, 1, 1.0, GridBagConstraints.CENTER,
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 5, 5));
-		getContentPane().add(getPanelButton(), new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.CENTER,
+
+		JPanel borderPanel = new JPanel();
+		borderPanel.setLayout(new BorderLayout());
+		borderPanel.add(getPanelButton(), BorderLayout.EAST);
+
+		getContentPane().add(borderPanel, new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
 	}

@@ -46,24 +46,17 @@ public class ClientFactory extends Connect {
 	 */
 	public void saveClient(Client client) throws Exception {
 
-		if (findClientByNameAndFirstName(client.getNom(), client.getPrenom()) != null) {
-			throw new Exception("ce client existe deja");
-		} else {
+		EntityTransaction t = getEm().getTransaction();
+		try {
 
-			EntityTransaction t = getEm().getTransaction();
-			try {
+			t.begin();
+			getEm().persist(client);
+			t.commit();
 
-				t.begin();
-				getEm().persist(client);
-				t.commit();
-
-			} catch (Exception e) {
-				t.rollback();
-				throw (e);
-			}
-
+		} catch (Exception e) {
+			t.rollback();
+			throw (e);
 		}
-
 	}
 
 	/**
@@ -94,9 +87,9 @@ public class ClientFactory extends Connect {
 	 */
 	public List<Client> findClientsByName(String name) {
 
-		Query query = getEm().createQuery("SELECT client FROM Client client where client.nom=:name");
+		Query query = getEm().createQuery("SELECT client FROM Client client where client.nom like :name");
 
-		query.setParameter("name", name);
+		query.setParameter("name", "%" + name + "%");
 
 		@SuppressWarnings("unchecked")
 		List<Client> l = query.getResultList();

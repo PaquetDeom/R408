@@ -5,9 +5,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.KeyStroke;
 
-import fr.paquet.ihm.alert.AlertType;
-import fr.paquet.ihm.alert.AlertWindow;
-import fr.paquet.ihm.echaf.OngletProjet;
 import fr.paquet.projet.Projet;
 import fr.paquet.projet.ProjetFactory;
 
@@ -17,7 +14,7 @@ public class ActionSave extends ActionBDA {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private OngletProjet ongletProjet = null;
+	private Projet projet = null;
 
 	public ActionSave() {
 		super();
@@ -28,22 +25,13 @@ public class ActionSave extends ActionBDA {
 
 	}
 
-	private OngletProjet getOngletProjet() {
-
-		return ongletProjet;
-	}
-
-	public void setOngletProjet(OngletProjet ongletProjet) {
-		this.ongletProjet = ongletProjet;
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+
 		try {
-		ProjetFactory pF = new ProjetFactory(getProjet());
-		pF.saveProjet();
-		}catch (Exception e) {
+			ProjetFactory pF = new ProjetFactory();
+			pF.saveProjet(getProjet());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -55,11 +43,12 @@ public class ActionSave extends ActionBDA {
 		return "Fichier";
 	}
 
-	public Projet getProjet() throws Exception {
-		if (getOngletProjet() == null) {
-			throw new Exception("Aucun projet en cours");
-		}
-		return getOngletProjet().getProjet();
+	private Projet getProjet() {
+		return projet;
+	}
+
+	public void setProjet(Projet projet) {
+		this.projet = projet;
 	}
 
 }

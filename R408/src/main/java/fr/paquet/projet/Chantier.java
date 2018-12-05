@@ -43,10 +43,13 @@ public class Chantier implements Aadresse {
 	}
 
 	public Adresse getAdresse() {
-		if (adresse == null)
-			return getProjet().getClient().getAdresse();
-		else
-			return adresse;
+
+		if (adresse == null) {
+			if (getProjet().getClient().getAdresse() != null)
+				setAdresse(getProjet().getClient().getAdresse());
+		}
+		return adresse;
+
 	}
 
 	public void setAdresse(Adresse adresse) {

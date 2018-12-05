@@ -26,14 +26,17 @@ public class Projet {
 	@Column(name = "PRPRTI", length = 20)
 	private String titre = null;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	private Client client = null;
 
-	@OneToOne(mappedBy = "projet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Chantier chantier = null;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	private Responsable resp = null;
+
+	@Column(name = "PRPRUR", length = 200)
+	private String url = null;
 
 	/**
 	 * Constructeur vide pour la gestion de la DB<br/>
@@ -57,13 +60,14 @@ public class Projet {
 	 *            de Type Reponsable<br/>
 	 * @throws Exception
 	 */
-	public Projet(String titre, Client client, Chantier chantier, Responsable resp) {
+	public Projet(String titre, Client client, Chantier chantier, Responsable resp, String url) {
 		this();
 
 		setTitre(titre);
 		setClient(client);
 		setChantier(chantier);
 		setResp(resp);
+		setUrl(url);
 
 	}
 
@@ -75,7 +79,7 @@ public class Projet {
 		this.id = id;
 	}
 
-	public  String getTitre() {
+	public String getTitre() {
 		return titre;
 	}
 
@@ -139,6 +143,14 @@ public class Projet {
 
 	public String toString() {
 		return getTitre();
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

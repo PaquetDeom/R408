@@ -1,5 +1,6 @@
 package fr.paquet.ihm.eltByName;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,12 +11,10 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -78,7 +77,7 @@ public class AjoutMotsCles extends JFrame {
 		}
 
 		setList(new JList<InstanciationElement>(listModel));
-		//add(new JScrollPane(getList()));
+		// add(new JScrollPane(getList()));
 		getList().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		getPanelList().add(getList(), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
@@ -96,7 +95,12 @@ public class AjoutMotsCles extends JFrame {
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 		getContentPane().add(getPanelList(), new GridBagConstraints(0, 1, 1, 1, 1, 2.0, GridBagConstraints.CENTER,
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 5, 5));
-		getContentPane().add(getPanelButton(), new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.CENTER,
+
+		JPanel borderPanel = new JPanel();
+		borderPanel.setLayout(new BorderLayout());
+		borderPanel.add(panelButton, BorderLayout.EAST);
+
+		getContentPane().add(borderPanel, new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
 	}

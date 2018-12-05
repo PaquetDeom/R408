@@ -30,44 +30,17 @@ public class PanelChantier extends JPanel {
 
 		setPanelEntete(panelEntete);
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
-				"Données du chantier"));
+				"Adresse du chantier"));
 
 		setLayout(new GridBagLayout());
 
 		// creation de panels.
-		JPanel radioPanel = new JPanel();
+
 		setpCC(new PanelCoordonneesChantier(this));
 
-		// ajout des panels ci-dessus a panel chantier
-		add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+		add(getpCC(), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+				new Insets(5, 5, 5, 5), 5, 5));
 
-		// creation du radio button
-		JRadioButton radioButton = new JRadioButton("L'adresse du chantier est différente de l'adresse client");
-
-		// ajout du listener
-		radioButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				remove(getpCC());
-
-				if (radioButton.isSelected()) {
-					add(getpCC(), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER,
-							GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
-
-				}
-
-				SwingUtilities.updateComponentTreeUI(PanelChantier.this);
-				PanelChantier.this.repaint();
-
-			}
-		});
-
-		// ajout du radioButton au panel radioButtonPanel.
-		radioPanel.add(radioButton, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 	}
 
 	/**

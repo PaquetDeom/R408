@@ -28,7 +28,7 @@ public class Client extends Personne implements Aadresse {
 	@Transient
 	private List<Projet> projets = null;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Adresse adresse = null;
 
 	/**
@@ -72,6 +72,8 @@ public class Client extends Personne implements Aadresse {
 	 * @return L'adresse du client<br/>
 	 */
 	public Adresse getAdresse() {
+		if (adresse == null)
+			adresse = new Adresse();
 		return adresse;
 	}
 

@@ -13,17 +13,29 @@ public class MainMenu extends JMenuBar {
 	 * @author Nathanaël
 	 */
 
+	private ActionSave actionSave = null;
+	private Action3D action3D = null;
+	private static MainMenu mainMenu = null;
+
 	/**
 	 * Constructeur de la class ajoute les Action a MainMenu<br/>
 	 */
-	public MainMenu() {
-		ActionNouveau aN = new ActionNouveau();
-		addAction(aN);
+	private MainMenu() {
+
+		addAction(new ActionNouveau());
 		addAction(new ActionGestionnaire());
 		addAction(new ActionQuitter());
-		addAction(new Action3D());
+		setAction3D(new Action3D());
+		addAction(getAction3D());
 		addAction(new ActionMotCle());
-		addAction(aN.getActionSave());
+		setActionSave(new ActionSave());
+		addAction(getActionSave());
+	}
+
+	public static MainMenu getUniqInstance() {
+		if (mainMenu == null)
+			mainMenu = new MainMenu();
+		return mainMenu;
 	}
 
 	private Hashtable<String, JMenu> menus = new Hashtable<String, JMenu>();
@@ -44,5 +56,21 @@ public class MainMenu extends JMenuBar {
 
 		getJMenu(action.getParentMenuName()).add(jMenuAction);
 		return action;
+	}
+
+	public ActionSave getActionSave() {
+		return actionSave;
+	}
+
+	public void setActionSave(ActionSave actionSave) {
+		this.actionSave = actionSave;
+	}
+
+	public Action3D getAction3D() {
+		return action3D;
+	}
+
+	public void setAction3D(Action3D action3d) {
+		action3D = action3d;
 	}
 }

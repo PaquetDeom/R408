@@ -11,9 +11,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import fr.paquet.echafaudage.Constructeur;
 import fr.paquet.echafaudage.TypeEchaf;
 
-@XStreamAlias("amarrage de baie")
+@XStreamAlias("gardes corps")
 @Entity
-@Table(name = "AMARRAGEBAIE")
+@Table(name = "GARDESCORPS")
 @AttributeOverrides({ @AttributeOverride(name = "ref", column = @Column(name = "TYTYID")),
 		@AttributeOverride(name = "name", column = @Column(name = "TYTYNA")),
 		@AttributeOverride(name = "poids", column = @Column(name = "TYTYPO")) })

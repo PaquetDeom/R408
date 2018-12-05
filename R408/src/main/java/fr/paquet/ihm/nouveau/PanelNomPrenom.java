@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -54,6 +55,10 @@ public abstract class PanelNomPrenom extends JPanel {
 		// ajout du layout
 		setLayout(new GridBagLayout());
 
+	}
+
+	protected void buildPanel() {
+
 		// traitement des panels
 		getPanelGauche().add(getPanelSaisi(), new GridBagConstraints(0, 0, 1, 1, 1, 2.0, GridBagConstraints.CENTER,
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
@@ -70,6 +75,21 @@ public abstract class PanelNomPrenom extends JPanel {
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 		add(getPanelDroite(), new GridBagConstraints(1, 0, 1, 1, 2.0, 1.0, GridBagConstraints.CENTER,
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+
+		// Ajout se components au panel
+		getPanelSaisi().add(new JLabel("Nom : "), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.BASELINE,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		getPanelSaisi().add(new JLabel("Prenom : "), new GridBagConstraints(0, 1, 1, 1, 0, 0,
+				GridBagConstraints.BASELINE, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		getPanelSaisi().add(getjTextFieldNom(), new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.BASELINE,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		getPanelSaisi().add(getjTextFieldPrenom(), new GridBagConstraints(1, 1, 1, 1, 1, 0, GridBagConstraints.BASELINE,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+
+		getPanelButtonGauche().add(getButtonCreer(), BorderLayout.CENTER);
+		getPanelButtonGauche().add(getButtonCancel(), BorderLayout.EAST);
+
+		getPanelButtonDroite().add(getButtonOk(), BorderLayout.EAST);
 
 	}
 

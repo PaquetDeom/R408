@@ -19,7 +19,6 @@ import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.projet.Adresse;
 import fr.paquet.projet.Client;
-import fr.paquet.projet.ClientFactory;
 
 public class JDialogClient extends JDialog {
 
@@ -130,18 +129,10 @@ public class JDialogClient extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				ClientFactory Cf = new ClientFactory();
-
 				if (getAdresse() != null) {
-					getPanelNometPrenomClient().getClient().setAdresse(getAdresse());
-					try {
-						Cf.saveClient(getPanelNometPrenomClient().getClient());
-						new AlertWindow(AlertType.INFORMATION, "Le client a bien été enregistré");
-						JDialogClient.this.dispose();
-					} catch (Exception e1) {
-						new AlertWindow(AlertType.ERREUR, "Le client n'a pas été sauvé dans la base");
-						e1.printStackTrace(System.out);
-					}
+					getPanelNometPrenomClient().getjDialogNouveau().getProjet().getClient().setAdresse(getAdresse());
+					JDialogClient.this.dispose();
+
 				} else
 					new AlertWindow(AlertType.ERREUR, "Veuillez saisir une adresse");
 

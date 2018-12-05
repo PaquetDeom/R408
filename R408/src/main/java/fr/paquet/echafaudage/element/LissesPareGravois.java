@@ -19,6 +19,7 @@ import fr.paquet.echafaudage.TypeEchaf;
 		@AttributeOverride(name = "poids", column = @Column(name = "TYTYPO")) })
 public class LissesPareGravois extends TypeElement {
 
+	@Column(name = "LILILO")
 	private double longueur = 0.0;
 	
 	public LissesPareGravois() {

@@ -3,6 +3,8 @@ package fr.paquet.ihm.nouveau;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -14,9 +16,11 @@ public class PanelProj extends JPanel {
 	 */
 
 	private static final long serialVersionUID = 1L;
-	private PanelTitre panelTitre = null;
+	private JLabelJTextField titre = null;
+	private JLabelJTextField url = null;
+	private JLabelJTextField responsable = null;
+	private JLabelJTextField client = null;
 	private JDialogNouveau jDialogNouveau = null;
-	private PanelNomPrenomResp panelNomPrenomResp = null;
 
 	/**
 	 * Constructeur de la class<br/>
@@ -31,35 +35,14 @@ public class PanelProj extends JPanel {
 				"Données du projet"));
 
 		setLayout(new GridBagLayout());
+		setTitre( new JLabelJTextField(this, "Projet", 0, 0));
+		setUrl(new JLabelJTextField(this, "URL", 0, 1));
+		setResponsable(new JLabelJTextField(this, "Responsable", 0, 2, JSearchResponsable.class));
+		setClient(new JLabelJTextField(this, "Client", 0, 3, JSearchClient.class));
 
-		// creation du panel resp
-		setPanelNomPrnomResp(new PanelNomPrenomResp(this.getjDialogNouveau()));
-		setPanelTitre(new PanelTitre(this));
+		
+	
 
-		// Affichage des component sur la panelProj
-		add(getPanelTitre(), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-		add(getPanelNomPrenomResp(), new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-		add(new JPanel(), new GridBagConstraints(0, 3, 1, 1, 1, 1, GridBagConstraints.LAST_LINE_START,
-				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-
-	}
-
-	private PanelNomPrenomResp getPanelNomPrenomResp() {
-		return panelNomPrenomResp;
-	}
-
-	private void setPanelNomPrnomResp(PanelNomPrenomResp panelNomPrenomResp) {
-		this.panelNomPrenomResp = panelNomPrenomResp;
-	}
-
-	private PanelTitre getPanelTitre() {
-		return panelTitre;
-	}
-
-	private void setPanelTitre(PanelTitre panelTitre) {
-		this.panelTitre = panelTitre;
 	}
 
 	public JDialogNouveau getjDialogNouveau() {
@@ -69,5 +52,39 @@ public class PanelProj extends JPanel {
 	private void setjDialogNouveau(JDialogNouveau jDialogNouveau) {
 		this.jDialogNouveau = jDialogNouveau;
 	}
+
+	public JLabelJTextField getTitre() {
+		return titre;
+	}
+
+	private void setTitre(JLabelJTextField titre) {
+		this.titre = titre;
+	}
+
+	public JLabelJTextField getUrl() {
+		return url;
+	}
+
+	private void setUrl(JLabelJTextField url) {
+		this.url = url;
+	}
+
+	public JLabelJTextField getResponsable() {
+		return responsable;
+	}
+
+	private void setResponsable(JLabelJTextField responsable) {
+		this.responsable = responsable;
+	}
+
+	public JLabelJTextField getClient() {
+		return client;
+	}
+
+	private void setClient(JLabelJTextField client) {
+		this.client = client;
+	}
+
+
 
 }

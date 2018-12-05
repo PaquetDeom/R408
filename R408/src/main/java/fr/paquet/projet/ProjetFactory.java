@@ -7,9 +7,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import fr.paquet.dataBase.Connect;
-import fr.paquet.ihm.alert.AlertListener;
-import fr.paquet.ihm.alert.AlertType;
-import fr.paquet.ihm.alert.AlertWindow;
 
 /**
  * 
@@ -17,9 +14,7 @@ import fr.paquet.ihm.alert.AlertWindow;
  *
  */
 
-public class ProjetFactory extends Connect implements AlertListener {
-
-	private Projet projet = null;
+public class ProjetFactory extends Connect {
 
 	/**
 	 * 
@@ -29,12 +24,6 @@ public class ProjetFactory extends Connect implements AlertListener {
 	public ProjetFactory() {
 		super();
 
-	}
-
-	public ProjetFactory(Projet projet) {
-		this();
-
-		setProjet(projet);
 	}
 
 	/**
@@ -77,44 +66,19 @@ public class ProjetFactory extends Connect implements AlertListener {
 		return projets;
 	}
 
-	public void saveProjet() throws Exception {
+	public void saveProjet(Projet projet) throws Exception {
 
-		if (getProjet().getTitre() == null || getProjet().getTitre().equals("")) {
-			throw new Exception("le projet doit avoir un titre");
-		}
-
-		if (findProjetByTitle(getProjet().getTitre()) != null) {
-			new AlertWindow(AlertType.QUESTION, "ce projet existe déja voulez-vous le mettre à jour", this);
-		} else {
-			EntityTransaction t = getEm().getTransaction();
-			try {
-
-				t.begin();
-				getEm().persist(getProjet());
-				t.commit();
-				new AlertWindow(AlertType.INFORMATION, "Le projet a bien été sauvegardé");
-
-			} catch (Exception e) {
-				
-				new AlertWindow(AlertType.ERREUR, "Le projet n'a pas été sauvé");
-				t.rollback();
-				throw (e);
-			}
-		}
-
-	}
-
-	public void RefrechProjet() {
 		EntityTransaction t = getEm().getTransaction();
-
 		try {
+
 			t.begin();
-			getEm().refresh(getProjet());
-			new AlertWindow(AlertType.INFORMATION, "Le projet a bien été mis à jour");
+			getEm().persist(projet);
+			t.commit();
+
 		} catch (Exception e) {
+
 			t.rollback();
-			new AlertWindow(AlertType.ERREUR, "Le projet n'a pas été mis à jour");
-			throw(e);
+			throw (e);
 		}
 	}
 
@@ -123,34 +87,19 @@ public class ProjetFactory extends Connect implements AlertListener {
 	 * 
 	 * @param projet
 	 */
-	public void removeProjet() {
+	public void removeProjet(Projet projet) {
 
 		EntityTransaction t = getEm().getTransaction();
 		try {
 
 			t.begin();
-			getEm().remove(getProjet());
+			getEm().remove(projet);
 			t.commit();
 
 		} catch (Exception e) {
 			t.rollback();
 			throw (e);
 		}
-
-	}
-
-	private Projet getProjet() {
-		return projet;
-	}
-
-	private void setProjet(Projet projet) {
-		this.projet = projet;
-	}
-
-	@Override
-	public void buttonClick(String button) {
-		if (button == "Oui")
-			RefrechProjet();
 
 	}
 

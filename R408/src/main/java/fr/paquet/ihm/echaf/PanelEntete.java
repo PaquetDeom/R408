@@ -16,7 +16,9 @@ public class PanelEntete extends JPanel {
 
 		add(new PanelProj(this));
 		add(new PanelClient(this));
-		add(new PanelChantier(this));
+
+		if (getPanelProjet().getOnglet().getProjet().getChantier().getAdresse() != null)
+			add(new PanelChantier(this));
 
 		GridLayout layout = new GridLayout(1, 3);
 		setLayout(layout);

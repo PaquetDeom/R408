@@ -10,6 +10,8 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
+import fr.paquet.dataBase.Connect;
+import fr.paquet.dataBase.CreateTable;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
@@ -34,6 +36,7 @@ public class Main {
 			server = new Server();
 			server.setProperties(p);
 			server.start();
+			//new CreateTable();
 
 		} catch (IOException | AclFormatException e1) {
 

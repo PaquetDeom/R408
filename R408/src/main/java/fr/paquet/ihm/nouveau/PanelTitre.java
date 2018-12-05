@@ -10,7 +10,7 @@ import java.awt.event.FocusListener;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import fr.paquet.ihm.echaf.AddLineJLabelJTextField;
+import fr.paquet.ihm.main.MainMenu;
 
 public class PanelTitre extends JPanel {
 
@@ -20,21 +20,24 @@ public class PanelTitre extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private PanelProj panelProj = null;
 	private JTextField jTextFieldTitre = null;
+	private JTextField jTextFieldUrl = null;
 
 	public PanelTitre(PanelProj panelProj) {
 		super();
 
 		setPanelProj(panelProj);
-		
 
 		// ajout du layout
 		setLayout(new GridBagLayout());
 
 		// ajout des Component au panel
-		AddLineJLabelJTextField lcl1 = new AddLineJLabelJTextField(this, "TITRE", "Titre du projet", 40, 0, 0, 1,
-				1, 0, 0, GridBagConstraints.NONE);
-		
+		JLabelJTextField lcl1 = new JLabelJTextField(this, "TITRE", "Titre du projet", 40, 0, 0, 1, 1, 0,
+				0, GridBagConstraints.NONE);
+		JLabelJTextField lcl2 = new JLabelJTextField(this, "URL", "Entrer une url", 40, 0, 1, 1, 1, 0, 0,
+				GridBagConstraints.NONE);
+
 		setjTextFieldTitre(lcl1.getTextField());
+		setjTextFieldUrl(lcl2.getTextField());
 
 	}
 
@@ -81,6 +84,29 @@ public class PanelTitre extends JPanel {
 
 	public void setPanelProj(PanelProj panelProj) {
 		this.panelProj = panelProj;
+	}
+
+	public JTextField getjTextFieldUrl() {
+		return jTextFieldUrl;
+	}
+
+	private void setjTextFieldUrl(JTextField jTextFieldUrl) {
+		
+		jTextFieldUrl.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+			
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				jTextFieldUrl.setText("");
+				
+			}
+		});
+		this.jTextFieldUrl = jTextFieldUrl;
 	}
 
 }

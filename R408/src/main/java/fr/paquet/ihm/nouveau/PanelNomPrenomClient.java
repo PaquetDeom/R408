@@ -1,8 +1,5 @@
 package fr.paquet.ihm.nouveau;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -12,7 +9,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -23,12 +19,9 @@ import javax.swing.table.TableModel;
 
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.ihm.echaf.PanelCoordonneesClient;
 import fr.paquet.projet.Client;
 import fr.paquet.projet.ClientFactory;
-import fr.paquet.projet.Responsable;
-import fr.paquet.projet.ResponsableFactory;
-
-import javax.swing.SwingConstants;
 
 public class PanelNomPrenomClient extends PanelNomPrenom {
 
@@ -36,7 +29,6 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Client client = null;
 	private List<Client> clients = null;
 
 	public PanelNomPrenomClient(JDialogNouveau jDN) {
@@ -52,21 +44,7 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 		setButtonOk(new JButton("Ok"));
 		setButtonCancel(new JButton("Annuler"));
 
-		// ajout des components au panel.
-
-		getPanelSaisi().add(new JLabel("Nom : "), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.BASELINE,
-				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-		getPanelSaisi().add(new JLabel("Prenom : "), new GridBagConstraints(0, 1, 1, 1, 0, 0,
-				GridBagConstraints.BASELINE, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-		getPanelSaisi().add(getjTextFieldNom(), new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.BASELINE,
-				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-		getPanelSaisi().add(getjTextFieldPrenom(), new GridBagConstraints(1, 1, 1, 1, 1, 0, GridBagConstraints.BASELINE,
-				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-
-		getPanelButtonGauche().add(getButtonCreer(), BorderLayout.CENTER);
-		getPanelButtonGauche().add(getButtonCancel(), BorderLayout.EAST);
-
-		getPanelButtonDroite().add(getButtonOk(), BorderLayout.EAST);
+		buildPanel();
 
 	}
 
@@ -88,12 +66,6 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 				getjTextFieldNom().setText(getClients().get(i).getNom());
 				getjTextFieldPrenom().setText(getClients().get(i).getPrenom());
 				frizeSaisi();
-
-				try {
-					setClient(getClients().get(i));
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
 
 			}
 		});
@@ -166,13 +138,10 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if ((!getjTextFieldNom().getText().equals("") && getjTextFieldNom().getText() != null)
-						&& (!getjTextFieldPrenom().getText().equals("") && getjTextFieldPrenom().getText() != null))
-					setClient(new Client(getjTextFieldNom().getText().toUpperCase(), getjTextFieldPrenom().getText()));
-
-				if (getClient() != null) {
+				if (!getjTextFieldNom().getText().equals("") && !getjTextFieldPrenom().getText().equals("")) {
 					frizeSaisi();
-					new JDialogClient(getClient(), PanelNomPrenomClient.this);
+					new JDialogClient(new Client(getjTextFieldNom().getText(), getjTextFieldPrenom().getText()),
+							PanelNomPrenomClient.this);
 
 				} else {
 					new AlertWindow(AlertType.ERREUR, "Veuillez saisir le nom et le prenom du client");
@@ -192,9 +161,14 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (getClient() != null) {
-					getjDialogNouveau().getProjet().setClient(getClient());
+				if (!getjTextFieldNom().getText().equals("") && !getjTextFieldPrenom().getText().equals("")) {
+					getjDialogNouveau().getProjet()
+							.setClient(new Client(getjTextFieldNom().getText(), getjTextFieldPrenom().getText()));
+					getjDialogNouveau().getPanelClient().setPanelCoordonneeClient(
+							new PanelCoordonneesClient(getjDialogNouveau().getProjet().getClient()));
+					getjDialogNouveau().getPanelClient().getPanelC();
 					frizeSaisi();
+					getjDialogNouveau().getPanelClient().repaint();
 				} else {
 					new AlertWindow(AlertType.ERREUR, "Veuillez saisir un client");
 				}
@@ -213,26 +187,12 @@ public class PanelNomPrenomClient extends PanelNomPrenom {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setClient(null);
 				getjDialogNouveau().getProjet().setClient(null);
 				desFrizeSaisi();
 				PanelNomPrenomClient.this.repaint();
 			}
 		});
 		this.buttonCancel = button;
-	}
-
-	public Client getClient() {
-		return client;
-	}
-
-	private void setClient(Client client) {
-
-		if ((getjTextFieldNom() != null && !getjTextFieldNom().equals(""))
-				&& (getjTextFieldPrenom() != null && !getjTextFieldPrenom().equals("")))
-			this.client = client;
-		else
-			this.client = null;
 	}
 
 	private List<Client> getClients() {

@@ -18,8 +18,7 @@ public class ActionGestionnaire extends ActionBDA {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		Gestionnaire gest = new Gestionnaire();
-		gest.setVisible(true);
+		new Gestionnaire();
 
 	}
 

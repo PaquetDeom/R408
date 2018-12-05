@@ -8,7 +8,6 @@ import javax.validation.constraints.Null;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
-
 @XStreamAlias("adresses")
 @Entity
 @Table(name = "ADRESSE")
@@ -30,20 +29,22 @@ public class Adresse {
 	private String adresse1 = null;
 
 	@Column(name = "ADADAD2", length = 100)
-	@Null
 	private String adresse2 = null;
 
 	@Column(name = "ADADAD3", length = 100)
-	@Null
 	private String adresse3 = null;
 
 	@Column(name = "ADADAD4", length = 100)
-	@Null
 	private String adresse4 = null;
 
-	@JoinColumn(name = "ADCOID")
-	@OneToOne
-	private Commune commune = null;
+	@Column(name = "ADADCM", length = 100)
+	private String com = null;
+
+	@Column(name = "ADADCO", length = 100)
+	private String codeCommune = null;
+
+	//@OneToOne(cascade = CascadeType.DETACH)
+	//private Commune commune = null;
 
 	@Column(name = "ADADMAIL", length = 100)
 	private String mail = null;
@@ -58,13 +59,15 @@ public class Adresse {
 		super();
 	}
 
-	public Adresse(String add1, String add2, String add3, String add4, Commune commune) throws Exception {
+	public Adresse(String add1, String add2, String add3, String add4, String codeCommune, String commune)
+			throws Exception {
 		this();
 		setAdresse1(add1);
 		setAdresse2(add2);
 		setAdresse3(add3);
 		setAdresse4(add4);
-		setCommune(commune);
+		setCodeCommune(codeCommune);
+		setCom(commune);
 	}
 
 	public void setId(long id) {
@@ -92,12 +95,6 @@ public class Adresse {
 			this.adresse4 = adresse.trim();
 	}
 
-	public void setCommune(Commune commune) throws Exception {
-		if (commune == null)
-			throw new Exception("Veuillez saisir une commune");
-		this.commune = commune;
-	}
-
 	public void setMail(String mail) throws Exception {
 
 		mail = mail.trim();
@@ -111,7 +108,7 @@ public class Adresse {
 
 	public void setTelephone(String tel) throws Exception {
 
-		tel=tel.trim();
+		tel = tel.trim();
 		boolean a = false;
 		a = Pattern.matches("^(\\\\+33|0|0033)[0-9]{9}$", tel);
 
@@ -155,10 +152,16 @@ public class Adresse {
 	/**
 	 * 
 	 * @return La commune et son code postal<br/>
+	 * @throws Exception
 	 */
-	public Commune getCommune() {
+	/**public Commune getCommune() throws Exception {
+		if (commune == null) {
+			if (getCodeCommune() == null || getCom() == null)
+				throw new Exception("La commune ne peut pas être crée");
+			commune = new Commune(getCodeCommune(), getCom());
+		}
 		return commune;
-	}
+	}*/
 
 	/**
 	 * 
@@ -182,6 +185,29 @@ public class Adresse {
 	 */
 	public long getId() {
 		return id;
+	}
+
+	public String getCom() {
+		return com;
+	}
+
+	public void setCom(String com) {
+		this.com = com.trim().toUpperCase();
+	}
+
+	public String getCodeCommune() {
+		return codeCommune;
+	}
+
+	public void setCodeCommune(String codeCommune) throws Exception {
+
+		codeCommune = codeCommune.trim().toUpperCase();
+		boolean a = false;
+		a = Pattern.matches("([0-9]([0-9]||[AB])[0-9][0-9][0-9])", codeCommune);
+
+		if (a == false)
+			throw new Exception("Saisi du code commune invalide");
+		this.codeCommune = codeCommune;
 	}
 
 }

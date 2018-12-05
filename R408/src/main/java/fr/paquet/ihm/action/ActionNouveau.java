@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.KeyStroke;
 
-import fr.paquet.ihm.echaf.OngletProjet;
 import fr.paquet.ihm.nouveau.JDialogNouveau;
 import fr.paquet.projet.*;;
 
@@ -15,7 +14,6 @@ public class ActionNouveau extends ActionBDA {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ActionSave actionSave = new ActionSave();
 
 	public ActionNouveau() {
 		super();
@@ -29,17 +27,9 @@ public class ActionNouveau extends ActionBDA {
 	public void actionPerformed(ActionEvent arg0) {
 
 		Projet projet = new Projet();
-		/**
-		 * OngletProjet c; c = new OngletProjet(projet);
-		 * 
-		 * actionSave.setOngletProjet(c); c.setVisible(true);
-		 */
-		JDialogNouveau jD = new JDialogNouveau(projet);
-		jD.setVisible(true);
-	}
 
-	public ActionSave getActionSave() {
-		return actionSave;
+		new JDialogNouveau(projet).setVisible(true);
+
 	}
 
 	@Override

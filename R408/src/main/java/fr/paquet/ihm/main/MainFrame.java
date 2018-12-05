@@ -14,7 +14,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements WindowListener {
 
@@ -24,7 +23,6 @@ public class MainFrame extends JFrame implements WindowListener {
 	 *         Fenetre pricipale du logiciel<br/>
 	 */
 
-	private static MainMenu mainMenu = null;
 	private static MainFrame mainFrame = null;
 	private static MainOnglet mainOnglet = null;
 
@@ -34,7 +32,7 @@ public class MainFrame extends JFrame implements WindowListener {
 		setAlwaysOnTop(false);
 		setMinimumSize(new Dimension(900, 600));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setJMenuBar(getMainMenu());
+		setJMenuBar(MainMenu.getUniqInstance());
 		add(getmasterPanel());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -66,16 +64,6 @@ public class MainFrame extends JFrame implements WindowListener {
 		if (mainFrame == null)
 			mainFrame = new MainFrame();
 		return mainFrame;
-	}
-
-	/**
-	 * 
-	 * @return le menu principal<br/>
-	 */
-	public static MainMenu getMainMenu() {
-		if (mainMenu == null)
-			mainMenu = new MainMenu();
-		return mainMenu;
 	}
 
 	/**

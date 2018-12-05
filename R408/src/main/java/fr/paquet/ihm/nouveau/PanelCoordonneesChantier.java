@@ -4,6 +4,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
@@ -14,17 +15,20 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 	/**
 	 * @author paquet
 	 */
-	private PanelChantier panelChantier = null;
+	private JDialogNouveau jDialogNouveau = null;
 	private static final long serialVersionUID = 1L;
 
-	public PanelCoordonneesChantier(PanelChantier panelChantier) {
+	public PanelCoordonneesChantier(JDialogNouveau jDialogNouveau) {
 		super();
+
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
+				"Coordonnées du chantier"));
 
 		// effacer tous les components
 		removeAll();
 
-		// mutte la variable panelChantier
-		setPanelChantier(panelChantier);
+		// mutte
+		setjDialogNouveau(jDialogNouveau);
 
 		// construit le panel de Coordonnes
 		buildPanel();
@@ -42,53 +46,30 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 					if (!textField.getText().equals("")) {
 
 						if (title.equals("ADRESSE1")) {
-							getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-									.setAdresse1(textField.getText());
+							getjDialogNouveau().getProjet().getChantier().getAdresse().setAdresse1(textField.getText());
 						}
 						if (title.equals("ADRESSE2")) {
-							getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-									.setAdresse2(textField.getText());
+							getjDialogNouveau().getProjet().getChantier().getAdresse().setAdresse2(textField.getText());
 						}
 						if (title.equals("ADRESSE3")) {
-							getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-									.setAdresse3(textField.getText());
+							getjDialogNouveau().getProjet().getChantier().getAdresse().setAdresse3(textField.getText());
 						}
 						if (title.equals("CODEPOSTAL")) {
 							try {
-								if (getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-										.getCommune() == null)
-									getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-											.setCommune(getCommune());
-
-								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-										.getCommune().setCodeCommune(textField.getText());
+								getjDialogNouveau().getProjet().getChantier().getAdresse()
+										.setCodeCommune(textField.getText());
 							} catch (Exception e1) {
-								e1.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, "La commune n'a pas été enregistrée");
+
+								e1.printStackTrace();
 							}
 						}
 
 						if (title.equals("COMMUNE")) {
-
-							try {
-								if (getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-										.getCommune() == null)
-									getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-											.setCommune(getCommune());
-
-								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-										.getCommune().setCommune(textField.getText());
-
-							} catch (Exception e2) {
-								e2.printStackTrace(System.out);
-								new AlertWindow(AlertType.ERREUR, "La commune n'a pas été enregistrée");
-							}
-
+							getjDialogNouveau().getProjet().getChantier().getAdresse().setCom(textField.getText());
 						}
 						if (title.equals("MAIL")) {
 							try {
-								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
-										.setMail(textField.getText());
+								getjDialogNouveau().getProjet().getChantier().getAdresse().setMail(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
 								new AlertWindow(AlertType.ERREUR, e1.getMessage());
@@ -96,7 +77,7 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 						}
 						if (title.equals("TEL")) {
 							try {
-								getPanelChantier().getjDialogNouveau().getProjet().getChantier().getAdresse()
+								getjDialogNouveau().getProjet().getChantier().getAdresse()
 										.setTelephone(textField.getText());
 							} catch (Exception e1) {
 								e1.printStackTrace(System.out);
@@ -128,16 +109,12 @@ public class PanelCoordonneesChantier extends PanelCoordonnees {
 		return commune;
 	}
 
-	private void setPanelChantier(PanelChantier panelChantier) {
-		this.panelChantier = panelChantier;
+	private JDialogNouveau getjDialogNouveau() {
+		return jDialogNouveau;
 	}
 
-	/**
-	 * 
-	 * @return le panelChantier correspondant<br/>
-	 */
-	private PanelChantier getPanelChantier() {
-		return panelChantier;
+	private void setjDialogNouveau(JDialogNouveau jDialogNouveau) {
+		this.jDialogNouveau = jDialogNouveau;
 	}
 
 }

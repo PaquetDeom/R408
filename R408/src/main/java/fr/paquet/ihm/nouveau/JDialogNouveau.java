@@ -12,12 +12,18 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import fr.paquet.echafaudage.Echafaudage;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.OngletProjet;
+import fr.paquet.ihm.main.MainMenu;
+import fr.paquet.projet.AdresseFactory;
 import fr.paquet.projet.Chantier;
 import fr.paquet.projet.Client;
+import fr.paquet.projet.ClientFactory;
+import fr.paquet.projet.CommuneFactory;
 import fr.paquet.projet.Projet;
+import fr.paquet.projet.ProjetFactory;
 import fr.paquet.projet.Responsable;
 
 public class JDialogNouveau extends JDialog {
@@ -29,7 +35,6 @@ public class JDialogNouveau extends JDialog {
 	private Projet projet = null;
 	private PanelProj panelProj = null;
 	private PanelClient panelClient = null;
-	private PanelChantier panelChantier = null;
 	private JButton jButtonCreer = null;
 
 	public JDialogNouveau(Projet projet) {
@@ -39,32 +44,27 @@ public class JDialogNouveau extends JDialog {
 		getProjet().setChantier(new Chantier());
 		setjButtonCreer(new JButton("Creer le projet"));
 		setPanelProj(new PanelProj(this));
-		setPanelClient(new PanelClient(this));
-		setPanelChantier(new PanelChantier(this));
 
 		// construction de la fenetre
 		setTitle("Création d'un nouveau projet");
-		setSize(900, 600);
+		setSize(900, 250);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(false);
+		setVisible(true);
 
 		// layout
 		GridBagLayout layout = new GridBagLayout();
-		setLayout(layout);
+		getContentPane().setLayout(layout);
 
 		// traitement de PanelProf
-		add(getPanelProj(), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-		add(getPanelClient(), new GridBagConstraints(0, 1, 1, 1, 1, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
-		add(getPanelChantier(), new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.CENTER,
+		getContentPane().add(getPanelProj(), new GridBagConstraints(0, 0, 1, 1, 1, 0.0, GridBagConstraints.CENTER,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
 
 		JPanel buttonPanel = new JPanel();
-		add(buttonPanel, new GridBagConstraints(0, 3, 3, 1, 1, 0, GridBagConstraints.FIRST_LINE_START,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+		getContentPane().add(buttonPanel, new GridBagConstraints(0, 3, 3, 1, 1, 0.0,
+				GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
 
 		buttonPanel.setLayout(new BorderLayout());
 		JPanel panelButton2 = new JPanel();
@@ -100,14 +100,6 @@ public class JDialogNouveau extends JDialog {
 		this.panelClient = panelClient;
 	}
 
-	public PanelChantier getPanelChantier() {
-		return panelChantier;
-	}
-
-	private void setPanelChantier(PanelChantier panelChantier) {
-		this.panelChantier = panelChantier;
-	}
-
 	public JButton getjButtonCreer() {
 		return jButtonCreer;
 	}
@@ -119,10 +111,26 @@ public class JDialogNouveau extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				initProjet();
+
 				if (projetEnable()) {
 					OngletProjet oProjet = new OngletProjet(getProjet());
+
 					oProjet.setVisible(true);
 					JDialogNouveau.this.dispose();
+
+					// Enregistrement en base de donnée
+
+					ProjetFactory proF = new ProjetFactory();
+
+					try {
+
+						proF.saveProjet(getProjet());
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						new AlertWindow(AlertType.ERREUR, "Le projet n'a pas été sauvegardé");
+					}
+
 				} else {
 					new AlertWindow(AlertType.ERREUR, "Veuillez renseigner la fenêtre");
 				}
@@ -131,6 +139,34 @@ public class JDialogNouveau extends JDialog {
 		});
 
 		this.jButtonCreer = jButtonCreer;
+	}
+
+	private void initProjet() {
+
+		if (!getPanelProj().getTitre().getTextField().getText().equals(""))
+			getProjet().setTitre(getPanelProj().getTitre().getTextField().getText());
+
+		if (getPanelProj().getClient().getObjet() != null) {
+			Client client = (Client) getPanelProj().getClient().getObjet();
+			getProjet().setClient(client);
+		}
+
+		if (getPanelProj().getResponsable().getObjet() != null) {
+			Responsable resp = (Responsable) getPanelProj().getResponsable().getObjet();
+			getProjet().setResp(resp);
+		}
+
+		Echafaudage echf = new Echafaudage();
+		Chantier chantier = new Chantier(getProjet(), echf);
+		getProjet().setChantier(chantier);
+
+		if (!getPanelProj().getUrl().getTextField().getText().equals(""))
+			getProjet().setUrl(getPanelProj().getUrl().getTextField().getText());
+
+		MainMenu.getUniqInstance().getActionSave().setProjet(getProjet());
+
+		if (getProjet().getUrl() != null)
+			MainMenu.getUniqInstance().getAction3D().setProjet(getProjet());
 	}
 
 	/**

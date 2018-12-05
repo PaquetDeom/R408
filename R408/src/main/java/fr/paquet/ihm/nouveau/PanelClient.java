@@ -1,11 +1,11 @@
 package fr.paquet.ihm.nouveau;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+
+import fr.paquet.ihm.echaf.PanelCoordonneesClient;
 
 public class PanelClient extends JPanel {
 
@@ -15,7 +15,10 @@ public class PanelClient extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JDialogNouveau jDialogNouveau = null;
+	private PanelCoordonneesClient panelCoordonneeClient = null;
+	private PanelCoordonneesChantier panelCoordonneeChantier = null;
 	private PanelNomPrenomClient panelNomPrenomClient = null;
+	private JPanel panelC = new JPanel();
 
 	/**
 	 * Constructeur de la class<br/>
@@ -32,14 +35,13 @@ public class PanelClient extends JPanel {
 		setjDialogNouveau(dN);
 
 		// Ajout du layout.
-		setLayout(new GridBagLayout());
+		setLayout(new GridLayout(2, 1));
 
 		// creation des panels
 		setPanelNomPrenomClient(new PanelNomPrenomClient(this.getjDialogNouveau()));
 
 		// ajout des Panel a PanelClient.
-		add(getPanelNomPrenomClient(), new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
-				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
+		add(getPanelNomPrenomClient(), 0, 0);
 
 	}
 
@@ -61,6 +63,36 @@ public class PanelClient extends JPanel {
 
 	private void setjDialogNouveau(JDialogNouveau jDialogNouveau) {
 		this.jDialogNouveau = jDialogNouveau;
+	}
+
+	public PanelCoordonneesClient getPanelCoordonneeClient() {
+		return panelCoordonneeClient;
+	}
+
+	public void setPanelCoordonneeClient(PanelCoordonneesClient panelCoordonneeClient) {
+		this.panelCoordonneeClient = panelCoordonneeClient;
+	}
+
+	public PanelCoordonneesChantier getPanelCoordonneeChantier() {
+		return panelCoordonneeChantier;
+	}
+
+	public void setPanelCoordonneeChantier(PanelCoordonneesChantier panelCoordonneeChantier) {
+		this.panelCoordonneeChantier = panelCoordonneeChantier;
+	}
+
+	public JPanel getPanelC() {
+
+		panelC.setLayout(new GridLayout(1, 2));
+
+		panelC.add(getPanelCoordonneeClient(), 0, 0);
+		panelC.add(getPanelCoordonneeChantier(), 0, 1);
+
+		add(panelC, 2, 0);
+		setVisible(true);
+		this.repaint();
+
+		return panelC;
 	}
 
 }

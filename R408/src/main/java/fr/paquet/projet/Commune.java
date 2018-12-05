@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 
 import javax.persistence.*;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 @Entity
 @Table(name = "COMMUNE")
 public class Commune {
@@ -14,7 +16,12 @@ public class Commune {
 	 *         La class gere les communes ainsi que leur code postaux<br/>
 	 */
 
+	@XStreamOmitField
 	@Id
+	@GeneratedValue
+	@Column(name = "COCOID")
+	private double id = 0;
+
 	@Column(name = "CMCMCOMMUNE", length = 50)
 	private String commune = null;
 
@@ -44,20 +51,12 @@ public class Commune {
 		setCommune(commune);
 	}
 
-	public void setCodeCommune(String codeCommune) throws Exception {
-
-		codeCommune = codeCommune.trim().toUpperCase();
-		boolean a = false;
-		a = Pattern.matches("([0-9]([0-9]||[AB])[0-9][0-9][0-9])", codeCommune);
-
-		if (a == false)
-			throw new Exception("Saisi du code commune invalide");
+	private void setCodeCommune(String codeCommune) {
 		this.codeCommune = codeCommune;
 	}
 
-	
-	public void setCommune(String commune) {
-		this.commune = commune.trim().toUpperCase();
+	private void setCommune(String commune) {
+		this.commune = commune;
 	}
 
 	/**
@@ -76,5 +75,12 @@ public class Commune {
 		return commune;
 	}
 
+	public double getId() {
+		return id;
+	}
+
+	public void setId(double id) {
+		this.id = id;
+	}
 
 }

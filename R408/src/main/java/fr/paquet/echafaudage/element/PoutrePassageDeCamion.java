@@ -19,6 +19,7 @@ import fr.paquet.echafaudage.TypeEchaf;
 		@AttributeOverride(name = "poids", column = @Column(name = "TYTYPO")) })
 public class PoutrePassageDeCamion extends TypeElement {
 
+	@Column(name = "POPOLO")
 	private double longueur = 0.0;
 	
 	public PoutrePassageDeCamion() {
