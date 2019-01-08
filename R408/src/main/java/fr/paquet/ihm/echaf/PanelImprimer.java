@@ -11,6 +11,9 @@ import javax.swing.border.BevelBorder;
 
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.io.jrxml.GeneratePDF;
+
+import fr.paquet.projet.Projet;
 
 public class PanelImprimer extends JPanel {
 
@@ -19,6 +22,7 @@ public class PanelImprimer extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private PanelResultats panelResultats = null;
+	private JButton jGenere = null;
 
 	public PanelImprimer(PanelResultats panelResultats) {
 		super();
@@ -31,20 +35,11 @@ public class PanelImprimer extends JPanel {
 		// ajout du layout
 		setLayout(new GridBagLayout());
 
-		// création du button imprimer
-		JButton imp = new JButton("imprimer");
+		// setteur button
+		setjGenere(new JButton("Génére"));
 
-		imp.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				new AlertWindow(AlertType.ATTENTION, "bientôt sa va imprimer");
-			}
-		});
-
-		add(imp, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.FIRST_LINE_END, GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 0), 0, 0));
+		add(getjGenere(), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.FIRST_LINE_END,
+				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
 	}
 
@@ -54,6 +49,30 @@ public class PanelImprimer extends JPanel {
 
 	private void setPanelResultats(PanelResultats panelResultats) {
 		this.panelResultats = panelResultats;
+	}
+
+	private JButton getjGenere() {
+		return jGenere;
+	}
+
+	private void setjGenere(JButton jGenere) {
+
+		jGenere.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				Projet projet = getPanelResultats().getPanelProjet().getOnglet().getProjet();
+
+				if (projet != null)
+					new GeneratePDF(projet);
+				else
+					new AlertWindow(AlertType.ATTENTION, "Aucun projet actif");
+
+			}
+		});
+
+		this.jGenere = jGenere;
 	}
 
 }

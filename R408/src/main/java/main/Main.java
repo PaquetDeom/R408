@@ -26,17 +26,17 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		// new ChoixDuType(null, "essai");
+		
 		try {
-
+			
 			HsqlProperties p = new HsqlProperties();
-			p.setProperty("server.database.0", "file:/home/paquet/hsqlDB/DataR408;user=r408;password=Login5340");
+			p.setProperty("server.database.0", "file:target/classes/hsql/r408;user=r408;password=Login5340");
 			p.setProperty("server.dbname.0", "R408");
 			p.setProperty("server.port", "5434");
 			server = new Server();
 			server.setProperties(p);
 			server.start();
-			//new CreateTable();
+			System.out.println(System.getProperty("user.dir"));
 
 		} catch (IOException | AclFormatException e1) {
 

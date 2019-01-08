@@ -43,7 +43,7 @@ public class MainFrame extends JFrame implements WindowListener {
 				super.paintComponent(g);
 				BufferedImage img = null;
 				try {
-					img = ImageIO.read(new File("target/image/echafaudage.jpeg"));
+					img = ImageIO.read(new File("target/classes/images/echafaudage.jpeg"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

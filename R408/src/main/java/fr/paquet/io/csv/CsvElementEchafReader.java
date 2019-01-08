@@ -17,7 +17,7 @@ public class CsvElementEchafReader {
 
 	private PanelEchafaudage pEchaf = null;
 	private File file = null;
-	private static String SEPARATOR = ";";
+	private static String SEPARATOR = ",";
 	private List<String[]> data = new ArrayList<String[]>();
 
 	/**

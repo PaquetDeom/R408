@@ -15,6 +15,7 @@ public class MainMenu extends JMenuBar {
 
 	private ActionSave actionSave = null;
 	private Action3D action3D = null;
+	private ActionUrl actionUrl = null;
 	private static MainMenu mainMenu = null;
 
 	/**
@@ -30,6 +31,9 @@ public class MainMenu extends JMenuBar {
 		addAction(new ActionMotCle());
 		setActionSave(new ActionSave());
 		addAction(getActionSave());
+		setActionUrl(new ActionUrl());
+		addAction(getActionUrl());
+
 	}
 
 	public static MainMenu getUniqInstance() {
@@ -72,5 +76,13 @@ public class MainMenu extends JMenuBar {
 
 	public void setAction3D(Action3D action3d) {
 		action3D = action3d;
+	}
+
+	public ActionUrl getActionUrl() {
+		return actionUrl;
+	}
+
+	public void setActionUrl(ActionUrl actionUrl) {
+		this.actionUrl = actionUrl;
 	}
 }

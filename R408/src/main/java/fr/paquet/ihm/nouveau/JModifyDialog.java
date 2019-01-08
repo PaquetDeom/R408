@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import fr.paquet.ihm.main.MainFrame;
+
 public abstract class JModifyDialog extends JDialog implements ActionListener {
 
 	/**
@@ -23,6 +25,8 @@ public abstract class JModifyDialog extends JDialog implements ActionListener {
 	private Object modifyObject = null;
 
 	public JModifyDialog(Object o) {
+		super(MainFrame.getUniqInstance());
+		setAlwaysOnTop(true);
 		setModifyObject(o);
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		setContentPane(mainPanel);

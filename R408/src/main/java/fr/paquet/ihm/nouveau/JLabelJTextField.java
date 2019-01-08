@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Constructor;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -30,6 +31,7 @@ public class JLabelJTextField implements ActionListener, SelectListener {
 		panel.add(new JLabel(textLabel), new GridBagConstraints(gridx * 3, gridy, 1, 1, 0, 0, GridBagConstraints.EAST,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
 		textField = new JTextField();
+		((AbstractDocument)textField.getDocument()).setDocumentFilter(new UppercaseDocumentFilter());
 		if (dialogClass == null)
 			panel.add(textField, new GridBagConstraints(gridx * 3 + 1, gridy, 2, 1, 1.0, 0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
@@ -67,7 +69,6 @@ public class JLabelJTextField implements ActionListener, SelectListener {
 		try {
 			ctor = dialogClass.getConstructor(String.class);
 			setDialog(ctor.newInstance(new Object[] { getText() }));
-			dialog.setVisible(true);
 			dialog.addSelectListener(this);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

@@ -82,9 +82,9 @@ public class ResponsableFactory extends Connect {
 
 	public List<Responsable> findResponsablesByName(String nom) {
 
-		Query query = getEm().createQuery("SELECT Responsable FROM Responsable responsable where responsable.nom=:nom");
+		Query query = getEm().createQuery("SELECT Responsable FROM Responsable responsable where responsable.nom like :nom");
 
-		query.setParameter("nom", nom);
+		query.setParameter("nom", "%"+nom+"%");
 
 		@SuppressWarnings("unchecked")
 		List<Responsable> l = query.getResultList();

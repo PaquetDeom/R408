@@ -7,7 +7,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("constructeur")
 @Entity
-@Table(name = "Constructeur")
+@Table(name = "CONSTRUCTEUR")
 public class Constructeur {
 
 	@XStreamOmitField

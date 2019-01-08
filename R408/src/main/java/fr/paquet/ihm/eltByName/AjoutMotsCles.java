@@ -173,7 +173,7 @@ public class AjoutMotsCles extends JFrame {
 
 				EltByNameFactory eltF = new EltByNameFactory();
 				eltF.saveEltByName(new EltByName(getTextField().getText(), getInst()));
-				new AlertWindow(AlertType.INFORMATION, "Le mot clé a bien été sauvegardé");
+				//new AlertWindow(AlertType.INFORMATION, "Le mot clé a bien été sauvegardé");
 				AjoutMotsCles.this.dispose();
 
 			}

@@ -16,6 +16,7 @@ import fr.paquet.echafaudage.Echafaudage;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.OngletProjet;
+import fr.paquet.ihm.main.MainFrame;
 import fr.paquet.ihm.main.MainMenu;
 import fr.paquet.projet.AdresseFactory;
 import fr.paquet.projet.Chantier;
@@ -38,8 +39,8 @@ public class JDialogNouveau extends JDialog {
 	private JButton jButtonCreer = null;
 
 	public JDialogNouveau(Projet projet) {
-
-		super();
+		super(MainFrame.getUniqInstance());
+		setAlwaysOnTop(true);
 		setProjet(projet);
 		getProjet().setChantier(new Chantier());
 		setjButtonCreer(new JButton("Creer le projet"));
@@ -165,8 +166,10 @@ public class JDialogNouveau extends JDialog {
 
 		MainMenu.getUniqInstance().getActionSave().setProjet(getProjet());
 
-		if (getProjet().getUrl() != null)
+		if (getProjet().getUrl() != null) {
 			MainMenu.getUniqInstance().getAction3D().setProjet(getProjet());
+			MainMenu.getUniqInstance().getActionUrl().setProjet(getProjet());
+		}
 	}
 
 	/**

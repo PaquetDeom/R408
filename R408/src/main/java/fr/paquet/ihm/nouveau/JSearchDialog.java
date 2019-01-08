@@ -22,6 +22,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import fr.paquet.ihm.main.MainFrame;
+
 public abstract class JSearchDialog extends JDialog implements ActionListener, SelectListener {
 
 	JPanel searchPanel = new JPanel(new GridBagLayout());
@@ -87,8 +89,8 @@ public abstract class JSearchDialog extends JDialog implements ActionListener, S
 	}
 
 	public JSearchDialog() {
-		super();
-
+		super(MainFrame.getUniqInstance());
+		setAlwaysOnTop(true);
 		JPanel panel = new JPanel(new BorderLayout());
 		setContentPane(panel);
 		panel.add(getSearchPanel(), BorderLayout.NORTH);
