@@ -284,6 +284,8 @@ public class Gestionnaire extends JDialog implements AlertListener {
 
 				OngletProjet c = new OngletProjet(getProjetSelected());
 				MainMenu.getUniqInstance().getActionSave().setProjet(getProjetSelected());
+				MainMenu.getUniqInstance().getAction3D().setProjet(getProjetSelected());
+				MainMenu.getUniqInstance().getActionUrl().setProjet(getProjetSelected());
 				Gestionnaire.this.dispose();
 				c.setVisible(true);
 

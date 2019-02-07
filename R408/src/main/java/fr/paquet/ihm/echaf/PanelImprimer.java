@@ -9,13 +9,14 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.io.jrxml.GeneratePDF;
 
 import fr.paquet.projet.Projet;
 
-public class PanelImprimer extends JPanel {
+public class PanelImprimer extends JPanel  {
 
 	/**
 	 * 
@@ -65,7 +66,13 @@ public class PanelImprimer extends JPanel {
 				Projet projet = getPanelResultats().getPanelProjet().getOnglet().getProjet();
 
 				if (projet != null)
-					new GeneratePDF(projet);
+					try {
+						new GeneratePDF(projet);
+						
+					} catch (Exception e) {
+						new AlertWindow(AlertType.ERREUR, "Le rapport n'a pas été généré");
+						e.printStackTrace();
+					}
 				else
 					new AlertWindow(AlertType.ATTENTION, "Aucun projet actif");
 
@@ -74,5 +81,7 @@ public class PanelImprimer extends JPanel {
 
 		this.jGenere = jGenere;
 	}
+
+	
 
 }

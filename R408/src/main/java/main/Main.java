@@ -10,8 +10,6 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerAcl.AclFormatException;
 
-import fr.paquet.dataBase.Connect;
-import fr.paquet.dataBase.CreateTable;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
@@ -26,17 +24,15 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		
 		try {
-			
+
 			HsqlProperties p = new HsqlProperties();
-			p.setProperty("server.database.0", "file:target/classes/hsql/r408;user=r408;password=Login5340");
+			p.setProperty("server.database.0", "file:./target/classes/hsql/r408;user=r408;password=Login5340");
 			p.setProperty("server.dbname.0", "R408");
 			p.setProperty("server.port", "5434");
 			server = new Server();
 			server.setProperties(p);
 			server.start();
-			System.out.println(System.getProperty("user.dir"));
 
 		} catch (IOException | AclFormatException e1) {
 

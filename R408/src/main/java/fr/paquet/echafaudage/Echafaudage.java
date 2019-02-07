@@ -107,8 +107,7 @@ public class Echafaudage {
 
 	/**
 	 * 
-	 * @param inst
-	 *            de type InstanciationElement
+	 * @param inst de type InstanciationElement
 	 * @return les valeurs de la hashtable getElemntEchafs() en fonction de leurs
 	 *         clés<br/>
 	 */
@@ -120,7 +119,7 @@ public class Echafaudage {
 	 * 
 	 * @return le nombre d'élément par TypeElement<br/>
 	 */
-	private Hashtable<InstanciationElement, Integer> getElementEchafs() {
+	public Hashtable<InstanciationElement, Integer> getElementEchafs() {
 		if (elementEchafs == null) {
 			initHashtable();
 		}
@@ -299,8 +298,7 @@ public class Echafaudage {
 	/**
 	 * 
 	 * @return Le nombre de pieds d'echafaudage<br/>
-	 * @throws Exception
-	 *             l'echafaudage n'a pas de pieds<br/>
+	 * @throws Exception l'echafaudage n'a pas de pieds<br/>
 	 */
 	public int getNbDePieds() throws Exception {
 
@@ -350,7 +348,7 @@ public class Echafaudage {
 
 	private double getSurfaceCale() throws Exception {
 
-		return (getChargeAReprendre() / getNbDePieds()) / getTypeSol().getChargeAdmissible();
+		return getChargeParPied() / getTypeSol().getChargeAdmissible();
 	}
 
 	public double getDimensionCale() throws Exception {
@@ -367,6 +365,10 @@ public class Echafaudage {
 	public double getChargeAReprendre() {
 
 		return getPoidsPropre() + getChargeExploitation();
+	}
+
+	public double getChargeParPied() throws Exception {
+		return getChargeAReprendre() / getNbDePieds();
 	}
 
 }

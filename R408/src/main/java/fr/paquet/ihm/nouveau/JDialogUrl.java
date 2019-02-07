@@ -38,7 +38,6 @@ public class JDialogUrl extends JDialog implements AlertListener {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setAlwaysOnTop(false);
 		setVisible(true);
 
 		// création des éléments
@@ -97,7 +96,7 @@ public class JDialogUrl extends JDialog implements AlertListener {
 					new AlertWindow(AlertType.QUESTION, "Url vide voulez-vous continuez ?", JDialogUrl.this);
 
 				if (!tab[0].equals("http:") && !tab[0].equals("https:"))
-					new AlertWindow(AlertType.ERREUR, "Vousn'avez pas saisi une Url");
+					new AlertWindow(AlertType.ERREUR, "Vous n'avez pas saisi une Url");
 				else {
 					getProjet().setUrl(newUrl);
 					JDialogUrl.this.dispose();
