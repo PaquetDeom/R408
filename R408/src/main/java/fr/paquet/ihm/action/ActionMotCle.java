@@ -16,7 +16,7 @@ public class ActionMotCle extends ActionBDA {
 
 	public ActionMotCle() {
 		super();
-		putValue(NAME, "Gestion des mots clés");
+		putValue(NAME, getName());
 		putValue(ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke('M', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
 	}
@@ -31,6 +31,12 @@ public class ActionMotCle extends ActionBDA {
 	public String getParentMenuName() {
 		// TODO Auto-generated method stub
 		return "Outils";
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Gestion des mots clés";
 	}
 
 }

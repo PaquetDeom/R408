@@ -19,7 +19,7 @@ public class ActionOuvrir extends ActionBDA {
 	public ActionOuvrir(Projet projet) throws Exception {
 		super();
 		setProjet(projet);
-		putValue(NAME, "Ouvrir");
+		putValue(NAME, getName());
 		putValue(ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
 	}
@@ -44,6 +44,12 @@ public class ActionOuvrir extends ActionBDA {
 		if (projet == null)
 			throw new Exception("Veuillez séletionner un projet");
 		this.projet = projet;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Ouvrir";
 	}
 
 }

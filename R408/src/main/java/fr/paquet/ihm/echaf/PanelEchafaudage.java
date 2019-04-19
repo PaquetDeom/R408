@@ -7,9 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -18,12 +16,15 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+import org.apache.tools.ant.taskdefs.cvslib.CVSEntry;
+
 import fr.paquet.echafaudage.ClasseEchaf;
 import fr.paquet.echafaudage.Echafaudage;
 import fr.paquet.echafaudage.TypeEchaf;
 import fr.paquet.echafaudage.TypeSol;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.ihm.parameterCsv.JDialogParameterCsv;
 import fr.paquet.io.csv.ElementIntegrator;
 import fr.paquet.projet.Chantier;
 import fr.paquet.io.csv.CsvElementEchafReader;
@@ -63,7 +64,7 @@ public class PanelEchafaudage extends JPanel {
 		 */
 		private boolean isClickable() {
 
-			if (isFileCharged() && getClasse() != null && getTypeSol() != null && getTypeEchaf()!= null) {
+			if (isFileCharged() && getClasse() != null && getTypeSol() != null && getTypeEchaf() != null) {
 
 				clickable = true;
 
@@ -141,18 +142,28 @@ public class PanelEchafaudage extends JPanel {
 	}
 
 	private ElementIntegrator integrator = null;
+	private File csvFile = null;
 
-	private void setIntegrator(ElementIntegrator eltin) {
-		this.integrator = eltin;
+	public File getCsvFile() {
+		return csvFile;
 	}
 
-	private ElementIntegrator getIntegrator() {
-		return integrator;
+	private void setCsvFile(File csvFile) throws Exception {
+
+		// String[] args = csvFile.getName().split(".");
+		// if (!args[1].equals("csv") || !args[1].equals("xml"))
+		// throw new Exception("Le fichier doit être un *.csv ou un *.xml");
+
+		this.csvFile = csvFile;
+	}
+
+	public void setIntegrator(ElementIntegrator eltin) {
+		this.integrator = eltin;
 	}
 
 	private void setJbuttonChooser(JButton button) {
 
-		button.setText("Intégrer un echafaudage");
+		button.setText("Intégrer un échafaudage");
 
 		button.addActionListener(new ActionListener() {
 
@@ -167,29 +178,14 @@ public class PanelEchafaudage extends JPanel {
 
 				try {
 
-					setIntegrator(
-							new ElementIntegrator(new CsvElementEchafReader(PanelEchafaudage.this, fc.getFile())));
+					setCsvFile(fc.getFile());
+					new JDialogParameterCsv(PanelEchafaudage.this);
 
 				} catch (Exception e) {
 
-					new AlertWindow(AlertType.ERREUR, "Fichier non chargé");
+					new AlertWindow(AlertType.ERREUR, e.getMessage());
 					e.printStackTrace(System.out);
-
 				}
-
-				if (fc.getFile() != null) {
-
-					chantier.getEchafaudage().setListElements(integrator.getElements());
-				}
-
-				new AlertWindow(AlertType.ATTENTION,
-						"Le fichier " + fc.getFile().getName() + " est correctement chargé");
-				setFileCharged(true);
-				getJButtonCalcul().buttonEnabled();
-
-				addFichier(fc.getFile());
-
-				getPanelProjet().getpResul().revalidate();
 
 			}
 
@@ -216,11 +212,11 @@ public class PanelEchafaudage extends JPanel {
 		this.jButtonCalcul = bc;
 	}
 
-	private JButtonCalcul getJButtonCalcul() {
+	public JButtonCalcul getJButtonCalcul() {
 		return jButtonCalcul;
 	}
 
-	private void setFileCharged(boolean b) {
+	public void setFileCharged(boolean b) {
 		this.fileIsCharged = b;
 	}
 
@@ -422,10 +418,6 @@ public class PanelEchafaudage extends JPanel {
 		});
 
 		getTypesEchaf().add(box);
-	}
-
-	public void addFichier(File file) {
-		labelFichier.setText("le fichier " + file.getName() + " est correctement chargé");
 	}
 
 	/**

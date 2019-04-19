@@ -15,7 +15,7 @@ public class ActionUrl extends ActionBDA {
 
 	public ActionUrl() {
 		super();
-		putValue(NAME, "Url de la 3D");
+		putValue(NAME, getName());
 	}
 
 	@Override
@@ -36,6 +36,12 @@ public class ActionUrl extends ActionBDA {
 
 	private Projet getProjet() {
 		return projet;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Url de la 3D";
 	}
 
 }

@@ -1,14 +1,18 @@
 package fr.paquet.io.jrxml;
 
-
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import fr.paquet.echafaudage.Arrondi;
 import fr.paquet.echafaudage.element.InstanciationElement;
 import fr.paquet.ihm.alert.AlertListener;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
+import fr.paquet.ihm.echaf.FileChooser;
 import fr.paquet.projet.Projet;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -16,14 +20,12 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
-
 
 public class GeneratePDF implements AlertListener {
 
 	private Projet projet = null;
-	private HashMap parameters = null;
+	private HashMap<String, Object> parameters = null;
 
 	public GeneratePDF(Projet projet) throws Exception {
 		super();
@@ -103,9 +105,9 @@ public class GeneratePDF implements AlertListener {
 
 	}
 
-	private HashMap getParameters() {
+	private HashMap<String, Object> getParameters() {
 		if (parameters == null)
-			parameters = new HashMap();
+			parameters = new HashMap<String, Object>();
 		return parameters;
 	}
 
@@ -117,20 +119,23 @@ public class GeneratePDF implements AlertListener {
 		this.projet = projet;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void CreateReport() throws Exception {
 
 		// - Chargement et compilation du rapport
-		JasperDesign jasperDesign;
+		// JasperDesign jasperDesign;
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport("./target/classes/jrxml/classic.jrxml");
 			jasperReport.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
-			
+
 			// - Execution du rapport
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, getParameters());
 
-			// - Création du rapport au format PDF
-			JasperExportManager.exportReportToPdfFile(jasperPrint, "/home/nath/Documents/R408/RapportPdf/Rapport.pdf");
+			// - Enregistrement du rapport au format PDF
+			FileChooser fc = new FileChooser();
+			JasperExportManager.exportReportToPdfFile(jasperPrint, fc.getSelectedFile().getAbsolutePath());
+
+		// T'EN ES LA
+			//JasperExportManager.exportReportToPdfFile(jasperPrint, "/home/nath/Documents/R408/RapportPdf/Rapport.pdf");
 
 			new AlertWindow(AlertType.QUESTION, "Rapport créé Voulez-vous le voir ?", this);
 

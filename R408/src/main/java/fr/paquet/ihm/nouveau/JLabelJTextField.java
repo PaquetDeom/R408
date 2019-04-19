@@ -30,8 +30,13 @@ public class JLabelJTextField implements ActionListener, SelectListener {
 
 		panel.add(new JLabel(textLabel), new GridBagConstraints(gridx * 3, gridy, 1, 1, 0, 0, GridBagConstraints.EAST,
 				GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+
 		textField = new JTextField();
-		((AbstractDocument)textField.getDocument()).setDocumentFilter(new UppercaseDocumentFilter());
+
+		// changer par nath l'url doit être en minuscule.
+		if (!textLabel.equals("URL"))
+			((AbstractDocument) textField.getDocument()).setDocumentFilter(new UppercaseDocumentFilter());
+
 		if (dialogClass == null)
 			panel.add(textField, new GridBagConstraints(gridx * 3 + 1, gridy, 2, 1, 1.0, 0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
@@ -83,28 +88,17 @@ public class JLabelJTextField implements ActionListener, SelectListener {
 	/**
 	 * Constructeur de class<br/>
 	 * 
-	 * @param panel
-	 *            type JPanel
-	 * @param titre
-	 *            type String
-	 * @param textLabel
-	 *            type String
-	 * @param taille
-	 *            type int
-	 * @param gridx
-	 *            type int
-	 * @param gridy
-	 *            type int
-	 * @param gridwidth
-	 *            type int
-	 * @param gridheiht
-	 *            type int
-	 * @param weithx
-	 *            type long
-	 * @param weithy
-	 *            type long
-	 * @param fill
-	 *            type int
+	 * @param panel     type JPanel
+	 * @param titre     type String
+	 * @param textLabel type String
+	 * @param taille    type int
+	 * @param gridx     type int
+	 * @param gridy     type int
+	 * @param gridwidth type int
+	 * @param gridheiht type int
+	 * @param weithx    type long
+	 * @param weithy    type long
+	 * @param fill      type int
 	 */
 	public JLabelJTextField(JPanel panel, String titre, String textLabel, int taille, int gridx, int gridy,
 			int gridwidth, int gridheiht, long weithx, long weithy, int fill) {
@@ -153,17 +147,16 @@ public class JLabelJTextField implements ActionListener, SelectListener {
 		textField.setText(text);
 
 	}
-	
+
 	private Object objet = null;
-	
+
 	private void setObject(Object objet) {
-		this.objet=objet;
+		this.objet = objet;
 	}
-	
+
 	public Object getObjet() {
 		return objet;
 	}
-	
 
 	@Override
 	public void objectSelected(PropertyChangeEvent event) {

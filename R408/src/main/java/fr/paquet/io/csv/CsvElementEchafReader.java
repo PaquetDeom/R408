@@ -4,21 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-import fr.paquet.ihm.alert.AlertType;
-import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.PanelEchafaudage;
 
 public class CsvElementEchafReader {
 
 	private PanelEchafaudage pEchaf = null;
 	private File file = null;
-	private static String SEPARATOR = ",";
-	private List<String[]> data = new ArrayList<String[]>();
 
 	/**
 	 * Constructeur
@@ -37,10 +33,13 @@ public class CsvElementEchafReader {
 		setPanelEchafaudage(pEchaf);
 		// FileReader fr = new FileReader(getFile());
 		// TODO Récupérer l'encodage du fichier csv (UTF8, 16...)
-		BufferedReader buff;
 
+		BufferedReader buff;
 		buff = new BufferedReader(new InputStreamReader(new FileInputStream(getFile()), "UTF-16"));
-		addData(buff);
+
+		// Création de la liste de String une String par ligne
+		addLines(buff);
+
 		buff.close();
 
 	}
@@ -49,17 +48,11 @@ public class CsvElementEchafReader {
 		this.pEchaf = pEchaf;
 	}
 
-	public List<String[]> getData() {
-		if (data == null)
-			data = new ArrayList<String[]>();
-		return data;
-	}
+	private List<String> lines = null;
 
-	/**
-	 * rempli le tableau data a partir du fichier CSV.
-	 */
-	private void addData(BufferedReader buff) {
+	private void addLines(BufferedReader buff) {
 		try {
+
 			int ligneVide = 0;
 			while (ligneVide < 20) {
 
@@ -67,28 +60,25 @@ public class CsvElementEchafReader {
 				// zones de la ligne
 				String ligne = buff.readLine();
 
-				// si la ligne n'existe pas on ajoute 1 au nombre de ligne vide
-				String[] nextLine = null;
-				if (ligne == null || ligne.trim().length() == 0 || (nextLine = ligne.split(SEPARATOR)).length == 0)
+				if (ligne == null || ligne.trim().length() == 0)
 					ligneVide++;
 
 				else {
-					// on réinitialise le nombre de ligne vide
-					ligneVide = 0;
 
-					String debut = nextLine[0].trim();
-					// si le début de la ligne ne commence par par <<vide>> ou par :
-					if (!debut.equals("") && !debut.equals(":"))
-						// ajoute nextline à data
-						getData().add(nextLine);
+					getLines().add(ligne);
 				}
 
 			}
 
-		} catch (IOException e) {
-			new AlertWindow(AlertType.ERREUR, e.getMessage());
-			e.printStackTrace(System.out);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+	}
+
+	public List<String> getLines() {
+		if (lines == null)
+			lines = new ArrayList<String>();
+		return lines;
 	}
 
 	/**

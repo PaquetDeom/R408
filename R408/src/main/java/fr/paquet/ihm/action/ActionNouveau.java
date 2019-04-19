@@ -17,7 +17,7 @@ public class ActionNouveau extends ActionBDA {
 
 	public ActionNouveau() {
 		super();
-		putValue(NAME, "Nouveau");
+		putValue(NAME, getName());
 		putValue(ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
 
@@ -35,6 +35,12 @@ public class ActionNouveau extends ActionBDA {
 	@Override
 	public String getParentMenuName() {
 		return "Fichier";
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Nouveau";
 	}
 
 }

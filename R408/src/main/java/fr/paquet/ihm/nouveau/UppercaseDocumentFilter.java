@@ -5,6 +5,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 public class UppercaseDocumentFilter extends DocumentFilter {
+	
 	public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr)
 			throws BadLocationException {
 

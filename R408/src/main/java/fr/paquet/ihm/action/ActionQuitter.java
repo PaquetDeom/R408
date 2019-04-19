@@ -16,7 +16,7 @@ public class ActionQuitter extends ActionBDA {
 
 	public ActionQuitter() {
 		super();
-		putValue(NAME, "Quitter");
+		putValue(NAME, getName());
 	}
 
 	@Override
@@ -35,6 +35,12 @@ public class ActionQuitter extends ActionBDA {
 	@Override
 	public String getParentMenuName() {
 		return "Fichier";
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Quitter";
 	}
 
 }

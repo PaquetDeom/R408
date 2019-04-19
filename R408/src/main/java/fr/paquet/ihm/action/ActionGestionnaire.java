@@ -13,7 +13,7 @@ public class ActionGestionnaire extends ActionBDA {
 
 	public ActionGestionnaire() {
 		super();
-		putValue(NAME, "Gestionnaire de projets");
+		putValue(NAME, getName());
 	}
 
 	@Override
@@ -25,6 +25,12 @@ public class ActionGestionnaire extends ActionBDA {
 	@Override
 	public String getParentMenuName() {
 		return "Fichier";
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Gestionnaire de projets";
 	}
 
 }

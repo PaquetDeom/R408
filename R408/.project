@@ -37,4 +37,26 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/main/test/donneesTest/Quantitatif Echaffaudage type MULTI-ULMA 01.csv</name>
+			<type>1</type>
+			<location>/home/nath/Documents/Echafaudage/Quantitatif Echaffaudage type MULTI-ULMA 01.csv</location>
+		</link>
+		<link>
+			<name>src/main/test/donneesTest/Quantitatif Echaffaudage type MULTI-ULMA 01a.csv</name>
+			<type>1</type>
+			<location>/home/nath/Documents/Echafaudage/Quantitatif Echaffaudage type MULTI-ULMA 01a.csv</location>
+		</link>
+		<link>
+			<name>src/main/test/donneesTest/Quantitatif Echaffaudage type MULTI-ULMA2.csv</name>
+			<type>1</type>
+			<location>/home/nath/Documents/Echafaudage/Quantitatif Echaffaudage type MULTI-ULMA2.csv</location>
+		</link>
+		<link>
+			<name>src/main/test/donneesTest/Quantitatif Echaffaudage type MULTI-ULMA2a.csv</name>
+			<type>1</type>
+			<location>/home/nath/Documents/Echafaudage/Quantitatif Echaffaudage type MULTI-ULMA2a.csv</location>
+		</link>
+	</linkedResources>
 </projectDescription>

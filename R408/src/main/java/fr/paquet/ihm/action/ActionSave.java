@@ -19,7 +19,7 @@ public class ActionSave extends ActionBDA {
 	public ActionSave() {
 		super();
 
-		putValue(NAME, "Sauver");
+		putValue(NAME, getName());
 		putValue(ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
 
@@ -49,6 +49,12 @@ public class ActionSave extends ActionBDA {
 
 	public void setProjet(Projet projet) {
 		this.projet = projet;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Sauver";
 	}
 
 }

@@ -13,13 +13,12 @@ public class ExportXml {
 	/**
 	 * 
 	 * @param projet
-	 * @throws Exception
-	 *             liée au flux dans un fichier
+	 * @throws Exception liée au flux dans un fichier
 	 */
 	public ExportXml(Projet projet) throws Exception {
 		super();
 
-		FileChooser fc = new FileChooser(null);
+		FileChooser fc = new FileChooser();
 
 		// Instanciation de l'objet XStream
 		XStream xs = new XStream(new DomDriver("UTF-8"));
@@ -28,7 +27,7 @@ public class ExportXml {
 
 		// Ouverture d'un flux sur un fichier
 		FileOutputStream fs;
-		fs = new FileOutputStream(fc.getSelectedFile()+".xml");
+		fs = new FileOutputStream(fc.getSelectedFile() + ".xml");
 		xs.toXML(projet, fs);
 		fs.close();
 

@@ -21,7 +21,7 @@ public class Action3D extends ActionBDA {
 
 	public Action3D() {
 		super();
-		putValue(NAME, "Visionneuse 3D");
+		putValue(NAME, getName());
 		putValue(ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke('D', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
 	}
@@ -49,6 +49,12 @@ public class Action3D extends ActionBDA {
 
 	public void setProjet(Projet projet) {
 		this.projet = projet;
+	}
+
+	@Override
+	public String getName() {
+
+		return "Visionneuse 3D";
 	}
 
 }

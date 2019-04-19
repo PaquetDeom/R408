@@ -37,16 +37,16 @@ public class AlertWindow extends JOptionPane {
 		ImageIcon img = new ImageIcon();
 
 		if (type == AlertType.ERREUR) {
-			img = new ImageIcon("target/classes/images/iconErreur.jpeg");
+			img = new ImageIcon("./target/classes/images/iconErreur.jpeg");
 			showMessageDialog(null, message, type.getStringType(), JOptionPane.ERROR_MESSAGE, img);
 		}
 		if (type == AlertType.ATTENTION) {
-			img = new ImageIcon("target/classes/images/iconWarning.jpeg");
+			img = new ImageIcon("./target/classes/images/iconWarning.jpeg");
 
 			showMessageDialog(null, message, type.getStringType(), JOptionPane.WARNING_MESSAGE, img);
 		}
 		if (type == AlertType.INFORMATION) {
-			img = new ImageIcon("target/classes/images/iconInfo.jpeg");
+			img = new ImageIcon("./target/classes/images/iconInfo.jpeg");
 
 			showMessageDialog(null, message, type.getStringType(), JOptionPane.INFORMATION_MESSAGE, img);
 		}
@@ -67,7 +67,7 @@ public class AlertWindow extends JOptionPane {
 		addButtonListener(listener);
 
 		if (type == AlertType.QUESTION) {
-			ImageIcon img = new ImageIcon("target/classes/images/iconQuestion.jpeg");
+			ImageIcon img = new ImageIcon("./target/classes/images/iconQuestion.jpeg");
 
 			int option = showConfirmDialog(null, message, type.getStringType(), JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, img);
