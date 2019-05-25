@@ -59,7 +59,8 @@ public class ElementIntegrator {
 	private void createElement() {
 
 		for (String[] args : getData()) {
-
+			//TODO gerer le nombre de paremetre de la ligne lue dans getData()
+			
 			String name = args[ParameterList.getUniqInstance().getParams().get(ParameterCsv.NAME)].trim();
 
 			EltByNameFactory eltF = new EltByNameFactory();

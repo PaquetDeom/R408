@@ -19,12 +19,12 @@ public class JLabelJRadio {
 		 */
 		private static final long serialVersionUID = 1L;
 		private int colonne = 0;
-		private int line = 0;
+		private ParameterCsv parameterCsv = null;
 
-		public JRadio(int positionColonne, int positionLigne) {
+		public JRadio(int positionColonne, ParameterCsv pc) {
 			super();
 			setColonne(positionColonne);
-			setLine(positionLigne);
+			setParameterCsv(pc);
 
 		}
 
@@ -36,35 +36,43 @@ public class JLabelJRadio {
 			return colonne;
 		}
 
-		private void setLine(int a) {
-			this.line = a;
+		public ParameterCsv getParameterCsv() {
+			return parameterCsv;
 		}
 
-		public int getLine() {
-			return line;
+		private void setParameterCsv(ParameterCsv parameterCsv) {
+			this.parameterCsv = parameterCsv;
+		}
+
+		public boolean mustBeDeselected(JRadio jRadio) {
+			if (this!=jRadio && (getColonne()==jRadio.getColonne() || getParameterCsv()==jRadio.getParameterCsv())) {
+				setSelected(false);
+				return true;
+			}
+			return false;	
 		}
 
 	}
 
-	public JLabelJRadio(JPanel panel, String textLabel, int gridx, int positionLigne) {
+	public JLabelJRadio(JPanel panel, int gridx, ParameterCsv pc) {
 
 		super();
 
-		panel.add(new JLabel(textLabel), new GridBagConstraints(gridx, positionLigne, 1, 1, 0, 0,
+		panel.add(new JLabel(pc.toString()), new GridBagConstraints(gridx, pc.ordinal()+1, 1, 1, 0, 0,
 				GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
 
 		int i = 0;
-		
+
 		for (ParameterCsv pr : EnumSet.allOf(ParameterCsv.class)) {
 
-			JRadio rB = new JRadio(i, positionLigne);
+			JRadio rB = new JRadio(i, pc);
 			ParameterList.getUniqInstance().addJradio(rB);
 
-			panel.add(rB, new GridBagConstraints(gridx + i + 1, positionLigne, 1, 1, 0, 0, GridBagConstraints.EAST,
+			panel.add(rB, new GridBagConstraints(gridx + i + 1, pc.ordinal()+1, 1, 1, 0, 0, GridBagConstraints.EAST,
 					GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
 			i++;
 		}
-		
+
 	}
 
 }

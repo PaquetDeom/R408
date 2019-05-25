@@ -16,7 +16,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-import org.apache.tools.ant.taskdefs.cvslib.CVSEntry;
+
 
 import fr.paquet.echafaudage.ClasseEchaf;
 import fr.paquet.echafaudage.Echafaudage;

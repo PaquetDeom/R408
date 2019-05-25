@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="classic" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a9475d6-7aa5-4eaf-972d-2c79040c4fee">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<subDataset name="DataEchafaudage" uuid="1c53f226-698e-47e3-9ed7-a3c4bec3e043">
@@ -179,7 +179,7 @@
 				<reportElement x="285" y="46" width="70" height="15" uuid="f2a38f76-2e17-4ea8-8c59-728cbcf3af78"/>
 				<text><![CDATA[Adresse :]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="355" y="46" width="200" height="15" uuid="8e49afb8-6ea8-4925-92b9-97a5ff2d0f01"/>
 				<textFieldExpression><![CDATA[$P{add1Chantier}]]></textFieldExpression>
 			</textField>
@@ -337,7 +337,7 @@
 				<textFieldExpression><![CDATA[$P{dCale} + " x "+$P{dCale}+"cm2"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="300" width="280" height="15" uuid="c5dbe185-2440-4a39-b249-8377fa0165ef"/>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="300" width="280" height="15" uuid="c5dbe185-2440-4a39-b249-8377fa0165ef"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -350,7 +350,7 @@
 				<text><![CDATA[Nom de l'élément ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="315" width="280" height="15" uuid="adede05f-ffe4-4bfc-90a5-466bb31b714d"/>
+				<reportElement x="1" y="315" width="280" height="15" uuid="adede05f-ffe4-4bfc-90a5-466bb31b714d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -363,7 +363,7 @@
 				<text><![CDATA[Socle réglable]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="315" width="274" height="15" uuid="ae1debe2-5e4b-440f-aa3b-e2d7f78e869a"/>
+				<reportElement x="281" y="315" width="274" height="15" uuid="ae1debe2-5e4b-440f-aa3b-e2d7f78e869a"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -374,7 +374,7 @@
 				<textFieldExpression><![CDATA[$P{socleRelable}+" U"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="330" width="280" height="15" uuid="04b3fd8a-ac24-458a-84af-a63088d1040e"/>
+				<reportElement x="1" y="330" width="280" height="15" uuid="04b3fd8a-ac24-458a-84af-a63088d1040e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -387,7 +387,7 @@
 				<text><![CDATA[Plinthe]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="330" width="274" height="15" uuid="7eeb2a2c-2e0f-4947-96f5-28cc7abd0a58"/>
+				<reportElement x="281" y="330" width="274" height="15" uuid="7eeb2a2c-2e0f-4947-96f5-28cc7abd0a58"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -398,7 +398,7 @@
 				<textFieldExpression><![CDATA[$P{plinthe}+" U"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="345" width="280" height="15" uuid="594512c0-e417-40c4-aade-6f4d487bb60d"/>
+				<reportElement x="1" y="345" width="280" height="15" uuid="594512c0-e417-40c4-aade-6f4d487bb60d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -411,7 +411,7 @@
 				<text><![CDATA[Amarrage de baie]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="360" width="280" height="15" uuid="fa361ab2-38be-4cc3-bf72-a3cfe910b10d"/>
+				<reportElement x="1" y="360" width="280" height="15" uuid="fa361ab2-38be-4cc3-bf72-a3cfe910b10d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -424,7 +424,7 @@
 				<text><![CDATA[Embase de poteaux]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="360" width="274" height="15" uuid="e254303e-53af-456b-8bcd-4a8b520436e6"/>
+				<reportElement x="281" y="360" width="274" height="15" uuid="e254303e-53af-456b-8bcd-4a8b520436e6"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -435,7 +435,7 @@
 				<textFieldExpression><![CDATA[$P{embasePoteaux}+" U"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="345" width="274" height="15" uuid="ee1fe84c-39cd-4409-bbfa-c12310c34066"/>
+				<reportElement x="281" y="345" width="274" height="15" uuid="ee1fe84c-39cd-4409-bbfa-c12310c34066"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -446,7 +446,7 @@
 				<textFieldExpression><![CDATA[$P{amarrageBaie}+" U"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="375" width="280" height="15" uuid="c620c6b9-6859-49ad-86e2-ecd8f3d54b01"/>
+				<reportElement x="1" y="375" width="280" height="15" uuid="c620c6b9-6859-49ad-86e2-ecd8f3d54b01"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -459,7 +459,7 @@
 				<text><![CDATA[Equerre de garde corps]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="390" width="280" height="15" uuid="8ae21491-f237-41e7-962c-11aac5edac16"/>
+				<reportElement x="1" y="390" width="280" height="15" uuid="8ae21491-f237-41e7-962c-11aac5edac16"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -472,7 +472,7 @@
 				<text><![CDATA[Plateau]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="405" width="280" height="15" uuid="806e56f3-5c45-4714-82af-b174e825fdba"/>
+				<reportElement x="1" y="405" width="280" height="15" uuid="806e56f3-5c45-4714-82af-b174e825fdba"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -485,7 +485,7 @@
 				<text><![CDATA[Jambe de force]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="420" width="280" height="15" uuid="f96f0afd-56a1-4394-bdad-c8e603ba808e"/>
+				<reportElement x="1" y="420" width="280" height="15" uuid="f96f0afd-56a1-4394-bdad-c8e603ba808e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -498,7 +498,7 @@
 				<text><![CDATA[Plancher trappe]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="420" width="274" height="15" uuid="b48e63e6-b13e-4b7a-904c-fc981cd49c25"/>
+				<reportElement x="281" y="420" width="274" height="15" uuid="b48e63e6-b13e-4b7a-904c-fc981cd49c25"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -509,7 +509,7 @@
 				<textFieldExpression><![CDATA[$P{plancherTrappe}+" U"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="405" width="274" height="15" uuid="471c18cb-cac8-4707-934a-a05e55928507"/>
+				<reportElement x="281" y="405" width="274" height="15" uuid="471c18cb-cac8-4707-934a-a05e55928507"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -520,7 +520,7 @@
 				<textFieldExpression><![CDATA[$P{jambeDeForce}+" U"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="390" width="274" height="15" uuid="4a365aeb-b4e7-4504-a8b4-9bd02d147ffd"/>
+				<reportElement x="281" y="390" width="274" height="15" uuid="4a365aeb-b4e7-4504-a8b4-9bd02d147ffd"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -531,7 +531,7 @@
 				<textFieldExpression><![CDATA[$P{plateau}+" U"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="375" width="274" height="15" uuid="953ebb23-2013-4c71-a241-fed528ceabe5"/>
+				<reportElement x="281" y="375" width="274" height="15" uuid="953ebb23-2013-4c71-a241-fed528ceabe5"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -638,7 +638,7 @@
 				<textFieldExpression><![CDATA[$P{poteau}+" U"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="280" y="300" width="274" height="15" uuid="6ee79be6-598e-4e56-886e-adc2998975ca"/>
+				<reportElement x="281" y="300" width="274" height="15" uuid="6ee79be6-598e-4e56-886e-adc2998975ca"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

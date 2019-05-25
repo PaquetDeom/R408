@@ -52,7 +52,7 @@ public class JPanelParameter extends JPanel {
 
 		for (ParameterCsv pC : EnumSet.allOf(ParameterCsv.class)) {
 
-			new JLabelJRadio(this, pC.toString(), 0, position);
+			new JLabelJRadio(this, 0, pC);
 			position++;
 
 		}
