@@ -16,8 +16,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-
-
 import fr.paquet.echafaudage.ClasseEchaf;
 import fr.paquet.echafaudage.Echafaudage;
 import fr.paquet.echafaudage.TypeEchaf;
@@ -25,9 +23,8 @@ import fr.paquet.echafaudage.TypeSol;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.parameterCsv.JDialogParameterCsv;
-import fr.paquet.io.csv.ElementIntegrator;
+import fr.paquet.io.csv.integrator.ElementIntegrator;
 import fr.paquet.projet.Chantier;
-import fr.paquet.io.csv.CsvElementEchafReader;
 
 public class PanelEchafaudage extends JPanel {
 

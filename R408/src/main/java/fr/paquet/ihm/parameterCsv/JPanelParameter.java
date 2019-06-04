@@ -40,7 +40,8 @@ public class JPanelParameter extends JPanel {
 
 		int posx = 1;
 
-		for (ParameterCsv pr : EnumSet.allOf(ParameterCsv.class)) {
+		for (@SuppressWarnings("unused")
+		ParameterCsv pr : EnumSet.allOf(ParameterCsv.class)) {
 
 			String a = "Col" + posx;
 			add(new JLabel(a), new GridBagConstraints(posx, 0, 1, 1, 0, 0, GridBagConstraints.EAST,

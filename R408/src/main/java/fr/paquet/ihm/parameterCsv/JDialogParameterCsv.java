@@ -19,7 +19,7 @@ import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.echaf.PanelEchafaudage;
 import fr.paquet.io.csv.CsvElementEchafReader;
-import fr.paquet.io.csv.ElementIntegrator;
+import fr.paquet.io.csv.integrator.ElementIntegrator;
 import fr.paquet.io.csv.ParameterList;
 
 public class JDialogParameterCsv extends JDialog {
