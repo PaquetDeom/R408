@@ -117,6 +117,8 @@ public class JDialogParameterCsv extends JDialog {
 				if (ParameterList.getUniqInstance().getSeparator() == null)
 					new AlertWindow(AlertType.ERREUR, "le séparateur n'est pas renseigné");
 				else {
+					
+					//Todo save param
 
 					Echafaudage echaf = getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier()
 							.getEchafaudage();

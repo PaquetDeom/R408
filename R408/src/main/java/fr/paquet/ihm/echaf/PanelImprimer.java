@@ -67,6 +67,7 @@ public class PanelImprimer extends JPanel  {
 
 				if (projet != null)
 					try {
+						
 						new GeneratePDF(projet);
 						
 					} catch (Exception e) {

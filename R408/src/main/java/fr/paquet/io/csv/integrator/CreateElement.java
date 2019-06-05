@@ -19,22 +19,23 @@ public class CreateElement {
 	public CreateElement(ElementIntegrator elI, InstanciationElement instanciation, String name, String constructeur,
 			String reference, String position, String poids, String surface) {
 
-		this(elI, instanciation, name, constructeur, reference, position, poids);
-
-		setSurface(surface);
-	}
-
-	public CreateElement(ElementIntegrator elI, InstanciationElement instanciation, String name, String constructeur,
-			String reference, String position, String poids) {
-
 		super();
-		setElementIntegrator(elI);
-		setInstanciation(instanciation);
-		setName(name);
-		setConstructeur(constructeur);
-		setReference(reference);
-		setPosition(position);
-		setPoids(poids);
+		if (elI != null)
+			setElementIntegrator(elI);
+		if (instanciation != null)
+			setInstanciation(instanciation);
+		if (name != null)
+			setName(name);
+		if (constructeur != null)
+			setConstructeur(constructeur);
+		if (reference != null)
+			setReference(reference);
+		if (position != null)
+			setPosition(position);
+		if (surface != null)
+			setPoids(poids);
+		if (surface != null)
+			setSurface(surface);
 
 	}
 

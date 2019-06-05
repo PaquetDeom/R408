@@ -80,12 +80,13 @@
 			<line>
 				<reportElement x="144" y="116" width="270" height="1" uuid="402fd267-03c5-464e-845d-41ef7479aa5c"/>
 			</line>
-			<componentElement>
-				<reportElement x="450" y="0" width="103" height="85" uuid="76f8d963-a215-4a36-ae67-b993e66f0dfe"/>
-				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<jr:codeExpression><![CDATA[$P{url}]]></jr:codeExpression>
-				</jr:QRCode>
-			</componentElement>
+			<image onErrorType="Blank">
+				<reportElement isPrintRepeatedValues="false" x="450" y="10" width="95" height="90" isRemoveLineWhenBlank="true" uuid="ed003ee2-0913-4b4e-9bef-ca9c4189b83b"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+	new com.google.zxing.qrcode.QRCodeWriter().encode(
+	$P{url},
+	com.google.zxing.BarcodeFormat.QR_CODE, 300, 300))]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

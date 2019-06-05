@@ -1,12 +1,6 @@
 package fr.paquet.io.jrxml;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.HashMap;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import fr.paquet.echafaudage.Arrondi;
 import fr.paquet.echafaudage.element.InstanciationElement;
 import fr.paquet.ihm.alert.AlertListener;
@@ -21,6 +15,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
+
 
 public class GeneratePDF implements AlertListener {
 

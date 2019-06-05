@@ -176,6 +176,7 @@ public class PanelEchafaudage extends JPanel {
 				try {
 
 					setCsvFile(fc.getFile());
+					// TODO Faire un param par default
 					new JDialogParameterCsv(PanelEchafaudage.this);
 
 				} catch (Exception e) {
@@ -259,7 +260,7 @@ public class PanelEchafaudage extends JPanel {
 			new AddLineJCheckBox(this, box, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
-		// TODO: Boulot pour Nath
+
 		ligneButton = ligneButton < gridy ? gridy : ligneButton;
 
 		gridx++;
@@ -278,7 +279,7 @@ public class PanelEchafaudage extends JPanel {
 			new AddLineJCheckBox(this, box2, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
-		// TODO: Boulot pour Nath
+
 		ligneButton = ligneButton < gridy ? gridy : ligneButton;
 
 		gridx++;
@@ -296,7 +297,7 @@ public class PanelEchafaudage extends JPanel {
 			new AddLineJCheckBox(this, box1, gridx, gridy, 1, 1, 0, 0, GridBagConstraints.BOTH);
 			gridy = gridy + 1;
 		}
-		// TODO: Boulot pour Nath
+
 		ligneButton = ligneButton < gridy ? gridy : ligneButton;
 
 		JPanel buttonPanel = new JPanel();

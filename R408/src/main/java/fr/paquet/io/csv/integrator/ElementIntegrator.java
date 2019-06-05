@@ -98,24 +98,20 @@ public class ElementIntegrator {
 
 		for (String[] args : getData()) {
 
-			if (getInstanciation(
-					args[ParameterList.getUniqInstance().getParams().get(ParameterCsv.NAME)].trim()) != null) {
+			String nom = getArguments(args, ParameterList.getUniqInstance().getParams().get(ParameterCsv.NAME));
+			String constructeur = getArguments(args,
+					ParameterList.getUniqInstance().getParams().get(ParameterCsv.CONSTRUCTEUR));
+			String reference = getArguments(args,
+					ParameterList.getUniqInstance().getParams().get(ParameterCsv.REFERENCE));
+			String position = getArguments(args,
+					ParameterList.getUniqInstance().getParams().get(ParameterCsv.POSITION));
+			String poids = getArguments(args, ParameterList.getUniqInstance().getParams().get(ParameterCsv.POIDS));
+			String surface = getArguments(args, ParameterList.getUniqInstance().getParams().get(ParameterCsv.SURFACE));
 
-				String nom = getArguments(args, ParameterList.getUniqInstance().getParams().get(ParameterCsv.NAME));
-				String constructeur = getArguments(args,
-						ParameterList.getUniqInstance().getParams().get(ParameterCsv.CONSTRUCTEUR));
-				String reference = getArguments(args,
-						ParameterList.getUniqInstance().getParams().get(ParameterCsv.REFERENCE));
-				String position = getArguments(args,
-						ParameterList.getUniqInstance().getParams().get(ParameterCsv.POSITION));
-				String poids = getArguments(args, ParameterList.getUniqInstance().getParams().get(ParameterCsv.POIDS));
-				String surface = getArguments(args,
-						ParameterList.getUniqInstance().getParams().get(ParameterCsv.SURFACE));
+			if (getInstanciation(nom.trim()) != null) {
 
-				CreateElement cE = new CreateElement(this,
-						getInstanciation(
-								args[ParameterList.getUniqInstance().getParams().get(ParameterCsv.NAME)].trim()),
-						nom, constructeur, reference, position, poids, surface);
+				CreateElement cE = new CreateElement(this, getInstanciation(nom.trim()), nom, constructeur, reference,
+						position, poids, surface);
 
 				try {
 					addElement(cE.getElement());
