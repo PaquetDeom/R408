@@ -9,12 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+
+import org.hamcrest.core.AllOf;
 
 import fr.paquet.echafaudage.ClasseEchaf;
 import fr.paquet.echafaudage.Echafaudage;
@@ -23,119 +26,43 @@ import fr.paquet.echafaudage.TypeSol;
 import fr.paquet.ihm.alert.AlertType;
 import fr.paquet.ihm.alert.AlertWindow;
 import fr.paquet.ihm.parameterCsv.JDialogParameterCsv;
+import fr.paquet.io.csv.CsvElementEchafReader;
+import fr.paquet.io.csv.ParameterCsv;
+import fr.paquet.io.csv.ParameterList;
 import fr.paquet.io.csv.integrator.ElementIntegrator;
 import fr.paquet.projet.Chantier;
+import net.sf.jasperreports.engine.type.CalculationEnum;
 
 public class PanelEchafaudage extends JPanel {
 
 	private JLabel labelFichier = null;
 	private JButton JbuttonChooser = null;
+	private ClasseEchaf classe = null;
+	private TypeEchaf typeEchaf = null;
+	private TypeSol typeSol = null;
 
-	public class JButtonCalcul extends JButton implements ActionListener {
+	private ClasseEchaf getClasse() {
+		return classe;
+	}
 
-		/**
-		 * Button particulier il est clickable lorsque le projet à un titre, que les
-		 * paramètres de l'echafaudage sont entrés<br/>
-		 */
+	public void setClasse(ClasseEchaf classe) {
+		this.classe = classe;
+	}
 
-		private boolean clickable = false;
-		private ClasseEchaf classe = null;
-		private TypeEchaf typeEchaf = null;
-		private TypeSol typeSol = null;
+	private TypeEchaf getTypeEchaf() {
+		return typeEchaf;
+	}
 
-		private static final long serialVersionUID = 1L;
+	public void setTypeEchaf(TypeEchaf typeEchaf) {
+		this.typeEchaf = typeEchaf;
+	}
 
-		public JButtonCalcul() {
-			super();
-			setText("Lancer le calcul");
-			buttonEnabled();
+	private TypeSol getTypeSol() {
+		return typeSol;
+	}
 
-			// listeners
-			addActionListener(this);
-
-		}
-
-		/**
-		 * 
-		 * @return true si tire, ClasseEchaf, TypeEchaf, TypeSol sont non null <br/>
-		 */
-		private boolean isClickable() {
-
-			if (isFileCharged() && getClasse() != null && getTypeSol() != null && getTypeEchaf() != null) {
-
-				clickable = true;
-
-			} else {
-				clickable = false;
-			}
-
-			return clickable;
-		}
-
-		public void buttonEnabled() {
-			this.setEnabled(isClickable());
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			try {
-
-				// efface tous les composants
-				getPanelProjet().getpResul().removeAll();
-
-				// set la classe, le typesol et le type echaf.
-				getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setClasseEchaf(getClasse());
-				getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeSol(getTypeSol());
-				getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeEchaf(getTypeEchaf());
-
-				// affiche les résultats.
-				getPanelProjet().getpResul().add(new PanelNoteDeCalcul(getPanelProjet().getpResul()),
-						new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.FIRST_LINE_START,
-								GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
-
-				getPanelProjet().getpResul().add(new PanelNomenclature(getPanelProjet().getpResul()),
-						new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BASELINE, GridBagConstraints.BOTH,
-								new Insets(5, 5, 5, 5), 5, 5));
-
-				getPanelProjet().getpResul().add(new PanelImprimer(getPanelProjet().getpResul()),
-						new GridBagConstraints(1, 0, 1, 2, 0, 0, GridBagConstraints.BASELINE,
-								GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
-
-				// affiche ce qu'il y a en mémoire (refrech screen)
-				getPanelProjet().getpResul().revalidate();
-
-			} catch (Exception e2) {
-				new AlertWindow(AlertType.ERREUR, "Calcul impossible");
-				e2.printStackTrace(System.out);
-			}
-
-		}
-
-		private ClasseEchaf getClasse() {
-			return classe;
-		}
-
-		public void setClasse(ClasseEchaf classe) {
-			this.classe = classe;
-		}
-
-		private TypeEchaf getTypeEchaf() {
-			return typeEchaf;
-		}
-
-		public void setTypeEchaf(TypeEchaf typeEchaf) {
-			this.typeEchaf = typeEchaf;
-		}
-
-		private TypeSol getTypeSol() {
-			return typeSol;
-		}
-
-		public void setTypeSol(TypeSol typeSol) {
-			this.typeSol = typeSol;
-		}
-
+	public void setTypeSol(TypeSol typeSol) {
+		this.typeSol = typeSol;
 	}
 
 	private ElementIntegrator integrator = null;
@@ -158,6 +85,32 @@ public class PanelEchafaudage extends JPanel {
 		this.integrator = eltin;
 	}
 
+	public void calcul() throws Exception {
+
+		// efface tous les composants
+		getPanelProjet().getpResul().removeAll();
+
+		// set la classe, le typesol et le type echaf.
+		getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setClasseEchaf(getClasse());
+		getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeSol(getTypeSol());
+		getPanelProjet().getOnglet().getProjet().getChantier().getEchafaudage().setTypeEchaf(getTypeEchaf());
+
+		// affiche les résultats.
+		getPanelProjet().getpResul().add(new PanelNoteDeCalcul(getPanelProjet().getpResul()),
+				new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.FIRST_LINE_START,
+						GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+
+		getPanelProjet().getpResul().add(new PanelNomenclature(getPanelProjet().getpResul()), new GridBagConstraints(0,
+				1, 1, 1, 1, 1, GridBagConstraints.BASELINE, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
+
+		getPanelProjet().getpResul().add(new PanelImprimer(getPanelProjet().getpResul()), new GridBagConstraints(1, 0,
+				1, 2, 0, 0, GridBagConstraints.BASELINE, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 5, 5));
+
+		// affiche ce qu'il y a en mémoire (refrech screen)
+		getPanelProjet().getpResul().revalidate();
+
+	}
+
 	private void setJbuttonChooser(JButton button) {
 
 		button.setText("Intégrer un échafaudage");
@@ -176,13 +129,43 @@ public class PanelEchafaudage extends JPanel {
 				try {
 
 					setCsvFile(fc.getFile());
-					// TODO Faire un param par default
-					new JDialogParameterCsv(PanelEchafaudage.this);
+
+					ParameterList.getUniqInstance().setSeparator(";");
+
+					for (ParameterCsv pC : EnumSet.allOf(ParameterCsv.class)) {
+						ParameterList.getUniqInstance().putValue(pC, pC.getDefaultValue());
+					}
+
+					ElementIntegrator Ei = new ElementIntegrator(
+							new CsvElementEchafReader(PanelEchafaudage.this, getCsvFile()));
+
+					echaf.setListElements(Ei.getElements());
+					setFileCharged(true);
+
+					getPanelProjet().getpResul().revalidate();
+
+					calcul();
 
 				} catch (Exception e) {
 
-					new AlertWindow(AlertType.ERREUR, e.getMessage());
-					e.printStackTrace(System.out);
+					try {
+
+						ParameterList.getUniqInstance().setSeparator("");
+						ParameterList.getUniqInstance().setParams(null);
+
+						new JDialogParameterCsv(PanelEchafaudage.this);
+
+					} catch (IOException e1) {
+
+						new AlertWindow(AlertType.ERREUR, e.getMessage());
+						e1.printStackTrace(System.out);
+
+					} catch (Exception e2) {
+
+						new AlertWindow(AlertType.ERREUR, e.getMessage());
+						e2.printStackTrace(System.out);
+					}
+
 				}
 
 			}
@@ -204,15 +187,6 @@ public class PanelEchafaudage extends JPanel {
 	private List<JCheckBox> types = null;
 	private List<JCheckBox> typeEchafs = null;
 	private boolean fileIsCharged = false;
-	private JButtonCalcul jButtonCalcul = null;
-
-	private void setJButtonCalcul(JButtonCalcul bc) {
-		this.jButtonCalcul = bc;
-	}
-
-	public JButtonCalcul getJButtonCalcul() {
-		return jButtonCalcul;
-	}
 
 	public void setFileCharged(boolean b) {
 		this.fileIsCharged = b;
@@ -239,7 +213,6 @@ public class PanelEchafaudage extends JPanel {
 
 		// mutte la variable JButtonChooser
 		setJbuttonChooser(new JButton());
-		setJButtonCalcul(new JButtonCalcul());
 
 		// contient la ligne des boutons
 		int ligneButton = 0;
@@ -313,7 +286,6 @@ public class PanelEchafaudage extends JPanel {
 		// fichier *.csv
 		panelButton2.add(getJbuttonChooser());
 		// affichage du button Jcalcul
-		panelButton2.add(getJButtonCalcul());
 
 		buttonPanel.add(panelButton2, BorderLayout.EAST);
 
@@ -341,9 +313,9 @@ public class PanelEchafaudage extends JPanel {
 
 				for (ClasseEchaf clE : EnumSet.allOf(ClasseEchaf.class)) {
 					if (clE.getClasse().equals(box.getText()))
-						getJButtonCalcul().setClasse(clE);
+						setClasse(clE);
 				}
-				getJButtonCalcul().buttonEnabled();
+
 			}
 		});
 
@@ -373,11 +345,9 @@ public class PanelEchafaudage extends JPanel {
 				for (TypeSol tS : EnumSet.allOf(TypeSol.class)) {
 
 					if (tS.getType().equals(box.getText()))
-						getJButtonCalcul().setTypeSol(tS);
+						setTypeSol(tS);
 
 				}
-
-				getJButtonCalcul().buttonEnabled();
 
 			}
 		});
@@ -408,10 +378,10 @@ public class PanelEchafaudage extends JPanel {
 				for (TypeEchaf tE : EnumSet.allOf(TypeEchaf.class)) {
 
 					if (tE.getType().equals(box.getText()))
-						getJButtonCalcul().setTypeEchaf(tE);
+						setTypeEchaf(tE);
 
 				}
-				getJButtonCalcul().buttonEnabled();
+
 			}
 		});
 

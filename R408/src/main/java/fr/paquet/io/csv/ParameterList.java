@@ -21,15 +21,25 @@ public class ParameterList {
 	public HashMap<ParameterCsv, Integer> getParams() {
 		if (params == null) {
 			params = new HashMap<ParameterCsv, Integer>();
-			putValue();
+			initValue();
 		}
 
 		return params;
 	}
 
-	private void putValue() {
+	public void putValue(ParameterCsv pC, Integer i) {
+
+		getParams().put(pC, i);
+
+	}
+
+	public void setParams(HashMap<ParameterCsv, Integer> params) {
+		this.params = params;
+	}
+
+	public void initValue() {
 		for (JRadio jr : getJradiosSelected()) {
-			getParams().put(jr.getParameterCsv(), jr.getColonne());
+			putValue(jr.getParameterCsv(), jr.getColonne());
 		}
 	}
 
@@ -59,8 +69,8 @@ public class ParameterList {
 				// récupère le JRadio cliquer
 				JRadio jRadio = (JRadio) e.getSource();
 
-				for (int i=getJradiosSelected().size()-1; i>=0; i--) {
-					JRadio jR=getJradiosSelected().get(i);
+				for (int i = getJradiosSelected().size() - 1; i >= 0; i--) {
+					JRadio jR = getJradiosSelected().get(i);
 					if (jR.mustBeDeselected(jRadio))
 						getJradiosSelected().remove(jR);
 				}

@@ -117,22 +117,24 @@ public class JDialogParameterCsv extends JDialog {
 				if (ParameterList.getUniqInstance().getSeparator() == null)
 					new AlertWindow(AlertType.ERREUR, "le séparateur n'est pas renseigné");
 				else {
-					
-					//Todo save param
+
+					// Todo save param
 
 					Echafaudage echaf = getPanelEchafaudage().getPanelProjet().getOnglet().getProjet().getChantier()
 							.getEchafaudage();
+
+					ParameterList.getUniqInstance().initValue();
 					ElementIntegrator Ei = new ElementIntegrator(getCsvElementReader());
 
 					try {
 
 						echaf.setListElements(Ei.getElements());
 						getPanelEchafaudage().setFileCharged(true);
-						getPanelEchafaudage().getJButtonCalcul().buttonEnabled();
+
 						getPanelEchafaudage().getPanelProjet().getpResul().revalidate();
 
-						new AlertWindow(AlertType.INFORMATION, "Le Fichier "
-								+ getPanelEchafaudage().getCsvFile().getName() + " est correctement chargé");
+						getPanelEchafaudage().calcul();
+
 						JDialogParameterCsv.this.dispose();
 
 					} catch (Exception e1) {

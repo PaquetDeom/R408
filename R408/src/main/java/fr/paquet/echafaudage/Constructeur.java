@@ -40,8 +40,11 @@ public class Constructeur {
 	 * 
 	 * @return Le nom d'un constructeur d'echafaudage sans espace a droite et a
 	 *         gauche<br/>
+	 * @throws Exception
 	 */
-	public String getName() {
+	public String getName() throws Exception {
+		if (name == null)
+			throw new Exception("Le constructeur doit avoir un nom");
 		return name;
 	}
 

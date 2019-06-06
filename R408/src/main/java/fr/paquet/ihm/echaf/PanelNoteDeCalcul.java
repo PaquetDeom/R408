@@ -24,7 +24,7 @@ public class PanelNoteDeCalcul extends JPanel {
 
 	private PanelResultats panelResultats = null;
 
-	public PanelNoteDeCalcul(PanelResultats pr) {
+	public PanelNoteDeCalcul(PanelResultats pr) throws Exception {
 		super();
 		setPanelResultats(pr);
 

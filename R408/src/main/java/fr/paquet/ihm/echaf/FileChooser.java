@@ -4,8 +4,11 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 import fr.paquet.ihm.main.MainFrame;
+import fr.paquet.io.jrxml.GeneratePDF;
+import fr.paquet.projet.Projet;
 
 public class FileChooser extends JFileChooser {
 
@@ -21,6 +24,24 @@ public class FileChooser extends JFileChooser {
 
 		addChoosableFileFilter(new FileNameExtensionFilter("*.csv", "csv"));
 		addChoosableFileFilter(new FileNameExtensionFilter("*.xml", "xml"));
+		int returnValue = showOpenDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+			setFile(getSelectedFile());
+
+		}
+
+	}
+
+	public FileChooser(GeneratePDF gP) {
+
+		super();
+		
+		FileSystemView.getFileSystemView().getHomeDirectory();
+		this.setDialogTitle("Sauvegarde : ");
+		this.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
 		int returnValue = showOpenDialog(null);
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -68,15 +89,15 @@ public class FileChooser extends JFileChooser {
 
 		int returnValue = showSaveDialog(null);
 
-		 int status = showOpenDialog(null);
-		    if (status == JFileChooser.APPROVE_OPTION) {
-		      File selectedFile = getSelectedFile();
-		      System.out.println(selectedFile.getParent());
-		      System.out.println(selectedFile.getName());
-		    } else if (status == JFileChooser.CANCEL_OPTION) {
-		      System.out.println(JFileChooser.CANCEL_OPTION);
-		    }
-		    
+		int status = showOpenDialog(null);
+		if (status == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = getSelectedFile();
+			System.out.println(selectedFile.getParent());
+			System.out.println(selectedFile.getName());
+		} else if (status == JFileChooser.CANCEL_OPTION) {
+			System.out.println(JFileChooser.CANCEL_OPTION);
+		}
+
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 
 			setFile(getSelectedFile());

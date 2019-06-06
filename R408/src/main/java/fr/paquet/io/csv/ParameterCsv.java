@@ -22,5 +22,24 @@ public enum ParameterCsv {
 			return null;
 		}
 	}
-	
+
+	public int getDefaultValue() {
+		switch (this) {
+		case NAME:
+			return 0;
+		case REFERENCE:
+			return 2;
+		case CONSTRUCTEUR:
+			return 1;
+		case POIDS:
+			return 4;
+		case SURFACE:
+			return 5;
+		case POSITION:
+			return 3;
+		default:
+			return 0;
+		}
+	}
+
 }

@@ -1,6 +1,11 @@
 package fr.paquet.io.jrxml;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+
+import javax.swing.JFileChooser;
+
 import fr.paquet.echafaudage.Arrondi;
 import fr.paquet.echafaudage.element.InstanciationElement;
 import fr.paquet.ihm.alert.AlertListener;
@@ -15,7 +20,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
-
 
 public class GeneratePDF implements AlertListener {
 
@@ -114,6 +118,8 @@ public class GeneratePDF implements AlertListener {
 		this.projet = projet;
 	}
 
+	private File filePdf = null;
+
 	private void CreateReport() throws Exception {
 
 		// - Chargement et compilation du rapport
@@ -126,11 +132,9 @@ public class GeneratePDF implements AlertListener {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, getParameters());
 
 			// - Enregistrement du rapport au format PDF
-			FileChooser fc = new FileChooser();
-			JasperExportManager.exportReportToPdfFile(jasperPrint, fc.getSelectedFile().getAbsolutePath());
-
-		// T'EN ES LA
-			//JasperExportManager.exportReportToPdfFile(jasperPrint, "/home/nath/Documents/R408/RapportPdf/Rapport.pdf");
+			FileChooser fc = new FileChooser(this);
+			setFilePdf(fc.getSelectedFile());
+			JasperExportManager.exportReportToPdfFile(jasperPrint, getFilePdf().getAbsolutePath());
 
 			new AlertWindow(AlertType.QUESTION, "Rapport créé Voulez-vous le voir ?", this);
 
@@ -143,7 +147,15 @@ public class GeneratePDF implements AlertListener {
 
 	@Override
 	public void buttonClick(String button) {
-		// TODO Auto-generated method stub
+		//TODO
 
+	}
+
+	private File getFilePdf() {
+		return filePdf;
+	}
+
+	private void setFilePdf(File filePdf) {
+		this.filePdf = filePdf;
 	}
 }
