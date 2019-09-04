@@ -40,7 +40,7 @@ public class FileChooser extends JFileChooser {
 		
 		FileSystemView.getFileSystemView().getHomeDirectory();
 		this.setDialogTitle("Sauvegarde : ");
-		this.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		this.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		int returnValue = showOpenDialog(null);
 

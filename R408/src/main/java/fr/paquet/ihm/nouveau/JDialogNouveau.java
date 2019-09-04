@@ -40,7 +40,7 @@ public class JDialogNouveau extends JDialog {
 
 	public JDialogNouveau(Projet projet) {
 		super(MainFrame.getUniqInstance());
-		setAlwaysOnTop(true);
+		
 		setProjet(projet);
 		getProjet().setChantier(new Chantier());
 		setjButtonCreer(new JButton("Creer le projet"));
